@@ -1,0 +1,23 @@
+
+
+
+<h1><b>Observers<b></h1>
+<p></p>
+<div ng-controller="SightingCtrl as sighting">
+<table>
+    <thead>
+    </thead>
+
+
+    <tbody>
+    <tr ng-repeat="observer in full.feed.facets[0].created_by">
+     <td>{{ observer.term }}&nbsp;</td>
+   </tr>
+   </tbody>
+
+</table>
+
+
+
+
+

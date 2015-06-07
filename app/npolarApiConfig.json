@@ -1,0 +1,15 @@
+{
+"environment" : "development",
+"lang": "nb",
+"config": [
+{ "environment" : "development",
+"base": "//api.npolar.no"
+},
+{ "environment" : "test",
+"base": "//apptest.data.npolar.no:9000"
+},
+{ "environment": "production",
+"base": "//api.npolar.no"
+}
+]
+}

@@ -1,0 +1,17 @@
+
+<h1><b> Delete observation {{ entry.id }} <b></h1>
+
+<form novalidate name="entryForm" class="css-form" ng-controller="DeleteObservationCtrl as entry">
+
+
+Are you sure you want to delete observation {{ entry.id }}?
+
+<br/><br />
+<input type="submit" ng-click="submit(entry.id)" value="Delete" />
+<input TYPE="button" value="Cancel" onClick="parent.location='#/observations'">
+</form>
+
+
+
+
+

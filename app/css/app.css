@@ -1,0 +1,254 @@
+/*RESET*/
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a,
+abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike,
+strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table,
+caption, tbody, tfoot, thead, tr, th, td
+{margin:0; padding:0; border:0; outline:0; font-size:100%; vertical-align:baseline; background:transparent;}
+body {line-height: 1;}ol, ul{list-style:none;} blockquote, q{quotes:none;} blockquote:before, blockquote:after,
+q:before, q:after{content:'';content:none;} :focus{outline:0;} ins{text-decoration:none;}
+del{text-decoration:line-through;} table{border-collapse:collapse; border-spacing:0;}
+
+/*MAIN*/
+body {
+      color: #4C9CF1;
+      margin: 0px;
+      padding: 20px;
+      line-height:150%;
+   /*   background: url('../img/frontpage1200.jpg');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover; */
+}
+
+
+label {
+    /*fonts for input fields labels*/
+    font-size: 1.05em;
+    line-height: 1.25em;
+    color: #4C9CF1;
+}
+/*links*/
+a {
+    color: #4C9CF1;
+    border-bottom: 2px dotted;
+    text-decoration: none;
+  /*  font-weight: bolder; */
+}
+a:hover {
+    color: #169;
+    border-bottom: 1px dotted;
+    text-decoration: none;
+}
+/*for the pure text fields*/
+p { color: #4C9CF1;
+     font-weight: normal;
+     max-width: 450px;
+     margin: 10px 0 ;
+
+}
+h1 {
+  color: #4C9CF1;
+  font-weight: bold;
+  font-size: 2em;
+  line-height: 1.15em;
+  margin: 20px 0 ;
+
+}
+
+
+
+/* For header menu*/
+img {
+
+  width: 100%;
+
+}
+
+header {
+
+  background: #fff;
+  width: 100%;
+  height: 76px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-bottom: 4px solid #4C9CF1;
+  z-index: 100;
+
+}
+
+#logo{
+
+  margin: 20px;
+  float: left;
+  width: 40px;
+  height: 40px;
+  background: url(../img/icons/logo_40.png) no-repeat center;
+  display: block;
+  border-bottom: none;
+
+}
+
+nav {
+
+  float: right;
+  padding: 20px;
+
+}
+
+#menu-icon {
+
+  display: hidden;
+  width: 100px;
+  height: 40px;
+  background: #4C8FEC url(../img/icons/menu_403.png) center;
+  border-bottom: none;
+
+}
+
+a:hover#menu-icon {
+
+  background-color: #444;
+  border-radius: 4px 4px 0 0;
+
+}
+
+ul {
+
+  list-style: none;
+
+}
+
+li {
+
+  display: inline-block;
+  float: left;
+  padding: 10px
+
+}
+
+.current {
+
+  color: #2262AD;
+
+}
+
+section {
+
+  margin: 80px auto 40px;
+  max-width: 980px;
+  position: relative;
+  padding: 20px
+
+}
+
+
+/*For responsive tables*/
+/*For Desktops/Laptops*/
+
+
+.layout1 {
+  width: 100%;
+  border-collapse: collapse;
+}
+/* Zebra striping */
+.layout1 tr:nth-of-type(odd) {
+  background: #eee;
+}
+.layout1 th {
+  background: #333;
+  color: white;
+  font-weight: bold;
+}
+.layout1 td, .layout1 th {
+  padding: 6px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+
+
+
+/*MEDIA QUERY*/
+@media only screen and (max-width : 800px) {
+
+  header {
+
+    position: absolute;
+
+  }
+
+  #menu-icon {
+
+    display:inline-block;
+
+  }
+
+  nav ul, nav:active ul {
+
+    display: none;
+    position: absolute;
+    padding: 20px;
+    background: #fff;
+    border: 5px solid #444;
+    right: 20px;
+    top: 60px;
+    width: 50%;
+    border-radius: 4px 0 4px 4px;
+
+  }
+
+  nav li {
+
+    text-align: center;
+    width: 100%;
+    padding: 10px 0;
+    margin: 0;
+
+  }
+
+  nav:hover ul {
+
+    display: block;
+
+  }
+
+
+  @media
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+
+  /* Force table to not be like tables anymore */
+  .layout1, .layout1 thead, .layout1 tbody, .layout1 th, .layout1 td, .layout1 tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  .layout1 thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .layout1 tr { border: 1px solid #ccc; }
+
+  .layout1 td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  .layout1 td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }

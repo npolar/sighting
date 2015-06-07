@@ -1,0 +1,162 @@
+/*MAIN*/
+body {
+        font-size: 1.05em;
+        line-height: 1.25em;
+        background:  #f9f9f9;
+        /* color language */
+        color: #4C9CF1;
+	     float: left;
+	     padding: 20px;
+        max-width: 980px;
+    /*    background: url('../img/frontpage1200.jpg');
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover; */
+}
+
+/*links*/
+a {
+	color: #4C9CF1;
+	text-decoration: none;
+	font-weight: bold;
+}
+a:hover {
+	color: #169;
+}
+
+/* Menu, second level */
+.second-level-menu
+{
+    position: absolute;
+    top: 195px;
+    left: 170px;
+    width: 150px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.second-level-menu > li:hover { display:block; }
+
+
+/* Nav menu */
+nav ul  {
+        display: none;
+        position: absolute;
+        padding: 20px;
+        background: #fff;
+        border: 1px solid #4C8FEC;
+        left: 20px;
+        top: 60px;
+        width: 150px;
+        border-radius: 4px 0 4px 4px;
+        list-style-type: none;
+}
+nav li {
+        text-align: center;
+        width: 100%;
+        padding: 10px 0;
+        margin: 0;
+}
+
+nav:hover ul {
+        display: block;
+}
+
+nav:visited ul  {
+        display: none;
+}
+
+
+.header-text {
+   font-family: Helvetica Neue, Helvetica, Arial;
+   color: #4C8FEC;
+   background-color: white;
+   position: fixed;
+   line-height: 100%;
+   top: 60%;
+   left: 10%;
+   font-size: 300%;
+}
+
+.header-text2 {
+    left: 60%;
+}
+
+
+/*Tables */
+.stripes {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+/*Zebra striping*/
+tr:nth-of-type(odd) {
+  background: #eee;
+}
+th {
+  background: #333;
+  color: white;
+  font-weight: bold;
+}
+td, th {
+  padding: 6px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+
+/*MEDIA QUERY*/
+/*@media only screen and (max-width : 480px) {
+       background: url('../img/frontpage480.jpg');
+       background-repeat: no-repeat;
+       background-position: center center;
+       background-attachment: fixed;
+       background-size: cover; */
+
+     /*  table {
+         overflow-x: auto;
+         display: block;
+       }  */
+
+
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+  /* Force table to not be like tables anymore */
+  table.stripes, thead.stripes, tbody.stripes, th.strieps, td.stripes, tr.stripes {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead.stripes tr.stripes {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr { border: 1px solid #ccc; }
+
+  td {
+    /* Behave  like a "row" */
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+
+
+}

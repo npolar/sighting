@@ -1,0 +1,14 @@
+{
+  "name": "formula",
+  "homepage": "https://github.com/npolar/formula",
+  "_release": "8f2d1b3a8e",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "8f2d1b3a8ed5b8c2aede9125e9a22a26bc1b5234"
+  },
+  "_source": "git://github.com/npolar/formula.git",
+  "_target": "*",
+  "_originalSource": "formula",
+  "_direct": true
+}

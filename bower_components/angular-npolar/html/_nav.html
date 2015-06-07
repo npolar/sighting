@@ -1,0 +1,74 @@
+
+ <nav class="navbar top-menu">
+        <div class="container-fluid">
+          <!-- Small screen menu toggle -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-menu-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+          </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="top-menu-collapse" style="height: auto !important;">
+            <ul class="nav navbar-nav menu">
+              <li><a href="">Norwegian polar data centre</a></li>
+              <li class="dropdown">
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                 <span class="glyphicon glyphicon-hdd" aria-hidden="true"></span> Data <span class="caret"></span></a>
+               
+               
+               <ul class="dropdown-menu" role="menu">
+    <!-- ngRepeat: link in nav --><li ng-repeat="link in nav" class="ng-scope"><a href="/home" title="Home" class="ng-binding">home</a></li><!-- end ngRepeat: link in nav --><li ng-repeat="link in nav" class="ng-scope"><a href="/dataset" title="Datasets" class="ng-binding">datasets</a></li><!-- end ngRepeat: link in nav --><li ng-repeat="link in nav" class="ng-scope"><a href="/publication" title="Publications" class="ng-binding">publications</a></li><!-- end ngRepeat: link in nav --><li ng-repeat="link in nav" class="ng-scope"><a href="/projects" title="Projects" class="ng-binding">projects</a></li><!-- end ngRepeat: link in nav --><li ng-repeat="link in nav" class="ng-scope"><a href="/people" title="People" class="ng-binding">people</a></li><!-- end ngRepeat: link in nav --><li ng-repeat="link in nav" class="ng-scope"><a href="/geodata" title="Geographic services and map data" class="ng-binding">geodata</a></li><!-- end ngRepeat: link in nav --><li ng-repeat="link in nav" class="ng-scope"><a href="/dashboard" title="Dashboard" class="ng-binding">dashboard</a></li><!-- end ngRepeat: link in nav --><li ng-repeat="link in nav" class="ng-scope"><a href="/latest" title="Latest of everything" class="ng-binding">latest</a></li><!-- end ngRepeat: link in nav --><li ng-repeat="link in nav" class="ng-scope"><a href="/indicator" title="Long-term environmental monitoring indicators" class="ng-binding">indicators</a></li><!-- end ngRepeat: link in nav --><li ng-repeat="link in nav" class="ng-scope"><a href="/vessel" title="Kjell-G. Kjær's Historic Vessel archive" class="ng-binding">vessel</a></li><!-- end ngRepeat: link in nav --><li ng-repeat="link in nav" class="ng-scope"><a href="/_login" title="Sign in" class="ng-binding">login</a></li><!-- end ngRepeat: link in nav -->
+  </ul>
+               
+               <ul class="dropdown-menu" role="menu">
+                 <li><a href="https://data.npolar.no/datasets">Datasets</a></li>
+                 <li><a href="https://data.npolar.no/biology/marine">Marine biology</a></li>
+                 <li><a href="/hello">People</a></li>
+                 <li><a href="https://data.npolar.no/projects">Projects</a></li>
+                 <li><a href="https://data.npolar.no/publications">Publications</a></li>
+                 
+                 
+                 
+               </ul>
+             </li>
+             <li><a href="https://data.npolar.no/geodata"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Map services</a></li>
+             <li><a href="http://api.npolar.no"><span class="glyphicon glyphicon-console" aria-hidden="true"></span> Developer</a></li>
+            </ul>
+            <form class="navbar-form" role="search">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                </span>
+              </div><!-- /input-group -->
+            </form>
+            <ul class="nav navbar-nav navbar-right login">
+              <li>
+                     
+               <a href="#" class="navbar-link" data-toggle="popover" role="button" aria-expanded="false">
+                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Login <span class="caret"></span></a>
+               <a href="#" class="navbar-link" data-toggle="modal" data-target="#login-modal" role="button" aria-expanded="false">
+                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Login</a>
+               <div class="popover-wrapper">
+                 <div class="popover-content">
+                   <form>
+                     <div class="form-group">
+                       <label for="exampleInputEmail1">Email address</label>
+                       <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                     </div>
+                     <div class="form-group">
+                       <label for="exampleInputPassword1">Password</label>
+                       <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                     </div>
+                     <button type="button" class="btn btn-default do-login">Submit</button>
+                    </form>
+                 </div>
+               </div>
+             </li>
+           </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
