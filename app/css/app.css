@@ -21,6 +21,20 @@ body {
         background-size: cover; */
 }
 
+#left_elem {
+   width: 45%;
+   float: left;
+}
+
+#right_elem {
+   width: 50%;
+    float: right;
+   background-image: url('../img/frontpage1200.jpg');
+   background-repeat: no-repeat;
+   background-size:contain;
+
+   height:500px;width:500px;
+}
 
 label {
     /*fonts for input fields labels*/
@@ -33,8 +47,13 @@ a {
     color: #4C9CF1;
     border-bottom: 2px dotted;
     text-decoration: none;
-  /*  font-weight: bolder; */
 }
+
+/*Remove underline from front menu*/
+a.menu {
+    border-bottom: 2px dotted white;
+}
+
 a:hover {
     color: #169;
     border-bottom: 1px dotted;
@@ -51,9 +70,15 @@ h1 {
   color: #4C9CF1;
   font-weight: bold;
   font-size: 2em;
-  line-height: 1.15em;
+  line-height: 1em;
   margin: 20px 0 ;
 
+}
+
+/*Get blue background for heading*/
+span.background_font {
+  background-color: #4C9CF1;
+  color: white;
 }
 
 
@@ -87,7 +112,6 @@ header {
   background: url(../img/icons/logo_40.png) no-repeat center;
   display: block;
   border-bottom: none;
-
 }
 
 nav {
@@ -124,14 +148,13 @@ li {
 
   display: inline-block;
   float: left;
-  padding: 10px
-
+  padding: 10px;
 }
 
 .current {
 
-  color: #2262AD;
-
+  /*color: #2262AD;*/
+  border-bottom: 2px dotted white;
 }
 
 section {
@@ -214,10 +237,21 @@ section {
 
   }
 
+/*Remove image*/
+  #left_elem {
+   width: 100%;
+   float: left;
+}
+
+#right_elem {
+   display:none;
+}
+
+/*}
 
   @media
 only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
+(min-device-width: 768px) and (max-device-width: 1024px)  {*/
 
 
   /* Force table to not be like tables anymore */
@@ -252,3 +286,26 @@ only screen and (max-width: 760px),
     padding-right: 10px;
     white-space: nowrap;
   }
+}
+
+
+@media
+only screen and (max-width: 1024px){
+   /*Remove image*/
+  #left_elem {
+   width: 50%;
+   float: left;
+}
+
+#right_elem {
+   width: 50%;
+    float: right;
+   background-image: url('../img/frontpage480.jpg');
+   background-repeat: no-repeat;
+   background-size:contain;
+
+   height:360px;width:360px;
+}
+
+}
+

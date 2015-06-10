@@ -37,30 +37,32 @@ sightingControllers.controller('ViewObservationCtrl', ['$scope', '$routeParams',
 
 
 //New entry goes here
-sightingControllers.controller('NewObservationCtrl', ['$scope', '$http', function($scope, $http) {
+sightingControllers.controller('NewObservationCtrl', ['$scope', '$http', 'npolarApiSecurity', function($scope, $http, npolarApiSecurity) {
    $scope.entry = {};
    $scope.items = species_gallery;
 
-   $scope.submit = function() {
-      console.log($scope.entry);
-      var entry = $scope.entry;
-      entry.username = user;
-      entry.password = pass;
-      console.log (entry);
 
-        $http({
+   $scope.submit = function() {
+     // console.log(JSON.parse($scope.entry));
+      var entry = $scope.entry;
+     // console.log(JSON.stringify(entry));
+    // console.log(user.username);
+    // var basic = basicToken(user.username);
+    // console.log(basic);
+
+
+   $http({
     method: 'POST',
-    url: 'http://apptest.data.npolar.no/sighting',
-  //  url: 'http://dbtest.data.npolar.no/sighting',
-    headers: {'Content-Type': 'application/json'},
+    url: 'https://apptest.data.npolar.no/sighting',
+    //headers: {'Content-Type': 'application/json'},
     //headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-  /*  transformRequest: function(obj) {
+    headers: {'Content-Type': 'text/plain; charset=utf-8','Authorization': 'Basic'},
+    transformRequest: function(obj) {
         var str = [];
         for(var p in obj)
         str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
         return str.join("&");
-    },*/
-   //data: {username: user, password: pass, entry },
+    },
     data: entry,
     }).success(function (data, status, headers, config) {
             console.log('status',status);

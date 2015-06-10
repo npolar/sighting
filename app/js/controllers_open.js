@@ -24,7 +24,7 @@ sightingControllers.controller('SightingCtrl', ['$scope', '$http', function( $sc
    //Get observers
    $http.jsonp('http://apptest.data.npolar.no:9000/sighting/?q=&facets=created_by&size-facet=1000&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
      $scope.full = data;
-     console.log("----", $scope.full);
+    // console.log("----", $scope.full);
    });
 }]);
 

@@ -23,6 +23,15 @@ var appSighting = angular.module('sighting',[
 appSighting.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
       when('/', {
+        //$stateProvider.state('contacts', {
+        //      templateUrl: '<h1>My Contacts</h1>'
+        //})
+        //$state.go();
+        //console.log("home");
+        templateUrl: 'partials/open/login.html',
+        controller: 'SightingCtrl',
+      }).
+      when('/', {
         templateUrl: 'partials/open/login.html',
         controller: 'SightingCtrl'
       }).
@@ -83,7 +92,7 @@ appSighting.config(['$routeProvider', function($routeProvider) {
       });
   }]);
 
-/*
+
 var sightingResources = [
   {"path": "/user", "resource": "User"},
   {"path": "/sighting", "resource": "Sighting" }
@@ -98,16 +107,16 @@ angular.forEach(sightingResources, function(service) {
 // Adds the token to the header of the http message
 appSighting.config(function($httpProvider, npolarApiAuthInterceptorProvider) {
    $httpProvider.interceptors.push("npolarApiAuthInterceptor");
-}); */
+});
 
 
 // Inject config and run
-/* appSighting.run(function(npolarApiConfig, $http) {
+ appSighting.run(function(npolarApiConfig, $http) {
 
-  $http.get("./npolarApiConfig.json").success(function(config) {   */
+  $http.get("./npolarApiConfig.json").success(function(config) {
       //console.log("npolarApiConfig", JSON.stringify(npolarApiConfig.json));
 
-   /*  var environment = config.environment || npolarApiConfig.environment;
+     var environment = config.environment || npolarApiConfig.environment;
      angular.extend(npolarApiConfig, _.find(config.config, { environment: environment}));
 
 
@@ -116,6 +125,6 @@ appSighting.config(function($httpProvider, npolarApiAuthInterceptorProvider) {
      console.log("npolarApiConfig", npolarApiConfig);
   });
 
-}); */
+});
 
 
