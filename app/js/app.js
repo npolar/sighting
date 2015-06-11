@@ -23,11 +23,6 @@ var appSighting = angular.module('sighting',[
 appSighting.config(['$routeProvider', function($routeProvider) {
     $routeProvider.
       when('/', {
-        //$stateProvider.state('contacts', {
-        //      templateUrl: '<h1>My Contacts</h1>'
-        //})
-        //$state.go();
-        //console.log("home");
         templateUrl: 'partials/open/login.html',
         controller: 'SightingCtrl',
       }).
@@ -47,18 +42,6 @@ appSighting.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'partials/open/observers.html',
         controller: 'SightingCtrl'
       }).
-  /*    when('/photos', {
-        templateUrl: 'partials/open/photos.html',
-        controller: 'PhotoCtrl'
-      }).
-      when('/stats', {
-        templateUrl: 'partials/open/stats.html',
-        controller: 'SightingCtrl'
-      }).
-      when('/maps', {
-        templateUrl: 'partials/open/maps.html',
-        controller: 'SightingCtrl'
-      }).*/
       when('/observations', {
         templateUrl: 'partials/user/my_observations.html',
         controller: 'MyObservationsCtrl'
@@ -121,8 +104,7 @@ appSighting.config(function($httpProvider, npolarApiAuthInterceptorProvider) {
 
 
   }).error(function(response) {
-     console.log("error");
-     console.log("npolarApiConfig", npolarApiConfig);
+     console.log("npolarApiConfig - error", npolarApiConfig);
   });
 
 });

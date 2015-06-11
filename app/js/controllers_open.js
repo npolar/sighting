@@ -1,21 +1,5 @@
 'use strict';
 
-/*leave out
-sightingControllers.controller('ParentSightingCtrl', ['$scope', '$location',
-   function( $scope, $location) {
-console.log("hi");
-
-$scope.isHome = function() {
-  console.log($location.url());
-  if ($location.url() == '/') {
-    console.log("true");
-   return true;
- }
-    console.log("false");
-    return false;
- }
-
-}]); */
 
 //Get species gallery for images, education/links to NPs home pages.
 sightingControllers.controller('SightingCtrl', ['$scope', '$http', function( $scope, $http) {
