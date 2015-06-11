@@ -100,9 +100,9 @@ var species_gallery = [
 { name: 'Vågehval',
     eng: 'Common minke whale',
     family: 'Cystophora cristata',
-    image:  'img/species/klappmyss.jpg',
+    image:  'img/species/vagehval.jpg',
     link: 'http://www.npolar.no/en/species/minke-whale.html',
-    rights: 'Norwegian Polar Institute'
+    rights: 'Ann Kristin Balto / Norwegian Polar Institute'
 },
 { name: 'Finnhval',
     eng: 'Fin whale',
@@ -156,9 +156,9 @@ var species_gallery = [
 { name: 'Seihval',
     eng: 'Sei whale',
     family: 'Balaenoptera borealis',
-    image:  'img/species/klappmyss.jpg',
+    image:  'img/species/seihval.jpg',
     link: 'http://www.npolar.no/en/species/sei-whale.html',
-    rights: ''
+    rights:'Christin Khan, NOAA / NEFSC'
 },
 ];
 
