@@ -9,7 +9,6 @@ sightingControllers.controller('SightingCtrl', ['$scope', '$http', function( $sc
    $http.jsonp('http://apptest.data.npolar.no:9000/sighting/?q=&facets=recorded_by&size-facet=1000&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
      $scope.full = data;
     // console.log("----", $scope.full.feed.entries[0].recorded_by);
-    console.log("----", $scope.full.feed.facets[0]);
    });
 }]);
 
