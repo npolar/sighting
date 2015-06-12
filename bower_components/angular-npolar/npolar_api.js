@@ -49,11 +49,12 @@ angular.module("npolarApi").factory('npolarApiAuthInterceptor', function ($rootS
       // Only intercept Npolar API requests
       if (config.url.indexOf(npolarApiConfig.base) === 0) {
         config.headers = config.headers || {};
-        console.log(config.headers);
+        //console.log(config.headers);
         if (!config.headers.Authorization) {
           config.headers.Authorization = npolarApiSecurity.authorization();
         }
-        console.log(config.method +" "+ config.url, config.params||{}, "[npolarApi]");
+        //console.log(config.headers.Authorization);
+        //console.log(config.method +" "+ config.url, config.params||{}, "[npolarApi]");
         if ("PUT" == config.method) {
           $rootScope.saving = true;
         } else if ("DELETE" == config.method) {

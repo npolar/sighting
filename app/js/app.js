@@ -87,26 +87,26 @@ angular.forEach(sightingResources, function(service) {
   });
 });
 
-// Adds the token to the header of the http message
+
+
+ // Auth interceptor -add to HTTP header
 appSighting.config(function($httpProvider, npolarApiAuthInterceptorProvider) {
    $httpProvider.interceptors.push("npolarApiAuthInterceptor");
 });
 
 
 // Inject config and run
- appSighting.run(function(npolarApiConfig, $http) {
+appSighting.run(function(npolarApiConfig, $http, npolarApiSecurity, npolarApiUser) {
 
   $http.get("./npolarApiConfig.json").success(function(config) {
-      //console.log("npolarApiConfig", JSON.stringify(npolarApiConfig.json));
 
-     var environment = config.environment || npolarApiConfig.environment;
-     angular.extend(npolarApiConfig, _.find(config.config, { environment: environment}));
+    var environment = config.environment || npolarApiConfig.environment;
+    angular.extend(npolarApiConfig, _.find(config.config, { environment: environment}));
 
 
   }).error(function(response) {
-     console.log("npolarApiConfig - error", npolarApiConfig);
+    console.log("npolarApiConfig -error", npolarApiConfig);
   });
 
 });
-
 

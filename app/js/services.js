@@ -8,8 +8,8 @@ var sightingServices = angular.module('sightingServices', ['ngResource']);
 sightingServices.factory('SightingDBUpdate', ['$resource',
   function($resource){
     return $resource('https://apptest.data.npolar.no/sighting/:id', { id:'@id'}, {
-    	query: {method: 'GET'},
-    	update: {method: 'PUT'}
+    	query: {method: 'GET'} //,
+    	//update: {method: 'PUT'}
     });
 }]);
 
