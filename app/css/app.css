@@ -76,7 +76,7 @@ h1 {
 }
 
 /*Get blue background for heading*/
-span.background_font {
+span.background-font {
   background-color: #4C9CF1;
   color: white;
 }
@@ -170,7 +170,6 @@ section {
 /*For responsive tables*/
 /*For Desktops/Laptops*/
 
-
 .layout1 {
   width: 100%;
   border-collapse: collapse;
@@ -180,7 +179,7 @@ section {
   background: #eee;
 }
 .layout1 th {
-  background: #333;
+  background: #444;
   color: white;
   font-weight: bold;
 }

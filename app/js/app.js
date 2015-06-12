@@ -26,10 +26,6 @@ appSighting.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'partials/open/login.html',
         controller: 'SightingCtrl',
       }).
-      when('/', {
-        templateUrl: 'partials/open/login.html',
-        controller: 'SightingCtrl'
-      }).
       when('/observe', {
         templateUrl: 'partials/open/become_observer.html',
         controller: 'SightingCtrl'
@@ -69,6 +65,10 @@ appSighting.config(['$routeProvider', function($routeProvider) {
       when('/all', {
         templateUrl: 'partials/admin/all.html',
         controller: 'AdminObservationsCtrl'
+      }).
+      when('/csv', {
+        templateUrl: 'partials/admin/csv.html',
+        controller: 'CSVCtrl'
       }).
       otherwise({
         redirectTo: '/'

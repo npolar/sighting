@@ -1,7 +1,6 @@
 'use strict';
 
 /* Respond to search to get relevant entries */
-
 sightingControllers.controller('AdminObservationsCtrl',
 	 ['$scope', '$http', function( $scope, $http) {
 $scope.submit = function() {
@@ -12,10 +11,16 @@ $scope.submit = function() {
 })};
 }]);
 
+/*Fetch entry from admin search here */
+sightingControllers.controller('CSVCtrl', function($scope, adminSearch) {
+    $scope.entries = adminSearch;
+    console.log("Reached CSV " + JSON.stringify(adminSearch));
+});
+
 
 //Fetch entry from svalbard sightings couch database here
-sightingControllers.controller('MapCtrl', ['$scope', '$http', 'leafletData',
- function($scope, $http, leafletData) {
+sightingControllers.controller('MapCtrl',
+ function($scope, $http, leafletData, adminSearch) {
     $scope.items = species_gallery;
 
     var markers = [];
@@ -158,6 +163,7 @@ sightingControllers.controller('MapCtrl', ['$scope', '$http', 'leafletData',
 
     //Display data for all entries
     $scope.entries = data.feed.entries;
+    adminSearch($scope.entries);
 
     //Get hostname
     $scope.hostname = location.host;
@@ -166,7 +172,8 @@ sightingControllers.controller('MapCtrl', ['$scope', '$http', 'leafletData',
   })};
 
 
-}]);
+
+});
 
 
 /*Convert to the search date format */

@@ -4,18 +4,15 @@
 <h1><b>Observers<b></h1>
 <p></p>
 <div ng-controller="SightingCtrl as sighting">
-<table>
-    <thead>
-    </thead>
+<p>
+    	Our observers are valuable to us! We wish to thank:
+    </p>
 
 
-    <tbody>
-    <tr ng-repeat="observer in full.feed.facets[0].created_by">
-     <td>{{ observer.term }}&nbsp;</td>
-   </tr>
-   </tbody>
+    <p ng-repeat="observer in full.feed.facets[0].recorded_by">
+     <b>{{ observer.term }}&nbsp;</b>
+    </p>
 
-</table>
 
 
 

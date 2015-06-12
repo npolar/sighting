@@ -1,0 +1,32 @@
+
+
+
+<h1><b>CSV <b></h1>
+
+<div ng-controller="CSVCtrl">
+
+	<table class="layout1">
+    <thead>
+ <th>Date</th><th>Species</th><th>Location</th><th>Assessment</th><th>Excelfile</th><th>View</th><th>Edit</th><th>Delete</th>
+    </thead>
+    <tbody>
+   <tr ng-repeat="entry in entries"> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
+        <td><a href="partials/edit_observations.html?id={{ entry.id }}">{{ entry.species }}&nbsp;</td>
+        <td>{{ entry.locality }}&nbsp;</td>
+        <td>{{ entry.editor_assessment }}&nbsp;</td>
+        <td><a href="http://{{hostname}}/{{entry.excelfile.filename}}">{{ entry.excelfile.filename }}&nbsp;</td>
+        <td><a href="#/observation/{{entry.id}}">View&nbsp;</a></td>
+         <td><a href="#/observation/edit/{{entry.id}}">Edit&nbsp;</a></td>
+        <td><a href="#/observation/delete/{{entry.id}}">Delete</a></td>
+  </tr>
+</tbody>
+</table>
+
+
+</div>
+
+
+
+
+
+
