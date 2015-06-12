@@ -11,16 +11,16 @@ $scope.submit = function() {
 })};
 }]);
 
-/*Fetch entry from admin search here */
-sightingControllers.controller('CSVCtrl', function($scope, adminSearch) {
-    $scope.entries = adminSearch;
-    console.log("Reached CSV " + JSON.stringify(adminSearch));
-});
+
+/*Controller for CSV print */
+sightingControllers.controller('CSVCtrl', function($scope, CSVService) {
+    $scope.entries = CSVService.entryObject;
+})
 
 
 //Fetch entry from svalbard sightings couch database here
 sightingControllers.controller('MapCtrl',
- function($scope, $http, leafletData, adminSearch) {
+ function($scope, $http, leafletData, CSVService) {
     $scope.items = species_gallery;
 
     var markers = [];
@@ -163,7 +163,9 @@ sightingControllers.controller('MapCtrl',
 
     //Display data for all entries
     $scope.entries = data.feed.entries;
-    adminSearch($scope.entries);
+
+    //Transfer info to CSV file via service
+    CSVService.entryObject = $scope.entries;
 
     //Get hostname
     $scope.hostname = location.host;

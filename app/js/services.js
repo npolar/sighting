@@ -13,9 +13,7 @@ sightingServices.factory('SightingDBUpdate', ['$resource',
     });
 }]);
 
-//Transfer search results to CSV file
-sightingServices.factory("adminSearch", function() {
-
-	 return {};
+/*Service to get CSV post*/
+sightingServices.factory('CSVService', function () {
+    return {entryObject: {data: null} }
 });
-

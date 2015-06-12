@@ -4,23 +4,16 @@
 <h1><b>CSV <b></h1>
 
 <div ng-controller="CSVCtrl">
+Id | Date | Latitude | Longitude | Location | Location comment | Species | Adult M | Adult F | Adult | Subadult | Polar bear condition | Cub/calf/pup | Bear cubs | Unidentified | Total | Habitat | Occurrence remark | Excel filename | Expedition name | Expedition contact info | Expedition organisation | Platform | Platform comment  <br />
 
-	<table class="layout1">
-    <thead>
- <th>Date</th><th>Species</th><th>Location</th><th>Assessment</th><th>Excelfile</th><th>View</th><th>Edit</th><th>Delete</th>
-    </thead>
-    <tbody>
-   <tr ng-repeat="entry in entries"> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
-        <td><a href="partials/edit_observations.html?id={{ entry.id }}">{{ entry.species }}&nbsp;</td>
-        <td>{{ entry.locality }}&nbsp;</td>
-        <td>{{ entry.editor_assessment }}&nbsp;</td>
-        <td><a href="http://{{hostname}}/{{entry.excelfile.filename}}">{{ entry.excelfile.filename }}&nbsp;</td>
-        <td><a href="#/observation/{{entry.id}}">View&nbsp;</a></td>
-         <td><a href="#/observation/edit/{{entry.id}}">Edit&nbsp;</a></td>
-        <td><a href="#/observation/delete/{{entry.id}}">Delete</a></td>
-  </tr>
-</tbody>
-</table>
+<p ng-repeat="entry in entries">
+{{ entry.id }} | {{ (entry.event_date).substring(0,10) }} | {{ entry.latitude }} |
+{{ entry.longitude }} | {{ entry.locality }} |{{ entry.location_comment }} |
+{{ entry.species }} | {{entry.adult_m }} | {{ entry.adult_f }} | {{ entry.adult }} |
+ {{ entry.subadult }} | {{ entry.polar_bear_condition }} | {{ entry.cub_calf_pup}} |
+ {{ entry.bear_cubs }} | {{ entry.unidentified }} | {{ entry.total }} | {{ entry.habitat }} | {{ entry.occurrence_remark }} | {{entry.excelfile.filename}} | {{entry.expedition.name}} | {{entry.expedition.contact_info}} | {{entry.expedition.organisation}} | {{entry.expedition.platform}} |
+ {{entry.expedition.platform_comment}} | {{ ((entry.expedition.start_date).substring(0,10)) }} | {{ ((entry.expedition.end_date).substring(0,10)) }}
+</p>
 
 
 </div>
