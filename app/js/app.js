@@ -54,6 +54,11 @@ appSighting.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'partials/user/edit_observation.html',
         controller: 'EditObservationCtrl'
       }).
+      /*This entry is for copying old info onto new entries */
+      when('/observation/copy/:id', {
+        templateUrl: 'partials/user/new_observation.html',
+        controller: 'NewObservationCtrl'
+      }).
       when('/observation/delete/:id', {
         templateUrl: 'partials/user/delete_observation.html',
         controller: 'DeleteObservationCtrl'

@@ -1,11 +1,12 @@
 
 //Fetch from svalbard sightings couch database here the owner's observations
-sightingControllers.controller('MyObservationsCtrl', function($scope, $http) {
+sightingControllers.controller('MyObservationsCtrl', function($scope, $http, SightingDBUpdate) {
   /* $http.jsonp('http://apptest.data.npolar.no/sighting/?q=&format=json&callback=JSON_CALLBACK&locales=utf-8')
     .success(function(data) {
         $scope.full = data;
      }).error(function (data, status, headers, config) {
      }); */
+
 });
 
 
@@ -20,8 +21,31 @@ sightingControllers.controller('ViewObservationCtrl', function($scope, $routePar
 
 
 //New entry created here
-sightingControllers.controller('NewObservationCtrl', function($scope, $http, npolarApiSecurity, npolarApiUser, Sighting) {
-   $scope.entry = {};
+sightingControllers.controller('NewObservationCtrl', function($scope, $http, $routeParams, npolarApiSecurity, npolarApiUser, Sighting, SightingDBUpdate) {
+
+   /*If new has an id, then it's the old id to be copyed into a new entry */
+   if  ($routeParams.id) {
+       /*Fetch info from copying the old id's info */
+      $scope.entry = SightingDBUpdate.get({id: $routeParams.id }, function(){
+      });
+     /* console.log($scope.entry); */
+
+      /* Shorten dates for display only*/
+   /*   if (typeof $scope.entry.event_date != "undefined" && $scope.entry.event_date != "") {
+         $scope.entry.event_date = $scope.entry.event_date.substring(0,10);
+      }
+      if (typeof $scope.entry.expedition.start_date != "undefined" && $scope.entry.expedition.start_date != "") {
+         $scope.entry.expedition.start_date = $scope.entry.expedition.start_date.substring(0,10);
+      }
+       if (typeof $scope.entry.expedition.end_date != "undefined" && $scope.entry.expedition.end_date != "") {
+      $scope.entry.expedition.end_date = $scope.entry.expedition.end_date.substring(0,10);
+      } */
+   } else {
+       /*New entry - start over no info fetched*/
+       $scope.entry = {};
+   }
+
+
 
    /*Set select menu for species*/
    $scope.items = species_gallery;
