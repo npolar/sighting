@@ -20,23 +20,43 @@
   <!-- Search ------>
 
 
+
   <label for="search">General search:&nbsp;</label><input type="text" placeholder="Search Svalbard Sightings.." ng-model="search" />
 
 
 
   <legend>or field search:</legend>
+
+<div class="pure-g">
+<div class="pure-u-1 pure-u-md-1-1">
   <label for="entry.species">Species: </label><select  ng-model="entry.species" ng-options="item  as item.eng + ' (' + item.name + ')' for item in items">
 </select>
-	<label for="event_date1">Start time:</label><datepicker date-format="yyyy.MM.dd"><input type="text" ng-model="event_date1" ></datepicker>
-	<label for="end_time">End time:</label><datepicker date-format="yyyy.MM.dd"><input type="text" ng-model="event_date2" ></datepicker>
-	<label for="lat2">Latitude:</label><input type="text" ng-model="lat1" size="5" class="lightblue"> - <input type="text" ng-model="lat2" size="5" >
-	<label for="lng2">Longitude:</label><input type="text" ng-model="lng1" size="5" class="lightblue"> - <input type="text" ng-model="lng2" size="5" >
-<input type="submit" id="submit" value="Search" /></td></tr>
-</table>
+</div>
+
+
+<div class="pure-u-1 pure-u-md-1-1">
+  <label for="start_time">Start time:</label><datepicker date-format="yyyy.MM.dd"><input type="text" ng-model="start_date" ></datepicker>
+</div>
+
+<div class="pure-u-1 pure-u-md-1-1">
+  <label for="end_time">End time:</label><datepicker date-format="yyyy.MM.dd"><input type="text" ng-model="end_date" ></datepicker>
+</div>
+
+<div class="pure-u-1 pure-u-md-1-1">
+  <label for="lat2">Latitude:</label><input type="text" ng-model="lat1" size="5" class="lightblue"> - <input type="text" ng-model="lat2" size="5" >
+</div>
+
+<div class="pure-u-1 pure-u-md-1-1">
+  <label for="lng2">Longitude:</label><input type="text" ng-model="lng1" size="5" class="lightblue"> - <input type="text" ng-model="lng2" size="5" >
+</div>
+
+<div class="pure-u-1 pure-u-md-1-1">
+<input type="submit" id="submit" value="Search" />
+</div>
+
+</div>
 
 <p></p>
-
-
 
 
 <!-- Create CSV -->
@@ -64,6 +84,7 @@
 
 </form>
 </div>
+
 
 
 
