@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
-# Convert from the old mms database Excel sheet to the new sightings database
+# Move images from local harddisk to apptest (or master).
 #
 # Author: srldl
 #
 ########################################
 
 require './server'
+require './config'
 require 'net/http'
 require  'net/ssh'
 require 'net/scp'
@@ -21,40 +22,14 @@ require 'rmagick'
 
 module Couch
 
-  class Convertmms
-
-    #Host1 is the database server
-    host1 = 
-    port1  = "5984"
-    user = 
-    password = 
-
-    #Host2 is the file server
-    host2 = 
-    user2 = 
-    password2 =
-
-    #LDAP_host is the LDAP server
-    host_ldap = 
-    user_ldap = 
-    password_ldap =
-
-
-    #Old mms info about database
-    user_mms = 
-    password_mms = 
-    oracle_sid = 
-
-    #Couch database name
-    couch_db_name = "sighting"
-
+  class MoveExcel
 
     #Get Oracle server connection
     #Get caroline.npolar.no
-    oci = OCI8.new(user_mms,password_mms,oracle_sid)
+    oci = OCI8.new(Couch::Config::USER_MMS,Couch::Config::PASSWORD_MMS,Couch::Config::ORACLE_SID)
 
     #Get ready to put into database
-    server = Couch::Server.new(host1, port1)
+    server = Couch::Server.new(Couch::Config::HOST1, Couch::Config::PORT1)
 
 
     #Fetch observation info
@@ -66,7 +41,7 @@ module Couch
         end
 
         #Copy to apptest
-        Net::SCP.start(host2, user2, :password => password2 ) do |scp|
+        Net::SCP.start(Couch::Config::HOST2, Couch::Config::USER2, :password => Couch::Config::PASSWORD2 ) do |scp|
          puts "SCP started"
          scp.upload!("/home/siri/projects/ruby_scripts/excel_download", "/srv/data.npolar.no/sighting/excel_download", :recursive => true)
         end

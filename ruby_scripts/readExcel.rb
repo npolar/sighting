@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
-# Convert from the old mms database to the new sightings database
+# Convert from the incoming mms Excel files to the new sightings database
 #
 # Author: srldl
 #
 ########################################
 
+require './config'
 require './server'
 require 'net/http'
 require 'net/ssh'
@@ -18,30 +19,11 @@ require 'net-ldap'
 require 'rmagick'
 require 'spreadsheet'
 
-#require 'rmagick'
-
 
 
 module Couch
 
   class ReadExcel
-
-
-    #Host1 is the database server
-    host1 = 
-    port1  = "5984"
-    user = 
-    password = 
-
-    #Host2 is the file server
-    host2 = 
-    user2 = 
-    password2 =
-
-
-    #Couch database name
-    couch_db_name = "sighting"
-
 
     #Fetch a file name from the directory
     #Convert to iso8601
@@ -64,7 +46,7 @@ module Couch
 
 
        #Get ready to put into database
-       server = Couch::Server.new(host1, port1)
+       server = Couch::Server.new(Couch::Config::HOST1, Couch::Config::PORT1)
 
 
        #Fetch a UUID from couchdb
@@ -91,8 +73,8 @@ module Couch
        @entry = {
             :id => uuid,
             :_id => uuid,
-            :schema => 'http://api.npolar.no/schema/' + couch_db_name + '.json',
-            :collection => couch_db_name,
+            :schema => 'http://api.npolar.no/schema/' + Couch::Config::COUCH_DB_NAME + '.json',
+            :collection => Couch::Config::COUCH_DB_NAME,
             :base => 'http://api.npolar.no',
             :language => 'en',
             :rights => 'No licence announced on the web site',
@@ -121,8 +103,8 @@ module Couch
             :expedition => Object.new,
             :created => timestamp,
             :updated => timestamp,
-            :created_by => user,
-            :updated_by => user
+            :created_by => Couch::Config::USER,
+            :updated_by => Couch::Config::USER
          }
 
 

@@ -6,6 +6,7 @@
 ########################################
 
 require './server'
+require './config'
 require 'net/http'
 require  'net/ssh'
 require 'net/scp'
@@ -33,48 +34,22 @@ module Couch
     end
 
 
-    #Host1 is the database server
-    host1 =
-    port1  = "5984"
-    user =
-    password =
-
-    #Host2 is the file server
-    host2 =
-    user2 =
-    password2 =
-
-    #LDAP_host is the LDAP server
-    host_ldap =
-    user_ldap =
-    password_ldap =
-
-
-    #Old mms info about database
-    user_mms =
-    password_mms =
-    oracle_sid =
-
-    #Couch database name
-    couch_db_name = "sighting"
-
-
     #Get Oracle server connection
     #Get caroline.npolar.no
-    oci = OCI8.new(user_mms,password_mms,oracle_sid)
+    oci = OCI8.new(Couch::Config::USER_MMS,Couch::Config::PASSWORD_MMS,Couch::Config::ORACLE_SID)
 
     #define the id
     id = nil
 
 
     #Fetch observation info
-    oci.exec('select * from mms.observations where id>5167 and id<5171') do |obs|
+    oci.exec('select * from mms.observations where id>169 and id<173') do |obs|
    # oci.exec('select * from mms.observations') do |obs|
 
 
 
        #Get ready to put into database
-       server = Couch::Server.new(host1, port1)
+       server = Couch::Server.new(Couch::Config::HOST1, Couch::Config::PORT1)
 
        #Fetch a UUID from courchdb
        res = server.get("/_uuids")
@@ -114,8 +89,8 @@ module Couch
        @entry = {
             :id => uuid,
             :_id => uuid,
-            :schema => 'http://api.npolar.no/schema/' + couch_db_name + '.json',
-            :collection => couch_db_name,
+            :schema => 'http://api.npolar.no/schema/' + Couch::Config::COUCH_DB_NAME + '.json',
+            :collection => Couch::Config::COUCH_DB_NAME,
             :base => 'http://api.npolar.no',
             :language => 'en',
             :rights => 'No licence announced on the web site',
@@ -154,8 +129,8 @@ module Couch
             :pictures => Array.new,
             :created => timestamp,
             :updated => timestamp,
-            :created_by => user,
-            :updated_by => user
+            :created_by => Couch::Config::USER,
+            :updated_by => Couch::Config::USER
          }
 
        #Finds the LDAP id - should be added to info_comment through variable temp_entry
@@ -209,7 +184,7 @@ module Couch
             puts uuid
 
             #Create thumbnail and image on apptest
-            Net::SSH.start(host2,user2, :password => password) do |ssh|
+            Net::SSH.start(Couch::Config::HOST2,Couch::Config::USER2, :password => Couch::Config::PASSWORD) do |ssh|
               ssh.exec "mkdir -p /srv/data.npolar.no/sighting/images/" + uuid
               ssh.exec "mkdir -p /srv/data.npolar.no/sighting/thumbnails/" + uuid
             end
@@ -251,7 +226,7 @@ module Couch
              f.write(thumbnail.to_blob)
           end
 
-          Net::SCP.start(host2, user2, :password => password2 ) do |scp|
+          Net::SCP.start(Couch::Config::HOST2, Couch::Config::USER2, :password => Couch::Config::PASSWORD2 ) do |scp|
            puts "SCP started"
          scp.upload!("/home/siri/projects/ruby_scripts/images/" + uuid + "/" + pic[2], "/srv/data.npolar.no/sighting/images/" + uuid + "/", :recursive => true)
          scp.upload!("/home/siri/projects/ruby_scripts/thumbnails/" + uuid + "/" + pic[2], "/srv/data.npolar.no/sighting/thumbnails/" + uuid +"/", :recursive => true)
@@ -329,15 +304,15 @@ module Couch
     #Connect to LDAP
     credentials = {
                     :method => :simple,
-                    :username => user_ldap,
-                    :password => password_ldap
+                    :username => Couch::Config::USER_LDAP,
+                    :password => Couch::Config::PASSWORD_LDAP
                    }
 
-    Net::LDAP.open(:host => host_ldap, :port => 389, :base => "dc=polarresearch, dc=org", :auth => credentials ) do |ldap|
+    Net::LDAP.open(:host => Couch::Config::HOST_LDAP, :port => 389, :base => "dc=polarresearch, dc=org", :auth => credentials ) do |ldap|
 
           #Add results from LDAP search into @entry
           ldap.search(filter: temp_entry, base: "dc=polarresearch,dc=org", ignore_server_caps: true) do |ldap_entry|
-               puts ldap_entry.cn #common name
+              # puts ldap_entry.cn #common name
               # puts ldap_entry.sn
               # puts ldap_entry.dn
               # puts ldap_entry.givenName
@@ -380,7 +355,7 @@ module Couch
     #Post coursetype
     doc = @entry.to_json
 
-    res = server.post("/"+ couch_db_name +"/", doc, user, password)
+    res = server.post("/"+ Couch::Config::COUCH_DB_NAME + "/", doc, Couch::Config::USER, Couch::Config::PASSWORD)
 
 
      #Load only the x first entries

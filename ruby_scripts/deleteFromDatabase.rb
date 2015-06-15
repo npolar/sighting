@@ -14,7 +14,7 @@ module Couchdb
   
   class DeleteEntries
 
-    host = 
+    host = "dbtest.data.npolar.no"
     port  = "5984"
     database = "sighting"
 
