@@ -3,6 +3,9 @@
 #
 # Author: srldl
 #
+# Requirements: At least one of the three fields lat, lon or event_date must be filled in
+# for the script to work.
+#
 ########################################
 
 require './config'
@@ -10,14 +13,13 @@ require './server'
 require 'net/http'
 require 'net/ssh'
 require 'net/scp'
-require 'mdb'
 require 'time'
 require 'date'
 require 'json'
 require 'oci8'
 require 'net-ldap'
 require 'rmagick'
-require 'spreadsheet'
+require 'simple-spreadsheet'
 
 
 
@@ -25,31 +27,10 @@ module Couch
 
   class ReadExcel
 
-    #Fetch a file name from the directory
-    #Convert to iso8601
-    def self.iso8601time(inputdate)
-       a = (inputdate).to_s
-       b = a.split(" ")
-       c = b[0].split("-")
-       dt = DateTime.new(c[0].to_i, c[1].to_i, c[2].to_i, 12, 0, 0, 0)
-       return dt.to_time.utc.iso8601
-    end
+    #Get hold of UUID for database storage
+    def self.getUUID(server)
 
-    #Open the file
-    Spreadsheet.client_encoding = 'UTF-8'
-    filename = 'SR1-2014.xls'
-    Spreadsheet.open('./excel_download2/' + filename) do |book|
-     # book.worksheet('Sightings').each do |row|
-     sheet1 = book.worksheet('Sightings')
-
-       puts "start"
-
-
-       #Get ready to put into database
-       server = Couch::Server.new(Couch::Config::HOST1, Couch::Config::PORT1)
-
-
-       #Fetch a UUID from couchdb
+      #Fetch a UUID from couchdb
        res = server.get("/_uuids")
 
 
@@ -61,86 +42,160 @@ module Couch
        uuid.insert 13, "-"
        uuid.insert 18, "-"
        uuid.insert 23, "-"
+       return uuid
+    end
 
-       #Timestamp
+    #Get a timestamp - current time
+    def self.timestamp()
        a = (Time.now).to_s
        b = a.split(" ")
        c = b[0].split("-")
        dt = DateTime.new(c[0].to_i, c[1].to_i, c[2].to_i, 12, 0, 0, 0)
-       timestamp = dt.to_time.utc.iso8601
-
-       #Create the json structure object
-       @entry = {
-            :id => uuid,
-            :_id => uuid,
-            :schema => 'http://api.npolar.no/schema/' + Couch::Config::COUCH_DB_NAME + '.json',
-            :collection => Couch::Config::COUCH_DB_NAME,
-            :base => 'http://api.npolar.no',
-            :language => 'en',
-            :rights => 'No licence announced on the web site',
-            :rights_holder => 'Norwegian Polar Institute',
-            :basis_of_record => 'HumanObservation',
-            :event_date => iso8601time(sheet1.rows[18][0]),
-            :locality => sheet1.rows[18][3],
-            :latitude => (sheet1.rows[18][1]).to_f(),    #Big decimal
-            :longitude => (sheet1.rows[18][2]).to_f(),   #Big decimal
-            :species => (sheet1.rows[18][4]),
-            :adult_m => (sheet1.rows[18][5]).to_i,
-            :adult_f => (sheet1.rows[18][6]).to_i,
-            :adult => (sheet1.rows[18][7]).to_i,
-            :sub_adult => (sheet1.rows[18][8]).to_i,
-            :polar_bear_condition => (sheet1.rows[18][9]),
-            :cub_calf_pup => (sheet1.rows[18][10]).to_i,
-            :bear_cubs => (sheet1.rows[18][11]).to_i,
-            :unidentified => (sheet1.rows[18][12]).to_i,
-            :dead_alive => (sheet1.rows[18][13]),
-            :total => (sheet1.rows[18][14]),
-            :habitat => (sheet1.rows[18][15]),
-            :occurrence_remarks => (sheet1.rows[18][16]),
-            :recorded_by => sheet1.rows[1][10],
-            :recorded_by_name => sheet1.rows[0][10],
-            :excelfile => Object.new,
-            :expedition => Object.new,
-            :created => timestamp,
-            :updated => timestamp,
-            :created_by => Couch::Config::USER,
-            :updated_by => Couch::Config::USER
-         }
+       return dt.to_time.utc.iso8601
+    end
 
 
-        @expedition = Object.new
-        @expedition = {
-                :name => sheet1.rows[0][10],
-                :contact_info => sheet1.rows[1][10],
-                :organisation => sheet1.rows[2][10],
-                :platform => sheet1.rows[5][10],
-                #:platform_comment => ,
-                :start_date => iso8601time(sheet1.rows[3][10]),
-                :end_date => iso8601time(sheet1.rows[4][10])
+    #Get date, convert to iso8601
+    #Does not handle chars as month such as 6.june 2015 etc
+    #Does not handle day in the middle, such as 04/23/2014 etc
+    def self.iso8601time(inputdate)
+       a = (inputdate).to_s
+       puts "a " + a
+
+       #Delimiter space, -, .,/
+       b = a.split(/\.|\s|\/|-/)
+       #Find out where the four digit is, aka year
+       if b[0].size == 4 #Assume YYYY.MM.DD
+             dt = DateTime.new(b[0].to_i, b[1].to_i, b[2].to_i, 12, 0, 0, 0)
+       elsif b[2].size == 4  #Assume DD.MM.YYYY
+             dt = DateTime.new(b[2].to_i, b[1].to_i, b[0].to_i, 12, 0, 0, 0)
+       else
+             puts "cannot read dateformat"
+       end
+             return dt.to_time.utc.iso8601
+    end
+
+
+
+
+    # do work on files ending in .xls in the desired directory
+    Dir.glob('./excel_download2/*.xls*') do |excel_file|
+
+     puts excel_file
+
+     #Get filename -last part of array (path is the first)
+     filename =  excel_file[18..-1]
+
+
+     #Open the file
+     s = SimpleSpreadsheet::Workbook.read(excel_file)
+
+     #Always fetch the first sheet
+     s.selected_sheet = s.sheets.first
+
+     #Start down the form -after
+     line = 19
+     while (line > 18 and line < (s.last_row).to_i)
+
+          #if row hasn't got event_date, lat or lon, skip it
+          unless ((s.cell(line,1))== nil or (s.cell(line,1) == "Add your observations here:")) and ((s.cell(line,2))==nil or (s.cell(line,2).to_i)==0) and ((s.cell(line,3))==nil or (s.cell(line,3).to_i)==0)
+
+
+              #Total is an object --but some people use integer or Fixnum instead..
+              if (s.cell(line,15) != "") and (s.cell(line,15).class == Object)
+                    total = (((s.cell(line,15)).value).to_i).to_s
+              else  #But some users fix it to be Fixnum or integer..
+                    total = (s.cell(line,15)).to_i.to_s
+              end
+
+              #Read the row here
+              #Get ready to put into database
+              server = Couch::Server.new(Couch::Config::HOST1, Couch::Config::PORT1)
+
+              #Get uuid
+              uuid = getUUID(server)
+
+
+              #Create the json structure object
+              @entry = {
+                :id => uuid,
+                :_id => uuid,
+                :schema => 'http://api.npolar.no/schema/' + Couch::Config::COUCH_DB_NAME + '.json',
+                :collection => Couch::Config::COUCH_DB_NAME,
+                :base => 'http://api.npolar.no',
+                :language => 'en',
+                :rights => 'No licence announced on the web site',
+                :rights_holder => 'Norwegian Polar Institute',
+                :basis_of_record => 'HumanObservation',
+                :event_date => (if (s.cell(line,1)) then iso8601time(s.cell(line,1)) end),
+                :locality => (s.cell(line,4)) == "(select or write placename)"? "": (s.cell(line,4)),
+                :latitude => (s.cell(line,2)).to_f(),    #Not big decimal
+                :longitude => (s.cell(line,3)).to_f(),   #Not big decimal
+                :species => (s.cell(line,5)) == "(select species)"? "": (s.cell(line,5)),
+                :adult_m => ((s.cell(line,6)).to_i).to_s,
+                :adult_f => ((s.cell(line,7)).to_i).to_s,
+                :adult => (s.cell(line,8).to_i).to_s,
+                :sub_adult => ((s.cell(line,9)).to_i).to_s,
+                :polar_bear_condition => ((s.cell(line,10)) == "(select condition)")? "":((s.cell(line,10)).to_i).to_s,
+                :cub_calf_pup => ((s.cell(line,11)).to_i).to_s,
+                :bear_cubs => (s.cell(line,12)) == "(select years)"? "": ((s.cell(line,12)).to_i).to_s,
+                :unidentified => (s.cell(line,13).to_i).to_s,
+                :dead_alive => (s.cell(line,14)),
+                :total => total,
+                :habitat => (s.cell(line,16)) == "(select habitat)"? "": (s.cell(line,16)),
+                :occurrence_remarks => (s.cell(line,17)),
+                :recorded_by => s.cell(3,11),
+                :recorded_by_name => s.cell(2,11),
+                :excelfile => Object.new,
+                :expedition => Object.new,
+                :created => timestamp,
+                :updated => timestamp,
+                :created_by => Couch::Config::USER,
+                :updated_by => Couch::Config::USER
+            }
+
+            #Extract expedition info
+            @expedition = Object.new
+            @expedition = {
+                :name => s.cell(2,11),
+                :contact_info => s.cell(3,11),
+                :organisation => s.cell(4,11),
+                :platform => s.cell(7,11),
+                :start_date => (if s.cell(5,11) then iso8601time(s.cell(5,11)) end),
+                :end_date => (if s.cell(6,11) then iso8601time(s.cell(6,11)) end)
                 }  #end exped object
 
-
-        #Avoid cluttering up next info with old excel infos
-        @excelfile = Object.new
-
-        #Extract excelfile info
-        @excelfile = {
+            #Extract excelfile info
+            @excelfile = Object.new
+            @excelfile = {
                   :filename => filename,
-                  :content_type => filename, #last digits
-                  :content_size => filename, #size
+                  :content_type => "application/vnd.ms-excel", #last digits
+                  :content_size => (File.size(excel_file)).to_s, #size
                   :timestamp =>  ""      #timestamp
-        } #Excelfile
+            } #Excelfile
 
 
-    #Add expedition and excelfile objects to entry object
-    defined?(@expedition[:name]).nil? ? @entry[:expedition] = nil : @entry[:expedition] = @expedition
-    defined?(@excelfile[:filename]).nil? ?  @entry[:excelfile] = nil : @entry[:excelfile] = @excelfile
+            #Add expedition and excelfile objects to entry object
+            defined?(@expedition[:name]).nil? ? @entry[:expedition] = nil : @entry[:expedition] = @expedition
+            defined?(@excelfile[:filename]).nil? ?  @entry[:excelfile] = nil : @entry[:excelfile] = @excelfile
+
+            puts @entry
+
+            #save entry in database
+            doc = @entry.to_json
+            res = server.post("/"+ Couch::Config::COUCH_DB_NAME + "/", doc, Couch::Config::USER, Couch::Config::PASSWORD)
 
 
-puts @entry
-#save entry in database
 
-end #entry
+          end #unless nil
 
-end #class
-end #module
+          #Count up next line
+          line += 1
+     end #while line
+
+     #Move Excel file to 'done'
+     File.rename excel_file, (excel_file[0..17]+'done/' + filename)
+  end #file
+
+  end
+end
