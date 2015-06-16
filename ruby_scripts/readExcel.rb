@@ -76,7 +76,32 @@ module Couch
     end
 
 
-
+    species = {'Polar Bear' => 'ursus maritimus',
+              'Polar bear Den' => 'ursus maritimus den',
+              'Walrus' => 'odobenus rosmarus',
+              'Ringed Seal' => 'pusa hispida',
+              'Bearded Seal' => 'erignathus barbatus',
+              'Harbour Seal' => 'phoca vitulina',
+              'Harp Seal' => 'phoca groenlandica',
+              'Hooded Seal' => 'cystophora cristata',
+              'Seal'=>'pinnipedia',
+              'Bowhead Whale' => 'balaena mysticetus',
+              'White Whale' => 'delphinapterus leucas',
+              'Narwhal' => 'monodon monoceros',
+              'Blue Whale' => 'balaenoptera musculus',
+              'Fin Whale' => 'balaenoptera physalus',
+              'Humpback whale' => 'megaptera novaeangliae',
+              'Minke Whale' => 'balaenoptera acutorostrata',
+              'Sei Whale' => 'balaenoptera borealis',
+              'Sperm Whale' => 'physeter macrocephalus',
+              'Northern Bottlenose Whale' =>'hyperoodon ampullatus',
+              'Killer Whale' => 'orcinus orca',
+              'Pilot Whale' => 'globicephala melas',
+              'Atlantic White-sided Dolphin' => 'lagenorhynchus acutus',
+              'White-beaked Dolphin' => 'lagenorhynchus albirostris',
+              'Harbour Porpoise' => 'phocoena phocoena',
+              'Whale' => 'cetacea',
+              'Other species' =>'unknown'}
 
     # do work on files ending in .xls in the desired directory
     Dir.glob('./excel_download2/*.xls*') do |excel_file|
@@ -98,7 +123,9 @@ module Couch
      while (line > 18 and line < (s.last_row).to_i)
 
           #if row hasn't got event_date, lat or lon, skip it
-          unless ((s.cell(line,1))== nil or (s.cell(line,1) == "Add your observations here:")) and ((s.cell(line,2))==nil or (s.cell(line,2).to_i)==0) and ((s.cell(line,3))==nil or (s.cell(line,3).to_i)==0)
+          unless ((s.cell(line,1)== nil) or (s.cell(line,1) == "Add your observations here:") or (s.cell(line,1)==' ')) \
+          and ((s.cell(line,2)==nil) or (s.cell(line,2).to_i)==0 or (s.cell(line,2).to_s) =='') \
+          and ((s.cell(line,3)==nil) or (s.cell(line,3).to_i)==0 or (s.cell(line,3).to_s) =='')
 
 
               #Total is an object --but some people use integer or Fixnum instead..
@@ -131,7 +158,7 @@ module Couch
                 :locality => (s.cell(line,4)) == "(select or write placename)"? "": (s.cell(line,4)),
                 :latitude => (s.cell(line,2)).to_f(),    #Not big decimal
                 :longitude => (s.cell(line,3)).to_f(),   #Not big decimal
-                :species => (s.cell(line,5)) == "(select species)"? "": (s.cell(line,5)),
+                :species => (s.cell(line,5)) == "(select species)"? "": species[(s.cell(line,5))],
                 :adult_m => ((s.cell(line,6)).to_i).to_s,
                 :adult_f => ((s.cell(line,7)).to_i).to_s,
                 :adult => (s.cell(line,8).to_i).to_s,
