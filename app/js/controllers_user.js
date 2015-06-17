@@ -107,7 +107,7 @@ sightingControllers.controller('EditObservationCtrl',  function($scope, $routePa
     $scope.entry = entry;
     /*Set abbreviated dates*/
     $scope.entry.event_date = entry.event_date.substring(0,10);
-    $scope.entry.expedition.start_date = entry.expedition.end_date.substring(0,10);
+    $scope.entry.expedition.start_date = entry.expedition.start_date.substring(0,10);
     $scope.entry.expedition.end_date = entry.expedition.end_date.substring(0,10);
      console.log('edit ' + JSON.stringify(entry));
     $scope.items = species_gallery;

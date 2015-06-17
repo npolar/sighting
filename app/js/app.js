@@ -75,6 +75,10 @@ appSighting.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'partials/admin/csv.html',
         controller: 'CSVCtrl'
       }).
+       when('/quality_check', {
+        templateUrl: 'partials/admin/quality_check.html',
+        controller: 'QualityCtrl'
+      }).
       otherwise({
         redirectTo: '/'
       });

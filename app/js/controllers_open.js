@@ -14,20 +14,20 @@ sightingControllers.controller('SightingCtrl', ['$scope', '$http', function( $sc
 
 var species_gallery = [
 {
+  name: 'Isbjørn',
+    eng: 'Polar bear',
+    family: 'Ursus maritimus',
+    image:  'img/species/isbjorn.jpg',
+    link: 'http://www.npolar.no/en/species/polar-bear.html',
+    rights: 'Ann Kristin Balto / Norwegian Polar Institute'
+},
+{
     name: 'Hvalross',
     eng: 'Walrus',
     family: 'Odobenus rosmarus',
     image:  'img/species/hvalross.jpg',
     link: 'http://www.npolar.no/en/species/walrus.html',
     rights: 'Tor Ivan Karlsen / Norwegian Polar Institute'
-},
-{
-    name: 'Ringsel',
-    eng: 'Ringed seal',
-    family: 'Pusa hispida',
-    image:  'img/species/ringsel.jpg',
-    link: 'http://www.npolar.no/en/species/ringed-seal.html',
-    rights: 'Kit Kovacs / Norwegian Polar Institute'
 },
 {
     name: 'Storkobbe',
@@ -46,14 +46,6 @@ var species_gallery = [
     rights: 'Kit Kovacs / Norwegian Polar Institute'
 },
 {
-    name: 'Klappmyss',
-    eng: 'Hooded seal',
-    family: 'Cystophora cristata',
-    image:  'img/species/klappmyss.jpg',
-    link: 'http://www.npolar.no/en/species/hooded-seal.html',
-    rights: 'Norwegian Polar Institute'
-},
-{
   name: 'Grønlandssel',
     eng: 'Harp seal',
     family: 'Phoca groenlandica',
@@ -62,12 +54,27 @@ var species_gallery = [
     rights: 'G. Bangjord / Norwegian Polar Institute'
 },
 {
-  name: 'Isbjørn',
-    eng: 'Polar bear',
-    family: 'Ursus maritimus',
-    image:  'img/species/isbjorn.jpg',
-    link: 'http://www.npolar.no/en/species/polar-bear.html',
-    rights: 'Ann Kristin Balto / Norwegian Polar Institute'
+    name: 'Klappmyss',
+    eng: 'Hooded seal',
+    family: 'Cystophora cristata',
+    image:  'img/species/klappmyss.jpg',
+    link: 'http://www.npolar.no/en/species/hooded-seal.html',
+    rights: 'Norwegian Polar Institute'
+},
+{
+    name: 'Ringsel',
+    eng: 'Ringed seal',
+    family: 'Pusa hispida',
+    image:  'img/species/ringsel.jpg',
+    link: 'http://www.npolar.no/en/species/ringed-seal.html',
+    rights: 'Kit Kovacs / Norwegian Polar Institute'
+},
+{ name: 'Hvithval',
+    eng: 'Beluga whale',
+    family: 'Delphinapterus leucas',
+    image:  'img/species/hvithval.jpg',
+    link: 'http://www.npolar.no/en/species/white-whale.html',
+    rights: 'E. Johansen / Norwegian Polar Institute'
 },
 {  name: 'Blåhval',
     eng: 'Blue whale',
@@ -83,23 +90,9 @@ var species_gallery = [
     link: 'http://www.npolar.no/en/species/bowhead-whale.html',
     rights: 'Norwegian Polar Institute'
 },
-{ name: 'Knølhval',
-    eng: 'Humpback whale',
-    family: 'Megaptera novaeangliae',
-    image:  'img/species/knolhval.jpg',
-    link: 'http://www.npolar.no/en/species/humpback-whale.html',
-    rights: 'tromsofoto.net - it this ok??'
-},
-{ name: 'Hvithval',
-    eng: 'Beluga whale',
-    family: 'Delphinapterus leucas',
-    image:  'img/species/hvithval.jpg',
-    link: 'http://www.npolar.no/en/species/white-whale.html',
-    rights: 'E. Johansen / Norwegian Polar Institute'
-},
 { name: 'Vågehval',
     eng: 'Common minke whale',
-    family: 'Cystophora cristata',
+    family: 'Balaenoptera acutorostrata',
     image:  'img/species/vagehval.jpg',
     link: 'http://www.npolar.no/en/species/minke-whale.html',
     rights: 'Ann Kristin Balto / Norwegian Polar Institute'
@@ -110,6 +103,13 @@ var species_gallery = [
     image:  'img/species/finnhval.jpg',
     link: 'http://www.npolar.no/en/species/fin-whale.html',
     rights: 'Aqqa Rosing-Asvid, http://en.wikipedia.org/wiki/Fin_whale#mediaviewer/File:Finhval.jpg'
+},
+{ name: 'Knølhval',
+    eng: 'Humpback whale',
+    family: 'Megaptera novaeangliae',
+    image:  'img/species/knolhval.jpg',
+    link: 'http://www.npolar.no/en/species/humpback-whale.html',
+    rights: 'tromsofoto.net - it this ok??'
 },
 { name: 'Spekkhugger',
     eng: 'Killer whale',
@@ -125,33 +125,19 @@ var species_gallery = [
     link: 'http://www.npolar.no/en/species/narwhal.html',
     rights: 'Glenn Williams, National Institute of Standards and Technology, http://commons.wikimedia.org/wiki/File:Narwhals_breach.jpg'
 },
-{ name: 'Grindhval',
-    eng: 'Long-finned pilot whale',
-    family: 'Globicephala melas',
-    image:  'img/species/grindhval.jpg',
-    link: 'http://www.npolar.no/en/species/pilot-whale.html',
-    rights: '"Pilot whale spyhop" by Barney Moss - Watching Whales 4. Licensed under CC BY 2.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:Pilot_whale_spyhop.jpg#mediaviewer/File:Pilot_whale_spyhop.jpg'
-},
 { name: 'Nebbhval',
     eng: 'Northern northern-bottlenose-whale',
-    family: 'Cystophora cristata',
+    family: 'Hyperoodon ampullatus',
     image:  'img/species/nebbhval.jpg',
     link: 'http://www.npolar.no/en/species/northern-bottlenose-whale.html',
     rights: 'NOAA Photo Library / National Oceanic and Atmospheric'
 },
-{ name: 'Kvitnos',
-    eng:'White beaked dolphin',
-    family: 'Lagenorhynchus albirostris',
-    image:  'img/species/kvitnos.jpg',
-    link: 'http://www.npolar.no/en/species/white-beaked-dolphin.html',
-    rights: 'Hannah Beker,  http://commons.wikimedia.org/wiki/File:White_beaked_dolphin.jpg'
-},
-{ name: 'Spermhval',
-    eng: 'Sperm whale',
-    family: 'Physeter macrocephalus',
-    image:  'img/species/spermhval.jpg',
-    link: 'http://www.npolar.no/en/species/sperm-whale.html',
-    rights: 'Gabriel Barathieu, http://commons.wikimedia.org/wiki/File:Mother_and_baby_sperm_whale.jpg'
+{ name: 'Grindhval',
+    eng: 'Pilot whale',
+    family: 'Globicephala melas',
+    image:  'img/species/grindhval.jpg',
+    link: 'http://www.npolar.no/en/species/pilot-whale.html',
+    rights: '"Pilot whale spyhop" by Barney Moss - Watching Whales 4. Licensed under CC BY 2.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:Pilot_whale_spyhop.jpg#mediaviewer/File:Pilot_whale_spyhop.jpg'
 },
 { name: 'Seihval',
     eng: 'Sei whale',
@@ -160,6 +146,20 @@ var species_gallery = [
     link: 'http://www.npolar.no/en/species/sei-whale.html',
     rights:'Christin Khan, NOAA / NEFSC'
 },
+{ name: 'Spermhval',
+    eng: 'Sperm whale',
+    family: 'Physeter macrocephalus',
+    image:  'img/species/spermhval.jpg',
+    link: 'http://www.npolar.no/en/species/sperm-whale.html',
+    rights: 'Gabriel Barathieu, http://commons.wikimedia.org/wiki/File:Mother_and_baby_sperm_whale.jpg'
+},
+{ name: 'Kvitnos',
+    eng:'White beaked dolphin',
+    family: 'Lagenorhynchus albirostris',
+    image:  'img/species/kvitnos.jpg',
+    link: 'http://www.npolar.no/en/species/white-beaked-dolphin.html',
+    rights: 'Hannah Beker,  http://commons.wikimedia.org/wiki/File:White_beaked_dolphin.jpg'
+}
 ];
 
 

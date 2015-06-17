@@ -11,6 +11,17 @@ $scope.submit = function() {
 })};
 }]);
 
+/* Respond to search to get relevant entries */
+sightingControllers.controller('QualityCtrl',
+   ['$scope', '$http', function( $scope, $http) {
+$scope.submit = function() {
+  console.log($scope);
+    $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
+    $scope.full = data;
+    console.log(data);
+})};
+}]);
+
 
 /*Controller for CSV print */
 sightingControllers.controller('CSVCtrl', function($scope, CSVService) {
@@ -146,8 +157,8 @@ sightingControllers.controller('MapCtrl',
     /* Fetch the lat/lon entries. Have to switch lat/lon for display */
     for (var i=0; i< data.feed.entries.length; i++) {
        markers.push({
-                lat: parseFloat(data.feed.entries[i].longitude),
-                lng: parseFloat(data.feed.entries[i].latitude),
+                lng: parseFloat(data.feed.entries[i].longitude),
+                lat: parseFloat(data.feed.entries[i].latitude),
                 focus: true,
                 draggable: false,
                 message: data.feed.entries[i].locality,

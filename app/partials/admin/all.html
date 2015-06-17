@@ -3,6 +3,7 @@
 
 <h1><b>Map search <b></h1>
 
+<a href="#/quality_check">Quality check</a>
 
 <div ng-controller="MapCtrl">
 <form ng-submit="submit()" class="pure-form pure-form-stacked">
@@ -73,10 +74,11 @@
 
  <table class="layout1">
     <thead>
- <th>Date</th><th>Species</th><th>Location</th><th>Assessment</th><th>Excelfile</th><th>View</th><th>Edit</th><th>Delete</th>
+ <th>Count</th><th>Date</th><th>Species</th><th>Location</th><th>Assessment</th><th>Excelfile</th><th>View</th><th>Edit</th><th>Delete</th>
     </thead>
     <tbody>
-   <tr ng-repeat="entry in entries"> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
+   <tr ng-repeat="entry in entries"><td>{{$index + 1}}</td> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
+
         <td><a href="partials/edit_observations.html?id={{ entry.id }}">{{ entry.species }}&nbsp;</td>
         <td>{{ entry.locality }}&nbsp;</td>
         <td>{{ entry.editor_assessment }}&nbsp;</td>
