@@ -34,6 +34,35 @@ module Couch
     end
 
 
+    species = {'Ursus maritimus' => 'ursus maritimus',
+              'Polar bear den' => 'ursus maritimus',
+              'Odobenus rosmarus' => 'odobenus rosmarus',
+              'Phoca hispida' => 'pusa hispida',
+              'Erignathus barbatus' => 'erignathus barbatus',
+              'Phoca vitulina' => 'phoca vitulina',
+              'Phoca groenlandica' => 'phoca groenlandica',
+              'Cystophora cristata' => 'cystophora cristata',
+              'Cetacea'=> '',
+              'Dolphin Undetermined' => '',
+              'Balaena mysticetus' => 'balaena mysticetus',
+              'Delphinapterus leucas' => 'delphinapterus leucas',
+              'Monodon monoceros' => 'monodon monoceros',
+              'Balaenoptera musculus' => 'balaenoptera musculus',
+              'Balaenoptera physalus' => 'balaenoptera physalus',
+              'Megaptera novaeangliae' => 'megaptera novaeangliae',
+              'Balaenoptera acutorostrata' => 'balaenoptera acutorostrata',
+              'Balaenoptera borealis' => 'balaenoptera borealis',
+              'Physeter macrocephalus' => 'physeter macrocephalus',
+              'Hyperoodon ampullatus' =>'hyperoodon ampullatus',
+              'Orcinus orca' => 'orcinus orca',
+              'Globicephala melas' => 'globicephala melas',
+              'Lagenorhynchus albirostris' => 'lagenorhynchus albirostris',
+              'Lagenorhynchus acutus' => '',
+              'Lagenorhynchus spp.' => '',
+              'Phocoena phocoena' => '',
+              'Pinnipedia' => '',
+              'Other species' =>'unknown'}
+
     #Get Oracle server connection
     #Get caroline.npolar.no
     oci = OCI8.new(Couch::Config::USER_MMS,Couch::Config::PASSWORD_MMS,Couch::Config::ORACLE_SID)
@@ -43,8 +72,8 @@ module Couch
 
 
     #Fetch observation info
-    oci.exec('select * from mms.observations where id>169 and id<173') do |obs|
-   # oci.exec('select * from mms.observations') do |obs|
+    oci.exec('select * from mms.observations where id>155 and id<160') do |obs|
+    # oci.exec('select * from mms.observations') do |obs|
 
 
 
@@ -101,7 +130,7 @@ module Couch
             :location_comment => obs[14],
             :latitude => (obs[15]).to_f(),    #Big decimal
             :longitude => (obs[16]).to_f(),   #Big decimal
-            :species => obs[4],
+            :species => species[obs[4]],
             :adult_m => '',
             :adult_f => '',
             :adult => '',
@@ -110,10 +139,13 @@ module Couch
             :cub_calf_pup => '',
             :bear_cubs => '',
             :unidentified => '',
+            :editor_assessment => '',
+            :polar_bear_den => unless (obs[4] == nil) then \
+                  (species[obs[4].downcase]) == 'polar bear den'? "1" : ""  end,
             :dead_alive => '',
             :total => obs[7].to_s,
             :habitat => obs[9],
-            :occurrence_remarks => obs[18],
+            :occurrence_remarks => obs[18] == nil ? "": obs[18],
             :info_comment => 'Old id:' + obs[0].to_s + ', field activity id:' + obs[1].to_s+ ' Platform: ' + obs[2].to_s + ', platform comment: ' + obs[3].to_s + ', species comment: ' + obs[6].to_s \
             + ', total count accuracy: ' + obs[8].to_s + ', coordinate precision: ' + obs[17].to_s  \
             + ', created_at ' + obs[20].to_s + ', updated_at ' + obs[21].to_s + ', time_known ' \
@@ -132,6 +164,18 @@ module Couch
             :created_by => Couch::Config::USER,
             :updated_by => Couch::Config::USER
          }
+
+         #Add to occurrence remark - seals - whales -uncommon species
+            alt = ['Pinnipedia', 'Phocoena phocoena', 'Lagenorhynchus spp.', 'Lagenorhynchus acutus', 'Dolphin Undetermined', 'Cetacea']
+            #first check if species exist at all
+            if (obs[4] != nil) && (obs[4] != '')
+                elem = obs[4]
+                puts @entry[:occurrence_remarks]
+                puts elem
+              if alt.include?(elem)
+               @entry[:occurrence_remarks] += " " + elem
+              end
+            end
 
        #Finds the LDAP id - should be added to info_comment through variable temp_entry
        temp_entry = obs[19].to_s

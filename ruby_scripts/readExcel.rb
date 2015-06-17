@@ -76,32 +76,32 @@ module Couch
     end
 
 
-    species = {'Polar Bear' => 'ursus maritimus',
-              'Polar bear Den' => 'ursus maritimus den',
-              'Walrus' => 'odobenus rosmarus',
-              'Ringed Seal' => 'pusa hispida',
-              'Bearded Seal' => 'erignathus barbatus',
-              'Harbour Seal' => 'phoca vitulina',
-              'Harp Seal' => 'phoca groenlandica',
-              'Hooded Seal' => 'cystophora cristata',
-              'Seal'=>'pinnipedia',
-              'Bowhead Whale' => 'balaena mysticetus',
-              'White Whale' => 'delphinapterus leucas',
-              'Narwhal' => 'monodon monoceros',
-              'Blue Whale' => 'balaenoptera musculus',
-              'Fin Whale' => 'balaenoptera physalus',
-              'Humpback whale' => 'megaptera novaeangliae',
-              'Minke Whale' => 'balaenoptera acutorostrata',
-              'Sei Whale' => 'balaenoptera borealis',
-              'Sperm Whale' => 'physeter macrocephalus',
-              'Northern Bottlenose Whale' =>'hyperoodon ampullatus',
-              'Killer Whale' => 'orcinus orca',
-              'Pilot Whale' => 'globicephala melas',
-              'Atlantic White-sided Dolphin' => 'lagenorhynchus acutus',
-              'White-beaked Dolphin' => 'lagenorhynchus albirostris',
-              'Harbour Porpoise' => 'phocoena phocoena',
-              'Whale' => 'cetacea',
-              'Other species' =>'unknown'}
+    species = {'polar bear' => 'ursus maritimus',
+              'polar bear den' => 'ursus maritimus',
+              'walrus' => 'odobenus rosmarus',
+              'ringed seal' => 'pusa hispida',
+              'bearded seal' => 'erignathus barbatus',
+              'harbour seal' => 'phoca vitulina',
+              'harp seal' => 'phoca groenlandica',
+              'hooded seal' => 'cystophora cristata',
+              'seal'=> '',
+              'bowhead whale' => 'balaena mysticetus',
+              'white whale' => 'delphinapterus leucas',
+              'narwhal' => 'monodon monoceros',
+              'blue whale' => 'balaenoptera musculus',
+              'fin whale' => 'balaenoptera physalus',
+              'humpback whale' => 'megaptera novaeangliae',
+              'minke whale' => 'balaenoptera acutorostrata',
+              'sei whale' => 'balaenoptera borealis',
+              'sperm whale' => 'physeter macrocephalus',
+              'northern bottlenose whale' =>'hyperoodon ampullatus',
+              'killer whale' => 'orcinus orca',
+              'pilot whale' => 'globicephala melas',
+              'atlantic white-sided dolphin' => '',
+              'white-beaked dolphin' => 'lagenorhynchus albirostris',
+              'harbour porpoise' => '',
+              'whale' => '',
+              'other species' =>'unknown'}
 
     # do work on files ending in .xls in the desired directory
     Dir.glob('./excel_download2/*.xls*') do |excel_file|
@@ -158,21 +158,27 @@ module Couch
                 :locality => (s.cell(line,4)) == "(select or write placename)"? "": (s.cell(line,4)),
                 :latitude => (s.cell(line,2)).to_f(),    #Not big decimal
                 :longitude => (s.cell(line,3)).to_f(),   #Not big decimal
-                :species => (s.cell(line,5)) == "(select species)"? "": species[(s.cell(line,5))],
+                :species => unless (s.cell(line,5)) == nil then \
+                    (s.cell(line,5)) == "(select species)"? "": (species[(s.cell(line,5)).downcase]) \
+                  end,
                 :adult_m => ((s.cell(line,6)).to_i).to_s,
                 :adult_f => ((s.cell(line,7)).to_i).to_s,
                 :adult => (s.cell(line,8).to_i).to_s,
                 :sub_adult => ((s.cell(line,9)).to_i).to_s,
                 :polar_bear_condition => ((s.cell(line,10)) == "(select condition)")? "":((s.cell(line,10)).to_i).to_s,
+                :polar_bear_den => unless (s.cell(line,5)) == nil then \
+                  (species[(s.cell(line,5)).downcase]) == 'polar bear den'? "1" : "" \
+                   end,
                 :cub_calf_pup => ((s.cell(line,11)).to_i).to_s,
                 :bear_cubs => (s.cell(line,12)) == "(select years)"? "": ((s.cell(line,12)).to_i).to_s,
                 :unidentified => (s.cell(line,13).to_i).to_s,
                 :dead_alive => (s.cell(line,14)),
                 :total => total,
                 :habitat => (s.cell(line,16)) == "(select habitat)"? "": (s.cell(line,16)),
-                :occurrence_remarks => (s.cell(line,17)),
+                :occurrence_remarks => s.cell(line,17) == nil ? "": s.cell(line,17),
                 :recorded_by => s.cell(3,11),
                 :recorded_by_name => s.cell(2,11),
+                :editor_assessment => 'NA',
                 :excelfile => Object.new,
                 :expedition => Object.new,
                 :created => timestamp,
@@ -181,13 +187,26 @@ module Couch
                 :updated_by => Couch::Config::USER
             }
 
+            #Add to occurrence remark - seals - whales -uncommon species
+            alt = ['atlantic white-sided dolphin', 'harbour porpoise', 'whale', 'seal']
+            #first check if species exist at all
+            if ((s.cell(line,5))) != nil && ((s.cell(line,5))) != ''
+                elem = (s.cell(line,5)).downcase
+                puts elem + "----"
+                puts @entry[:occurrence_remarks]
+              if alt.include?(elem)
+               @entry[:occurrence_remarks] += (s.cell(line,5))
+              end
+            end
+
             #Extract expedition info
             @expedition = Object.new
             @expedition = {
                 :name => s.cell(2,11),
                 :contact_info => s.cell(3,11),
                 :organisation => s.cell(4,11),
-                :platform => s.cell(7,11),
+                :platform_comment => s.cell(7,11),
+                :platform => '',
                 :start_date => (if s.cell(5,11) then iso8601time(s.cell(5,11)) end),
                 :end_date => (if s.cell(6,11) then iso8601time(s.cell(6,11)) end)
                 }  #end exped object
