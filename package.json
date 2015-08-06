@@ -3,7 +3,7 @@
   "private": true,
   "name": "sighting",
   "description": "Sightings observations marine mammals at Svalbard",
-  "repository": "https://github.com/angular/angular-phonecat",
+  "repository": "https://github.com/npolar/sighting",
   "license": "MIT",
   "devDependencies": {
     "karma": "^0.12.16",
