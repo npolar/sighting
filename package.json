@@ -6,11 +6,22 @@
   "repository": "https://github.com/npolar/sighting",
   "license": "MIT",
   "devDependencies": {
+    "browser-sync": "^2.8.2",
+    "browserify": "^11.0.1",
+    "elasticsearch": "^4.1.0",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-notify": "^2.2.0",
+    "gulp-uglify": "^1.2.0",
+    "http-server": "^0.6.1",
     "karma": "^0.12.16",
     "karma-chrome-launcher": "^0.1.4",
     "karma-jasmine": "^0.1.5",
+    "lodash": "^3.10.1",
     "protractor": "~1.0.0",
-    "http-server": "^0.6.1"
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "scripts": {
     "start": "http-server -a 0.0.0.0 -p 8000",
@@ -23,8 +34,11 @@
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
   },
   "dependencies": {
+    "angular": "^1.4.3",
+    "angular-route": "^1.4.3",
     "angularjs-datepicker": "git://github.com/720kb/angular-datepicker",
     "elasticsearch": "^4.0.2",
+    "leaflet": "^0.7.3",
     "leaflet-draw": "git://github.com/leaflet/leaflet.draw"
   }
 }

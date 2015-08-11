@@ -1,0 +1,36 @@
+<table>
+<tr><td colspan="2"><h2>Expedition</h2></td></tr>
+<tr><td>Platform (ship, helicopter etc): </td><td>{{ entry.expedition.platform }}</td></tr>
+<tr><td>Link to expedition database (if applicable): </td><td>{{ entry.occurrence_remarks }}</td></tr>
+<tr><td>Platform name: </td><td>{{ entry.expedition.name }}</td></tr>
+<tr><td>Expedition start date: </td><td>{{entry.expedition.start_date }}</td></tr>
+<tr><td>Expedition end date: </td><td>{{entry.expedition.end_date }}</td></tr>
+<tr><td>Platform comment: </td><td>{{ entry.expedition.platform_comment }}</td></tr>
+<tr><td colspan="2"><h2>Observation info</h2></td></tr>
+<tr><td>Observation date:</td><td> {{ entry.event_date }}</td></tr>
+<tr><td>Location name: </td><td> {{ entry.locality" }}</td></tr>
+<tr><td>Longitude: </td><td>{{ entry.longitude }}</td></tr>
+<tr><td>Latitude: </td><td>{{ entry.latitude }}</td></tr>
+<tr><td>Location comment: </td><td>{{ entry.location_comment }}</td></tr>
+<tr><td>Species: </td><td>{{ entry.species }}</td></tr>
+<tr><td>Adult M:</td><td>{{ entry.adult_m }}</td></tr>
+<tr><td>Adult F:</td><td>{{ entry.adult_f }}</td></tr>
+<tr><td>Adult:</td><td>{{ entry.adult }}</td></tr>
+<tr><td>Subadult:</td><td>{{ entry.sub_adult }}</td></tr>
+<tr><td>Polar bear condition:{{ entry.polar_bear_condition }}</td></tr>
+<tr><td>Cub, calf, pup:</td><td> {{ entry.cub_calf_pup }}</td></tr>
+<tr><td>Bear cubs:</td><td> {{ entry.bear_cubs }} </td></tr>
+<tr><td>Unidentified:</td><td> {{ entry.unidentified }}</td></tr>
+<tr><td>Alive or dead:</td><td> {{ entry.dead_alive }}</td></tr>
+<tr><td>Total: </td><td>{{ entry.total }}</td></tr>
+<tr><td>Habitat: </td><td>{{ entry.habitat }}</td></tr>
+<tr><td>Comment: </td><td>{{ entry.occurrence_remarks }}</td></tr>
+
+<tr><td colspan="2"><h2>Admin:</h2></td></tr>
+<tr><td>Editor's assessment: </td><td> {{ entry.editor_assessment }}</td></tr>
+<tr><td>Editor comment: </td><td> {{ entry.editor_comment }}</td></tr>
+<tr><td colspan="2"><h2>Add pictures:</h2></td></tr>
+<tr><td>Photographer:</td><td>{{ entry.pictures.photographer }}</td></tr>
+<tr><td>Comments:</td><td>{{ entry.pictures.comments }}</td></tr>
+</table>
+

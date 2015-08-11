@@ -1,0 +1,32 @@
+
+
+
+
+
+
+<div ng-controller="ViewObservationCtrl as entry">
+
+<div ng-include="'partials/user/view.html'"></div>
+<br />
+
+<table>
+<tr><td><b>Images</b></td></tr>
+
+<tr ng-repeat="picture in entry.pictures"> 
+<td><b><a href="http://{{hostname}}/image_upload/{{entry.id}}/{{picture.filename}}">{{picture.filename}}&nbsp;</a></b></td>
+<td><b>Size:&nbsp; {{picture.content_size}} &nbsp;</b></td>
+<td><b>Photographer:&nbsp;{{picture.photographer}}&nbsp;</b></td>
+</tr>
+
+</table>
+
+</div>
+
+
+
+
+
+
+
+
+
