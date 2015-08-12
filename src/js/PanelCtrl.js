@@ -1,5 +1,8 @@
+/*Controller not behind login*/
+
 /* Menu choices */
 var PanelCtrl = function ($location) {
+   'use strict';
 //sightingControllers.controller("PanelCtrl", ['$location', function($location){
    this.tab = 1;
 

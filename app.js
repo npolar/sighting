@@ -33,9 +33,8 @@ var appSighting = angular.module('sighting',[
 //Open - open to all,
 //User - with user login
 //Admin - for administrators
-//appSighting.controller('MapCtrl', require('./src/js/controllers_open'));
 appSighting.controller('PanelCtrl', require('./src/js/PanelCtrl'));
-//appSighting.controller('SightingCtrl', require('./src/js/controllers_open'));
+appSighting.controller('SightingCtrl', require('./src/js/SightingCtrl'));
 /*appSighting.controller('AdminObservationsCtrl', require('./src/js/controllers_admin'));
 appSighting.controller('QualityCtrl', require('./src/js/controllers_admin'));
 appSighting.controller('MapCtrl', require('./src/js/controllers_admin'));
