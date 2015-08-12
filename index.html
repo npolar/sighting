@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" ng-app="sighting">
+<head>
+  <meta charset="utf-8">
+  <title>Svalbard Marine Mammal Sightings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="./src/css/pure-release-0.6.0/pure.css">
+  <link rel="stylesheet" href="./src/css/gallery.css">
+  <link rel="stylesheet" href="./src/css/app.css">
+  <!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="./src/css/pure-release-0.6.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+</head>
+
+<body class="container" ng-controller="SightingCtrl as sighting">
+
+
+<br />
+
+
+<!--Menu -->
+<header>
+  <a href="http://www.npolar.no/no/tjenester/mms/index.html" id="logo"></a>
+
+
+<nav>
+<a href="#" id="menu-icon"></a>
+<ul ng-controller="PanelCtrl as panel">
+<li><a href ng-click="panel.choosePath(1)" class="current">Login</a></li>
+<li><a href ng-click="panel.choosePath(2)" class="menu">Become observer</a></li>
+<li><a href ng-click="panel.choosePath(3)" class="menu">Species</a></li>
+<li><a href ng-click="panel.choosePath(4)" class="menu">Observers</a></li>
+<li><a href ng-click="panel.choosePath(8)" class="menu">My observations</a></li>
+<li><a href ng-click="panel.choosePath(9)" class="menu">Administrators</a></li>
+</ul>
+</nav>
+
+<script src="bundle.js"></script>
+
+</header>
+
+<section>
+<div ng-view></div>
+</section>
+
+
+</body>
+
+</html>

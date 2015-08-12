@@ -1,37 +1,41 @@
 'use strict';
 
 /* Respond to search to get relevant entries */
-sightingControllers.controller('AdminObservationsCtrl',
-	 ['$scope', '$http', function( $scope, $http) {
+var AdminObservationsCtrl = function($scope, $http) {
+//sightingControllers.controller('AdminObservationsCtrl',
+	// ['$scope', '$http', function( $scope, $http) {
 $scope.submit = function() {
 	console.log($scope);
     $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
     $scope.full = data;
     console.log(data);
 })};
-}]);
+};
 
 /* Respond to search to get relevant entries */
-sightingControllers.controller('QualityCtrl',
-   ['$scope', '$http', function( $scope, $http) {
+var QualityCtrl = function($scope, $http) {
+//sightingControllers.controller('QualityCtrl',
+//   ['$scope', '$http', function( $scope, $http) {
 $scope.submit = function() {
   console.log($scope);
     $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
     $scope.full = data;
     console.log(data);
 })};
-}]);
+}; //]);
 
 
 /*Controller for CSV print */
-sightingControllers.controller('CSVCtrl', function($scope, CSVService) {
+var CSVCtrl = function($scope, CSVService) {
+//sightingControllers.controller('CSVCtrl', function($scope, CSVService) {
     $scope.entries = CSVService.entryObject;
-})
+} // )
 
 
 //Fetch entry from svalbard sightings couch database here
-sightingControllers.controller('MapCtrl',
- function($scope, $http, leafletData, CSVService) {
+var MapCtrl = function($scope, $http, leafletData, CSVService) {
+//sightingControllers.controller('MapCtrl',
+// function($scope, $http, leafletData, CSVService) {
     $scope.items = species_gallery;
 
     var markers = [];
@@ -182,11 +186,11 @@ sightingControllers.controller('MapCtrl',
     $scope.hostname = location.host;
    // console.log($scope.hostname);
 
-  })};
+ })};
 
 
 
-});
+}; //);
 
 
 /*Convert to the search date format */
@@ -199,4 +203,7 @@ function convertDate(idate) {
 }
 
 
-
+module.exports = MapCtrl;
+module.exports = CSVCtrl;
+module.exports = AdminObservationsCtrl;
+module.exports = QualityCtrl;

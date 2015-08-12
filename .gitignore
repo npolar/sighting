@@ -1,4 +1,4 @@
-app/js/config.js
+src/js/config.js
 excel/**
 excel_upload/**
 image_upload/**

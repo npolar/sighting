@@ -2,7 +2,8 @@
 
 
 //Get species gallery for images, education/links to NPs home pages.
-sightingControllers.controller('SightingCtrl', ['$scope', '$http', function( $scope, $http) {
+var SightingCtrl = function ($scope, $http) {
+//sightingControllers.controller('SightingCtrl', ['$scope', '$http', function( $scope, $http) {
    this.species = species_gallery;
 
    //Get observers
@@ -10,7 +11,7 @@ sightingControllers.controller('SightingCtrl', ['$scope', '$http', function( $sc
      $scope.full = data;
     // console.log("----", $scope.full.feed.entries[0].recorded_by);
    });
-}]);
+}; //]);
 
 var species_gallery = [
 {
@@ -165,7 +166,8 @@ var species_gallery = [
 
 
 /* Menu choices */
-sightingControllers.controller("PanelCtrl", ['$location', function($location){
+var PanelCtrl = function ($location) {
+//sightingControllers.controller("PanelCtrl", ['$location', function($location){
    this.tab = 1;
 
    this.selectTab = function(setTab) {
@@ -206,12 +208,14 @@ sightingControllers.controller("PanelCtrl", ['$location', function($location){
    this.isSelected = function(checkTab){
      return this.tab === checkTab;
    };
-}]);
+}; //]);
 
 
 //Fetch entry from svalbard sightings couch database here
-sightingControllers.controller('MapCtrl', ['$scope', '$http', 'leafletData',
- function($scope, $http, leafletData) {
+
+var MapCtrl = function ($scope, $http, leafletData) {
+//sightingControllers.controller('MapCtrl', ['$scope', '$http', 'leafletData',
+// function($scope, $http, leafletData) {
     $scope.items = species_gallery;
 
     var markers = [];
@@ -346,7 +350,7 @@ sightingControllers.controller('MapCtrl', ['$scope', '$http', 'leafletData',
   })};
 
 
-}]);
+}; //]);
 
 
 /*Convert to the search date format */
@@ -360,24 +364,10 @@ function convertDate(idate) {
 
 
 //Update entry from Svalbard MMS couch database here
-sightingControllers.controller('LoginCtrl', ['$scope', 'jwtHelper', 'npolarApiSecurity', function($scope, jwtHelper, npolarApiSecurity) {
+//sightingControllers.controller('LoginCtrl',
+//['$scope', 'jwtHelper', 'npolarApiSecurity', function($scope, jwtHelper, npolarApiSecurity) {
+//}]);
 
-
-    /* Angular-jwt */
-    //var expToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NhbXBsZXMuYXV0aDAuY29tLyIsInN1YiI6ImZhY2Vib29rfDEwMTU0Mjg3MDI3NTEwMzAyIiwiYXVkIjoiQlVJSlNXOXg2MHNJSEJ3OEtkOUVtQ2JqOGVESUZ4REMiLCJleHAiOjE0MTIyMzQ3MzAsImlhdCI6MTQxMjE5ODczMH0.7M5sAV50fF1-_h9qVbdSgqAnXVF7mz3I6RjS6JiH0H8';
-    //$scope.tokenPayload = jwtHelper.decodeToken(expToken);
-    //$scope.date = jwtHelper.getTokenExpirationDate(expToken);
-    //$scope.bool = jwtHelper.isTokenExpired(expToken);
-
-}]);
-
-
-
-
-
-
-
-
-
-
-
+module.exports = PanelCtrl;
+module.exports = SightingCtrl;
+module.exports = MapCtrl;
