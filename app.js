@@ -39,16 +39,16 @@ appSighting.controller('AdminObservationsCtrl', require('./src/js/AdminObservati
 appSighting.controller('QualityCtrl', require('./src/js/QualityCtrl'));
 appSighting.controller('MapCtrl', require('./src/js/MapCtrl'));
 appSighting.controller('CSVCtrl', require('./src/js/CSVCtrl'));
-/*appSighting.controller('MyObservationsCtrl', require('./src/js/controllers_user'));
-appSighting.controller('ViewObservationCtrl', require('./src/js/controllers_user'));
-appSighting.controller('NewObservationCtrl', require('./src/js/controllers_user'));
-appSighting.controller('EditObservationCtrl', require('./src/js/controllers_user'));
-appSighting.controller('DeleteObservationCtrl', require('./src/js/controllers_user'));
-appSighting.controller('UploadObservationsCtrl', require('./src/js/controllers_user')); */
-/*appSighting.service('SightingDBUpdate', require('./src/js/services'));
-appSighting.service('CSVService', require('./src/js/services'));
-appSighting.directive('fileInput', require('./src/js/directives'));
-appSighting.directive('ngLoginLogout', require('./src/js/directives')); */
+appSighting.controller('MyObservationsCtrl', require('./src/js/MyObservationsCtrl'));
+appSighting.controller('ViewObservationCtrl', require('./src/js/ViewObservationCtrl'));
+appSighting.controller('NewObservationCtrl', require('./src/js/NewObservationCtrl'));
+appSighting.controller('EditObservationCtrl', require('./src/js/EditObservationCtrl'));
+appSighting.controller('DeleteObservationCtrl', require('./src/js/DeleteObservationCtrl'));
+appSighting.controller('UploadObservationsCtrl', require('./src/js/UploadObservationsCtrl'));
+appSighting.service('SightingDBUpdate', require('./src/js/SightingDBUpdate'));
+appSighting.service('CSVService', require('./src/js/CSVService'));
+appSighting.directive('fileInput', require('./src/js/fileInput'));
+/*appSighting.directive('ngLoginLogout', require('./src/js/ngLoginLogout'));*/
 
 
 
