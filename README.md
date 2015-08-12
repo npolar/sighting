@@ -6,11 +6,11 @@ The application let people register their sightings of marine mammals at Svalbar
 
 
 ## Prerequisites
-AngularJS, bower, npm
+AngularJS, npm, browserify
 
 ##Install
 
-<pre><code>git clone http://gtihub.com/npolar/sighting</code></pre>
+<pre><code>git clone http://github.com/npolar/sighting</code></pre>
 
 to get the code. To start:
 
@@ -23,7 +23,3 @@ to get the code. To start:
 - List of participating observers
 - List of own observations - view -edit
 - Admin module with general and specialized search, map and list of results.
-
-
-
-

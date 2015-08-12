@@ -14,7 +14,12 @@
   },
   "dependencies": {
     "angular": "^1.4.3",
+    "angular-leaflet-directive": "^0.8.5",
     "angular-resource": "^1.4.3",
-    "angular-route": "^1.4.3"
+    "angular-route": "^1.4.3",
+    "angularjs-datepicker": "^0.2.6",
+    "elasticsearch": "^6.0.0",
+    "leaflet": "^0.7.3",
+    "leaflet-draw": "^0.2.3"
   }
 }

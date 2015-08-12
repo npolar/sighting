@@ -1,4 +1,5 @@
 src/js/config.js
 excel/**
 excel_upload/**
-image_upload/**
+image_upload/*
+bundle.js
