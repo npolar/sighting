@@ -14,6 +14,9 @@ require('angular-base64');
 require('angular-npolar');
 require('lodash'); */
 
+/*stylesheets*/
+require('./src/css/app.css');
+
 
 var appSighting = angular.module('sighting',[
   'ngRoute',
