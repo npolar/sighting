@@ -27,20 +27,20 @@ var router = function($routeProvider, $locationProvider) {
         templateUrl: './src/partials/user/my_observations.html',
         controller: 'MyObservationsCtrl'
       }).
-      when('/observation', {
+      when('/observations/new', {
         templateUrl: './src/partials/user/new_observation.html',
         controller: 'NewObservationCtrl'
       }).
-      when('/observation/:id', {
+      when('/observations/:id', {
         templateUrl: './src/partials/user/view_observation.html',
         controller: 'ViewObservationCtrl'
       }).
-      when('/observation/edit/:id', {
+      when('/observations/edit/:id', {
         templateUrl: './src/partials/user/edit_observation.html',
         controller: 'EditObservationCtrl'
       }).
       /*This entry is for copying old info onto new entries */
-      when('/observation/copy/:id', {
+      when('/observations/copy/:id', {
         templateUrl: './src/partials/user/new_observation.html',
         controller: 'NewObservationCtrl'
       }).

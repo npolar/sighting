@@ -4,7 +4,8 @@
 var angular = require('angular');
 require('angular-route');
 require('angular-resource');
-require('leaflet');
+var L = require('leaflet');
+L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images/';
 require('leaflet-draw');
 /*require('angular-leaflet-directive');*/
 /*require('angularjs-datepicker');*/
@@ -45,7 +46,7 @@ appSighting.config(require('./src/js/router'));
 
 
 // API HTTP interceptor - adds tokens to server + (gir probl routing)
-appSighting.config($httpProvider => {
+appSighting.config(function ($httpProvider) {
   $httpProvider.interceptors.push('npolarApiInterceptor');
 });
 
@@ -70,7 +71,7 @@ appSighting.service('SightingDBUpdate', require('./src/js/SightingDBUpdate'));
 appSighting.service('CSVService', require('./src/js/CSVService'));
 appSighting.directive('fileInput', require('./src/js/fileInput'));
 
-/*appSighting.directive('ngLoginLogout', require('./src/js/ngLoginLogout'));*/
+var AutoConfig = require('npdc-common').AutoConfig;
 
 // Inject npolarApiConfig and run
 appSighting.run(function(npolarApiConfig) {
