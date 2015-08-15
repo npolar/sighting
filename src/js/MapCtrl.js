@@ -1,7 +1,6 @@
 /* Admin module */
 
-//Fetch entry from svalbard sightings couch database here
-var MapCtrl = function($scope, $http, leafletData, CSVService) {
+
     $scope.items = species_gallery;
 
     var markers = [];
@@ -156,7 +155,7 @@ var MapCtrl = function($scope, $http, leafletData, CSVService) {
 
 
 
-}; //);
+//}; 
 
 
 /*Convert to the search date format */

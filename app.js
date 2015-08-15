@@ -5,15 +5,12 @@ var angular = require('angular');
 require('angular-route');
 require('angular-resource');
 var L = require('leaflet');
-L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images/';
 require('leaflet-draw');
 /*require('angular-leaflet-directive');*/
 /*require('angularjs-datepicker');*/
 require('elasticsearch');
 require('formula');
 require('angular-npolar');
-
-//var AutoConfig = require('npdc-common').AutoConfig;
 
 var appSighting = angular.module('sighting',[
   'ngRoute',

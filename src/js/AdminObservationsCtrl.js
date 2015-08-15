@@ -3,16 +3,29 @@
 /* Respond to search to get relevant entries */
 var AdminObservationsCtrl = function($scope, $http) {
  'use strict';
-var map = L.map('map');
-map.setView([47.63, -122.32], 11);
-var attribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>';
 
-var tiles = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png';
+ // create a map in the "map" div, set the view to a given place and zoom
+var map = L.map('map', {drawControl: true}).setView([78.000, 16.000], 4);
 
-L.tileLayer(tiles, {
-  maxZoom: 18,
-  attribution: attribution
+// add an OpenStreetMap tile layer
+L.tileLayer('http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png', {
+    attribution: 'Norwegian Polar Institute'
 }).addTo(map);
+
+// Initialize the FeatureGroup to store editable layers
+var drawnItems = new L.FeatureGroup();
+map.addLayer(drawnItems);
+
+// Initialize the draw control and pass it the FeatureGroup of editable layers
+var drawControl = new L.Control.Draw({
+    edit: {
+        featureGroup: drawnItems
+    }
+});
+map.addControl(drawControl);
+
+
+
 
 $scope.submit = function() {
 	console.log($scope);
