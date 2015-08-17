@@ -1,7 +1,11 @@
 /* Admin module */
 
+var MapCtrl = function($scope, $http) {
+ 'use strict';
 
-    $scope.items = species_gallery;
+
+    $scope.items = SpeciesGallery;
+
 
     var markers = [];
 
@@ -153,9 +157,7 @@
 
  })};
 
-
-
-//}; 
+};
 
 
 /*Convert to the search date format */

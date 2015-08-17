@@ -26,7 +26,8 @@ var NewObservationCtrl = function($scope, $http, $routeParams, npolarApiSecurity
 
 
    /*Set select menu for species*/
-   $scope.items = species_gallery;
+   $scope.species = SpeciesGallery;
+
 
 
    $scope.submit = function() {

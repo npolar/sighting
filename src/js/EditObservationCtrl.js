@@ -9,7 +9,8 @@ var EditObservationCtrl =  function($scope, $routeParams, $http, Sighting, Sight
     $scope.entry.expedition.start_date = entry.expedition.start_date.substring(0,10);
     $scope.entry.expedition.end_date = entry.expedition.end_date.substring(0,10);
      console.log('edit ' + JSON.stringify(entry));
-    $scope.items = species_gallery;
+    $scope.species = SpeciesGallery;
+
   });
 
     //Store update

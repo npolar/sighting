@@ -12,6 +12,8 @@ require('elasticsearch');
 require('formula');
 require('angular-npolar');
 
+var AutoConfig = require('npdc-common').AutoConfig;
+
 var appSighting = angular.module('sighting',[
   'ngRoute',
   'formula',
@@ -44,7 +46,7 @@ appSighting.config(require('./src/js/router'));
 
 // API HTTP interceptor - adds tokens to server + (gir probl routing)
 appSighting.config(function ($httpProvider) {
-  $httpProvider.interceptors.push('npolarApiInterceptor');
+  $httpProvider.interceptors.push('npolarApiAuthInterceptor');
 });
 
 
@@ -67,8 +69,9 @@ appSighting.controller('UploadObservationsCtrl', require('./src/js/UploadObserva
 appSighting.service('SightingDBUpdate', require('./src/js/SightingDBUpdate'));
 appSighting.service('CSVService', require('./src/js/CSVService'));
 appSighting.directive('fileInput', require('./src/js/fileInput'));
+var SpeciesGallery = require('./src/js/SpeciesGallery');
 
-var AutoConfig = require('npdc-common').AutoConfig;
+
 
 // Inject npolarApiConfig and run
 appSighting.run(function(npolarApiConfig) {
