@@ -2,6 +2,8 @@
 //Update entry from Svalbard MMS couch database here
 var EditObservationCtrl =  function($scope, $routeParams, $http, Sighting, SightingDBUpdate, npolarApiSecurity, npolarApiUser) {
     'use strict';
+    var SpeciesGallery = require('SpeciesGallery');
+
     var entry = SightingDBUpdate.get({id: $routeParams.id }, function(){
     $scope.entry = entry;
     /*Set abbreviated dates*/
@@ -19,7 +21,7 @@ var EditObservationCtrl =  function($scope, $routeParams, $http, Sighting, Sight
       console.log('edit ' + JSON.stringify(entry));
       console.log("http "  + JSON.stringify($http.defaults.headers.common));
       entry.$update();
-  }
+  };
 };
 
 module.exports = EditObservationCtrl;

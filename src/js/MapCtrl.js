@@ -3,9 +3,13 @@
 var MapCtrl = function($scope, $http) {
  'use strict';
 
+ var angular = require('angular');
+ require('leaflet');
+ require('leaflet-draw');
+ var SpeciesGallery = require('SpeciesGallery');
+
 
     $scope.items = SpeciesGallery;
-
 
     var markers = [];
 
@@ -58,53 +62,53 @@ var MapCtrl = function($scope, $http) {
 
 
     /* If event_date exists */
-    if (typeof $scope.event_date1 != "undefined" && $scope.event_date1 != "") {
+    if (typeof $scope.event_date1 !== "undefined" && $scope.event_date1 !== "") {
            /*Remember to transform into the correct format*/
            edate = '&filter-event_date=' + convertDate($scope.event_date1) + '..';
 
-           if (typeof $scope.event_date2 != "undefined" && $scope.event_date2 != "") {
+           if (typeof $scope.event_date2 !== "undefined" && $scope.event_date2 !== "") {
                /*Transform edate to correct format*/
                edate = edate + convertDate($scope.event_date2);
 
            }
     /*Else if lat2 exists */
-    } else if (typeof $scope.event_date2 != "undefined" && $scope.event_date2 != "") {
+  } else if (typeof $scope.event_date2 !== "undefined" && $scope.event_date2 !== "") {
                /*Transform edate to correct format*/
                edate = '&filter-event_date=..' + convertDate($scope.event_date2);
     }
 
 
     /* If lat1 exists */
-    if (typeof $scope.lat1 != "undefined" && $scope.lat1 != "") {
+    if (typeof $scope.lat1 !== "undefined" && $scope.lat1 !== "") {
            lat = '&filter-latitude=' + $scope.lat1 + '..';
            console.log(lat);
-           if (typeof $scope.lat2 != "undefined" && $scope.lat2 != "") {
+           if (typeof $scope.lat2 !== "undefined" && $scope.lat2 !== "") {
                lat = lat + $scope.lat2;
            }
     /*Else if lat2 exists */
-    } else if (typeof $scope.lat2 != "undefined" && $scope.lat2 != "") {
+  } else if (typeof $scope.lat2 !== "undefined" && $scope.lat2 !== "") {
                lat = '&filter-latitude=..' + $scope.lat2;
     }
 
     /* If lng1 exists */
-    if (typeof $scope.lng1 != "undefined" && $scope.lng1 != "") {
+    if (typeof $scope.lng1 !== "undefined" && $scope.lng1 !== "") {
            lat = '&filter-longitude=' + $scope.lng1 + '..';
 
-           if (typeof $scope.lng2 != "undefined" && $scope.lng2 != "") {
+           if (typeof $scope.lng2 !== "undefined" && $scope.lng2 !== "") {
                lat = lat + $scope.lng2;
 
            }
     /*Else if lng2 exists */
-    } else if (typeof $scope.lng2 != "undefined" && $scope.lng2 != "") {
+  } else if (typeof $scope.lng2 !== "undefined" && $scope.lng2 !== "") {
                lng = '&filter-longitude=..' + $scope.lng2;
 
     }
 
     /*Include species */
-    if (typeof $scope.species != "undefined") {
+    if (typeof $scope.species !== "undefined") {
            sok = sok + '&filter-species=' + $scope.species.family;
            sok = sok.replace(/ /g,"+");
-    };
+    }
 
     /*Sum up the query */
     if ($scope.search) {
@@ -117,15 +121,14 @@ var MapCtrl = function($scope, $http) {
 
     console.log(sok);
 
-    $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ sok
-      +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
+    $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ sok +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
 
       //console.log($scope);
 
     var redIcon = {
     iconUrl: 'img/icons/reddot.png',
     iconSize:     [8, 8] // size of the icon
-    }
+  };
 
     /* Fetch the lat/lon entries. Have to switch lat/lon for display */
     for (var i=0; i< data.feed.entries.length; i++) {
@@ -137,7 +140,7 @@ var MapCtrl = function($scope, $http) {
                 message: data.feed.entries[i].locality,
                 icon: redIcon
        });
-    };
+    }
 
     //Display markers on map
     $scope.markers = markers;
@@ -149,19 +152,19 @@ var MapCtrl = function($scope, $http) {
     $scope.entries = data.feed.entries;
 
     //Transfer info to CSV file via service
-    CSVService.entryObject = $scope.entries;
+  /*  CSVService.entryObject = $scope.entries; */
 
     //Get hostname
     $scope.hostname = location.host;
    // console.log($scope.hostname);
-
- })};
+ });};
 
 };
 
 
 /*Convert to the search date format */
 function convertDate(idate) {
+          'use strict';
           console.log(idate);
            var temp_date = idate.substring(0,4) + '-' + idate.substring(5,7) + '-' +idate.substring(8,10);
            temp_date += 'T00:00:00.000';

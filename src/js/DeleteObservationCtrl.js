@@ -1,5 +1,6 @@
 //Delete entry here by updating so entry is still available
 var DeleteObservationCtrl =  function($scope, $http, $routeParams, Sighting, SightingDBUpdate) {
+   'use strict';
 
      //Delete by put update, set _deleted to true
     $scope.submit = function(id) {
@@ -8,7 +9,7 @@ var DeleteObservationCtrl =  function($scope, $http, $routeParams, Sighting, Sig
           entry._deleted = true;
           entry.$update();
           console.log("entry object: ", entry);
-   }
+   };
 };
 
 module.exports = DeleteObservationCtrl;

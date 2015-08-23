@@ -3,6 +3,7 @@
 /* Respond to search to get relevant entries */
 var AdminObservationsCtrl = function($scope, $http) {
  'use strict';
+  var L =require('leaflet');
 
  // create a map in the "map" div, set the view to a given place and zoom
 var map = L.map('map', {drawControl: true}).setView([78.000, 16.000], 4);
@@ -26,13 +27,15 @@ map.addControl(drawControl);
 
 
 
-
 $scope.submit = function() {
 	console.log($scope);
     $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
     $scope.full = data;
     console.log(data);
-})};
+});
+}; /*$scope.submit*/
 };
+
+
 
 module.exports = AdminObservationsCtrl;

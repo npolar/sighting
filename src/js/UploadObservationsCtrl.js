@@ -2,11 +2,14 @@
 
 //Controller for Excel file upload
 var UploadObservationsCtrl = function($scope, $http) {
+     'use strict';
+     var angular = require('angular');
+
      $scope.filesChanged = function(elm){
         $scope.files=elm.files;
         $scope.$apply();
        // console.log($scope.files);
-     }
+     };
      $scope.upload = function() {
         var fd = new FormData();
 
@@ -28,7 +31,7 @@ var UploadObservationsCtrl = function($scope, $http) {
         .error(function(data, status, headers, config) {
          console.log('error' + data);
         });
-   }
+   };
 };
 
 

@@ -1,6 +1,7 @@
 /* directive */
 
 var fileInput =  function($parse){
+       'use strict';
       return {
         restrict:'A',
     link:function(scope,elm,attrs){
@@ -9,9 +10,9 @@ var fileInput =  function($parse){
       scope.$apply();
       console.log("directive");
       console.log(scope);
-     })
-    }
+    });
   }
+};
 };
 
 module.exports = fileInput;

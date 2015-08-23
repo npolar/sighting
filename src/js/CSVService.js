@@ -2,7 +2,8 @@
 
 /*Service to get CSV post*/
 var CSVService =  function () {
-    return {entryObject: {data: null} }
+    'use strict';
+    return {entryObject: {data: null} };
 };
 
 

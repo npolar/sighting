@@ -2,13 +2,9 @@
 
 //Get species gallery for images, education/links to NPs home pages.
 var SightingCtrl = function ($scope, $http) {
-  'use strict';
+   'use strict';
 
-  this.species = require('./SpeciesGallery');
-
-
-
-   console.log(this.species);
+   this.species = require('./SpeciesGallery');
 
 
    //Get observers

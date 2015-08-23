@@ -2,6 +2,7 @@
 
 //Use the directive to show username/password html template and get response from the database server
 var ngLoginlogout =  function() {
+  'use strict';
    return {
    // templateUrl: '../bower_components/angular-npolar/html/_user.html'
      scope: {},
@@ -10,7 +11,7 @@ var ngLoginlogout =  function() {
      link: function(scope) {
         scope.user = {};
      }
-  }
+  };
 };
 
 module.exports = ngLoginlogout;

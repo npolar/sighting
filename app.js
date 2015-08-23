@@ -19,7 +19,7 @@ var appSighting = angular.module('sighting',[
   'formula',
   'npolarApi', /*NP logon*/
   'npolarUi',
-/*  'templates', */
+  'templates',
 /*  'sightingServices', */   /*Edit service*/
 /*  'leaflet-directive', */   /*Map*/
 /*  '720kb.datepicker', */    /*Calendar*/
@@ -46,7 +46,7 @@ appSighting.config(require('./src/js/router'));
 
 // API HTTP interceptor - adds tokens to server + (gir probl routing)
 appSighting.config(function ($httpProvider) {
-  $httpProvider.interceptors.push('npolarApiAuthInterceptor');
+  $httpProvider.interceptors.push('npolarApiInterceptor');
 });
 
 

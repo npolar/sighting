@@ -1,5 +1,8 @@
 //New entry created here
 var NewObservationCtrl = function($scope, $http, $routeParams, npolarApiSecurity, npolarApiUser, Sighting, SightingDBUpdate) {
+   'use strict';
+   var SpeciesGallery = require('SpeciesGallery');
+
 
    /*If new has an id, then it's the old id to be copyed into a new entry */
    if  ($routeParams.id) {
@@ -34,7 +37,7 @@ var NewObservationCtrl = function($scope, $http, $routeParams, npolarApiSecurity
 
       /* Populate with inital values */
       console.log($scope.entry);
-      entry = $scope.entry
+      entry = $scope.entry;
       entry.schema = 'http://api.npolar.no/schema/sighting.json';
       entry.collection = 'sighting';
       entry.base = 'http://api.npolar.no';
@@ -53,7 +56,7 @@ var NewObservationCtrl = function($scope, $http, $routeParams, npolarApiSecurity
 
 
       //Update species
-      if (typeof entry.species != "undefined") {
+      if (typeof entry.species !== "undefined") {
         $scope.entry.species = entry.species.family;
       }
      /* if (typeof $scope.entry.event_date != "undefined") {
@@ -76,7 +79,7 @@ var NewObservationCtrl = function($scope, $http, $routeParams, npolarApiSecurity
       console.log("New entry" + JSON.stringify(entry));
       console.log("New entry2 " + JSON.stringify(ret));
 
-  }
+  };
 };
 
 module.exports = NewObservationCtrl;
