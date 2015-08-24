@@ -6,7 +6,7 @@ var MapCtrl = function($scope, $http) {
  var angular = require('angular');
  require('leaflet');
  require('leaflet-draw');
- var speciesgallery = require('SpeciesGalleryCtrl');
+ var speciesgallery = require('./SpeciesGalleryCtrl');
 
 
     $scope.items = speciesgallery.speciesgallery;
@@ -36,22 +36,22 @@ var MapCtrl = function($scope, $http) {
   });
 
   /*Draw a rectangle on the map to get coordinates from */
-  leafletData.getMap().then(function(map) {
+/*  leafletData.getMap().then(function(map) {
         var drawnItems = $scope.controls.edit.featureGroup;
         //console.log($scope.controls);
         map.on('draw:created', function (e) {
                 var layer = e.layer;
                 drawnItems.addLayer(layer);
 
-                var res = (layer.toGeoJSON()).geometry.coordinates;
+                var res = (layer.toGeoJSON()).geometry.coordinates; */
 
                 /*fetch zero and second coordinate pair to get a rectangle */
-                $scope.lat1= res[0][0][0];
+      /*          $scope.lat1= res[0][0][0];
                 $scope.lng1= res[0][0][1];
                 $scope.lat2= res[0][2][0];
                 $scope.lng2= res[0][2][1];
         });
-  });
+  }); */
 
 
  /* Execute this function when search button is pressed */

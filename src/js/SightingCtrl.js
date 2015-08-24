@@ -4,7 +4,8 @@
 var SightingCtrl = function ($scope, $http) {
    'use strict';
 
-   this.species = require('./SpeciesGallery');
+   var speciesgallery = require('./SpeciesGalleryCtrl');
+   this.species = speciesgallery;
 
 
    //Get observers
