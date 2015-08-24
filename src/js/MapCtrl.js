@@ -6,10 +6,10 @@ var MapCtrl = function($scope, $http) {
  var angular = require('angular');
  require('leaflet');
  require('leaflet-draw');
- var SpeciesGallery = require('SpeciesGallery');
+ var speciesgallery = require('SpeciesGalleryCtrl');
 
 
-    $scope.items = SpeciesGallery;
+    $scope.items = speciesgallery.speciesgallery;
 
     var markers = [];
 

@@ -69,7 +69,7 @@ appSighting.controller('UploadObservationsCtrl', require('./src/js/UploadObserva
 appSighting.service('SightingDBUpdate', require('./src/js/SightingDBUpdate'));
 appSighting.service('CSVService', require('./src/js/CSVService'));
 appSighting.directive('fileInput', require('./src/js/fileInput'));
-var SpeciesGallery = require('./src/js/SpeciesGallery');
+appSighting.controller('SpeciesGalleryCtrl', require('./src/js/SpeciesGalleryCtrl'));
 
 
 

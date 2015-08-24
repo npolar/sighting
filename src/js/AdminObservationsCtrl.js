@@ -4,6 +4,8 @@
 var AdminObservationsCtrl = function($scope, $http) {
  'use strict';
   var L =require('leaflet');
+  require('leaflet-draw');
+
 
  // create a map in the "map" div, set the view to a given place and zoom
 var map = L.map('map', {drawControl: true}).setView([78.000, 16.000], 4);
