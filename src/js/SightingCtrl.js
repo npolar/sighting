@@ -7,7 +7,6 @@ var SightingCtrl = function ($scope, $http) {
 //   require('./SpeciesGalleryCtrl');
 var speciesgallery = require('./SpeciesGallery');
 
-   console.log(speciesgallery);
    this.species = speciesgallery;
 
 

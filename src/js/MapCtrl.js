@@ -3,10 +3,12 @@
 var MapCtrl = function($scope, $http) {
  'use strict';
 
- var angular = require('angular');
- require('leaflet');
+// var angular = require('angular');
+ var L = require('leaflet');
  require('leaflet-draw');
  var speciesgallery = require('./SpeciesGallery');
+
+
 
 
     $scope.items = speciesgallery;
@@ -14,8 +16,60 @@ var MapCtrl = function($scope, $http) {
     var markers = [];
 
 
+    console.log("hei");
+    var osmUrl = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
+			osmAttrib = '&copy; <a href="http://www.npolar.no">NPI</a>',
+			osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib}),
+			map = new L.Map('map', {layers: [osm], center: new L.LatLng(78.000, 16.000), zoom: 4 });
+
+		var drawnItems = new L.FeatureGroup();
+		map.addLayer(drawnItems);
+
+		var drawControl = new L.Control.Draw({
+			draw: {
+				position: 'topleft',
+				polygon: {
+					title: 'Draw a sexy polygon!',
+					allowIntersection: false,
+					drawError: {
+						color: '#b00b00',
+						timeout: 1000
+					},
+					shapeOptions: {
+						color: '#bada55'
+					},
+					showArea: true
+				},
+				polyline: {
+					metric: false
+				},
+				circle: {
+					shapeOptions: {
+						color: '#662d91'
+					}
+				}
+			},
+			edit: {
+				featureGroup: drawnItems
+			}
+		});
+		map.addControl(drawControl);
+
+		map.on('draw:created', function (e) {
+			var type = e.layerType,
+				layer = e.layer;
+
+			if (type === 'marker') {
+				layer.bindPopup('A popup!');
+			}
+
+			drawnItems.addLayer(layer);
+		});
+
+
+
     /* Setting up the map  */
-    angular.extend($scope, {
+    /*angular.extend($scope, {
       center: {
                     lat: 78.000,
                     lng: 16.000,
@@ -33,7 +87,7 @@ var MapCtrl = function($scope, $http) {
         circle : false,
         marker: false }
       }
-  });
+  }); */
 
   /*Draw a rectangle on the map to get coordinates from */
 /*  leafletData.getMap().then(function(map) {

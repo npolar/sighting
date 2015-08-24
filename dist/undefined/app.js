@@ -62243,37 +62243,67 @@ If you find a bug or make an improvement, it would be courteous to let the autho
 'use strict';
 
 var AdminObservationsCtrl = function AdminObservationsCtrl($scope, $http) {
-    'use strict';
-    var L = require('leaflet');
-    require('leaflet-draw');
+  'use strict';
+  var L = require('leaflet');
+  require('leaflet-draw');
 
-    // create a map in the "map" div, set the view to a given place and zoom
-    var map = L.map('map', { drawControl: true }).setView([78.000, 16.000], 4);
+  var url = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
+      attrib = '&copy; <a href="http://openstreetmap.org/copyright">Norwegian Polar Institute</a>',
+      osm = L.tileLayer(url, { maxZoom: 18, attribution: attrib }),
+      map = new L.Map('map', { layers: [osm], center: new L.LatLng(78.000, 16.000), zoom: 4 });
 
-    // add an OpenStreetMap tile layer
-    L.tileLayer('http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png', {
-        attribution: 'Norwegian Polar Institute'
-    }).addTo(map);
+  var drawnItems = new L.FeatureGroup();
+  map.addLayer(drawnItems);
 
-    // Initialize the FeatureGroup to store editable layers
-    var drawnItems = new L.FeatureGroup();
-    map.addLayer(drawnItems);
-
-    // Initialize the draw control and pass it the FeatureGroup of editable layers
-    var drawControl = new L.Control.Draw({
-        edit: {
-            featureGroup: drawnItems
+  var drawControl = new L.Control.Draw({
+    draw: {
+      position: 'topleft',
+      polygon: {
+        title: 'Draw a polygon!',
+        allowIntersection: false,
+        drawError: {
+          color: '#b00b00',
+          timeout: 1000
+        },
+        shapeOptions: {
+          color: '#bada55'
+        },
+        showArea: true
+      },
+      polyline: {
+        metric: false
+      },
+      circle: {
+        shapeOptions: {
+          color: '#662d91'
         }
-    });
-    map.addControl(drawControl);
+      }
+    },
+    edit: {
+      featureGroup: drawnItems
+    }
+  });
+  map.addControl(drawControl);
 
-    $scope.submit = function () {
-        console.log($scope);
-        $http.jsonp('http://apptest.data.npolar.no/sighting/?q=' + $scope.search + '&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function (data) {
-            $scope.full = data;
-            console.log(data);
-        });
-    }; /*$scope.submit*/
+  map.on('draw:created', function (e) {
+    var type = e.layerType,
+        layer = e.layer;
+
+    if (type === 'marker') {
+      layer.bindPopup('A popup!');
+    }
+
+    drawnItems.addLayer(layer);
+  });
+
+  // create a map in the "map" div, set the view to a given place and zoom
+  /*$scope.submit = function() {
+  	console.log($scope);
+      $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
+      $scope.full = data;
+      console.log(data);
+  });
+  }; */ /*$scope.submit*/
 };
 
 module.exports = AdminObservationsCtrl;
@@ -62361,8 +62391,8 @@ module.exports = EditObservationCtrl;
 var MapCtrl = function MapCtrl($scope, $http) {
   'use strict';
 
-  var angular = require('angular');
-  require('leaflet');
+  // var angular = require('angular');
+  var L = require('leaflet');
   require('leaflet-draw');
   var speciesgallery = require('./SpeciesGallery');
 
@@ -62370,26 +62400,76 @@ var MapCtrl = function MapCtrl($scope, $http) {
 
   var markers = [];
 
+  console.log("hei");
+  var osmUrl = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
+      osmAttrib = '&copy; <a href="http://www.npolar.no">NPI</a>',
+      osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
+      map = new L.Map('map', { layers: [osm], center: new L.LatLng(78.000, 16.000), zoom: 4 });
+
+  var drawnItems = new L.FeatureGroup();
+  map.addLayer(drawnItems);
+
+  var drawControl = new L.Control.Draw({
+    draw: {
+      position: 'topleft',
+      polygon: {
+        title: 'Draw a sexy polygon!',
+        allowIntersection: false,
+        drawError: {
+          color: '#b00b00',
+          timeout: 1000
+        },
+        shapeOptions: {
+          color: '#bada55'
+        },
+        showArea: true
+      },
+      polyline: {
+        metric: false
+      },
+      circle: {
+        shapeOptions: {
+          color: '#662d91'
+        }
+      }
+    },
+    edit: {
+      featureGroup: drawnItems
+    }
+  });
+  map.addControl(drawControl);
+
+  map.on('draw:created', function (e) {
+    var type = e.layerType,
+        layer = e.layer;
+
+    if (type === 'marker') {
+      layer.bindPopup('A popup!');
+    }
+
+    drawnItems.addLayer(layer);
+  });
+
   /* Setting up the map  */
-  angular.extend($scope, {
+  /*angular.extend($scope, {
     center: {
-      lat: 78.000,
-      lng: 16.000,
-      zoom: 4
+                  lat: 78.000,
+                  lng: 16.000,
+                  zoom: 4
     },
     layers: {
       tileLayer: "http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png",
       maxZoom: 14
     },
     controls: {
-      draw: { position: 'topleft',
-        polygon: false,
-        polyline: false,
-        rectangle: true,
-        circle: false,
-        marker: false }
+      draw: { position : 'topleft',
+      polygon : false,
+      polyline : false,
+      rectangle : true,
+      circle : false,
+      marker: false }
     }
-  });
+  }); */
 
   /*Draw a rectangle on the map to get coordinates from */
   /*  leafletData.getMap().then(function(map) {
@@ -62523,7 +62603,7 @@ function convertDate(idate) {
 
 module.exports = MapCtrl;
 
-},{"./SpeciesGallery":261,"angular":29,"leaflet":63,"leaflet-draw":62}],255:[function(require,module,exports){
+},{"./SpeciesGallery":261,"leaflet":63,"leaflet-draw":62}],255:[function(require,module,exports){
 /*User module*/
 
 //Fetch from svalbard sightings couch database here the owner's observations
@@ -62704,7 +62784,6 @@ var SightingCtrl = function SightingCtrl($scope, $http) {
    //   require('./SpeciesGalleryCtrl');
    var speciesgallery = require('./SpeciesGallery');
 
-   console.log(speciesgallery);
    this.species = speciesgallery;
 
    //Get observers
@@ -62731,7 +62810,7 @@ var SightingDBUpdate = function SightingDBUpdate($resource) {
 module.exports = SightingDBUpdate;
 
 },{}],261:[function(require,module,exports){
-/*Array*/
+/*Array - gallery of species */
 'use strict';
 
 var SpeciesGallery = [{

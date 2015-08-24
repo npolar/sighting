@@ -1,4 +1,4 @@
-/*Array*/
+/*Array - gallery of species */
       var SpeciesGallery =  [
         {
         name: 'Isbjørn',
