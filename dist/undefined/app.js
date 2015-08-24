@@ -62698,7 +62698,7 @@ module.exports = QualityCtrl;
 //Get species gallery for images, education/links to NPs home pages.
 'use strict';
 
-var SightingCtrl = function SightingCtrl($scope, $http, SpeciesGalleryService) {
+var SightingCtrl = function SightingCtrl($scope, $http) {
    'use strict';
 
    //   require('./SpeciesGalleryCtrl');

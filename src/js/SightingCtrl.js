@@ -1,7 +1,7 @@
 /*Controller not behind login*/
 
 //Get species gallery for images, education/links to NPs home pages.
-var SightingCtrl = function ($scope, $http, SpeciesGalleryService) {
+var SightingCtrl = function ($scope, $http) {
    'use strict';
 
 //   require('./SpeciesGalleryCtrl');
