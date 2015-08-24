@@ -36,9 +36,9 @@ resources.forEach(function (service) {
 appSighting.config(require('./src/js/router'));
 
 // API HTTP interceptor - adds tokens to server + (gir probl routing)
-appSighting.config(["$httpProvider", function ($httpProvider) {
+/* appSighting.config(function ($httpProvider) {
   $httpProvider.interceptors.push('npolarApiInterceptor');
-}]);
+}); */
 
 //Routing to the individual pages
 //Open - open to all,
@@ -59,7 +59,7 @@ appSighting.controller('UploadObservationsCtrl', require('./src/js/UploadObserva
 appSighting.service('SightingDBUpdate', require('./src/js/SightingDBUpdate'));
 appSighting.service('CSVService', require('./src/js/CSVService'));
 appSighting.directive('fileInput', require('./src/js/fileInput'));
-appSighting.controller('SpeciesGalleryCtrl', require('./src/js/SpeciesGalleryCtrl'));
+appSighting.constant(require('./src/js/SpeciesGallery'));
 
 // Inject npolarApiConfig and run
 appSighting.run(["npolarApiConfig", function (npolarApiConfig) {
@@ -69,7 +69,7 @@ appSighting.run(["npolarApiConfig", function (npolarApiConfig) {
   console.log("npolarApiConfig", npolarApiConfig);
 }]);
 
-},{"./src/js/AdminObservationsCtrl":249,"./src/js/CSVCtrl":250,"./src/js/CSVService":251,"./src/js/DeleteObservationCtrl":252,"./src/js/EditObservationCtrl":253,"./src/js/MapCtrl":254,"./src/js/MyObservationsCtrl":255,"./src/js/NewObservationCtrl":256,"./src/js/PanelCtrl":257,"./src/js/QualityCtrl":258,"./src/js/SightingCtrl":259,"./src/js/SightingDBUpdate":260,"./src/js/SpeciesGalleryCtrl":261,"./src/js/UploadObservationsCtrl":262,"./src/js/ViewObservationCtrl":263,"./src/js/fileInput":264,"./src/js/router":265,"angular":29,"angular-npolar":12,"angular-resource":25,"angular-route":27,"elasticsearch":32,"formula":61,"leaflet":63,"leaflet-draw":62,"npdc-common":65}],2:[function(require,module,exports){
+},{"./src/js/AdminObservationsCtrl":249,"./src/js/CSVCtrl":250,"./src/js/CSVService":251,"./src/js/DeleteObservationCtrl":252,"./src/js/EditObservationCtrl":253,"./src/js/MapCtrl":254,"./src/js/MyObservationsCtrl":255,"./src/js/NewObservationCtrl":256,"./src/js/PanelCtrl":257,"./src/js/QualityCtrl":258,"./src/js/SightingCtrl":259,"./src/js/SightingDBUpdate":260,"./src/js/SpeciesGallery":261,"./src/js/UploadObservationsCtrl":262,"./src/js/ViewObservationCtrl":263,"./src/js/fileInput":264,"./src/js/router":265,"angular":29,"angular-npolar":12,"angular-resource":25,"angular-route":27,"elasticsearch":32,"formula":61,"leaflet":63,"leaflet-draw":62,"npdc-common":65}],2:[function(require,module,exports){
 /**
  * npolarApiConfig, meant to be .run and merged with overrides for the current environment
  *
@@ -62330,7 +62330,7 @@ module.exports = DeleteObservationCtrl;
 
 var EditObservationCtrl = function EditObservationCtrl($scope, $routeParams, $http, Sighting, SightingDBUpdate, npolarApiSecurity, npolarApiUser) {
   'use strict';
-  var speciesgallery = require('./SpeciesGalleryCtrl');
+  var speciesgallery = require('./SpeciesGallery');
 
   var entry = SightingDBUpdate.get({ id: $routeParams.id }, function () {
     $scope.entry = entry;
@@ -62339,7 +62339,7 @@ var EditObservationCtrl = function EditObservationCtrl($scope, $routeParams, $ht
     $scope.entry.expedition.start_date = entry.expedition.start_date.substring(0, 10);
     $scope.entry.expedition.end_date = entry.expedition.end_date.substring(0, 10);
     console.log('edit ' + JSON.stringify(entry));
-    $scope.species = speciesgallery.speciesgallery;
+    $scope.species = speciesgallery;
   });
 
   //Store update
@@ -62353,7 +62353,7 @@ var EditObservationCtrl = function EditObservationCtrl($scope, $routeParams, $ht
 
 module.exports = EditObservationCtrl;
 
-},{"./SpeciesGalleryCtrl":261}],254:[function(require,module,exports){
+},{"./SpeciesGallery":261}],254:[function(require,module,exports){
 /* Admin module */
 
 'use strict';
@@ -62364,9 +62364,9 @@ var MapCtrl = function MapCtrl($scope, $http) {
   var angular = require('angular');
   require('leaflet');
   require('leaflet-draw');
-  var speciesgallery = require('./SpeciesGalleryCtrl');
+  var speciesgallery = require('./SpeciesGallery');
 
-  $scope.items = speciesgallery.speciesgallery;
+  $scope.items = speciesgallery;
 
   var markers = [];
 
@@ -62523,7 +62523,7 @@ function convertDate(idate) {
 
 module.exports = MapCtrl;
 
-},{"./SpeciesGalleryCtrl":261,"angular":29,"leaflet":63,"leaflet-draw":62}],255:[function(require,module,exports){
+},{"./SpeciesGallery":261,"angular":29,"leaflet":63,"leaflet-draw":62}],255:[function(require,module,exports){
 /*User module*/
 
 //Fetch from svalbard sightings couch database here the owner's observations
@@ -62546,7 +62546,7 @@ module.exports = MyObservationsCtrl;
 
 var NewObservationCtrl = function NewObservationCtrl($scope, $http, $routeParams, npolarApiSecurity, npolarApiUser, Sighting, SightingDBUpdate) {
   'use strict';
-  var speciesgallery = require('./SpeciesGalleryCtrl');
+  var speciesgallery = require('./SpeciesGallery');
 
   /*If new has an id, then it's the old id to be copyed into a new entry */
   if ($routeParams.id) {
@@ -62570,7 +62570,7 @@ var NewObservationCtrl = function NewObservationCtrl($scope, $http, $routeParams
     }
 
   /*Set select menu for species*/
-  $scope.species = speciesgallery.speciesgallery;
+  $scope.species = speciesgallery;
 
   $scope.submit = function () {
 
@@ -62620,7 +62620,7 @@ var NewObservationCtrl = function NewObservationCtrl($scope, $http, $routeParams
 
 module.exports = NewObservationCtrl;
 
-},{"./SpeciesGalleryCtrl":261}],257:[function(require,module,exports){
+},{"./SpeciesGallery":261}],257:[function(require,module,exports){
 /*Controller not behind login*/
 
 /* Menu choices */
@@ -62698,10 +62698,13 @@ module.exports = QualityCtrl;
 //Get species gallery for images, education/links to NPs home pages.
 'use strict';
 
-var SightingCtrl = function SightingCtrl($scope, $http) {
+var SightingCtrl = function SightingCtrl($scope, $http, SpeciesGalleryService) {
    'use strict';
 
-   var speciesgallery = require('./SpeciesGalleryCtrl');
+   //   require('./SpeciesGalleryCtrl');
+   var speciesgallery = require('./SpeciesGallery');
+
+   console.log(speciesgallery);
    this.species = speciesgallery;
 
    //Get observers
@@ -62712,7 +62715,7 @@ var SightingCtrl = function SightingCtrl($scope, $http) {
 
 module.exports = SightingCtrl;
 
-},{"./SpeciesGalleryCtrl":261}],260:[function(require,module,exports){
+},{"./SpeciesGallery":261}],260:[function(require,module,exports){
 /*service */
 
 'use strict';
@@ -62728,142 +62731,139 @@ var SightingDBUpdate = function SightingDBUpdate($resource) {
 module.exports = SightingDBUpdate;
 
 },{}],261:[function(require,module,exports){
+/*Array*/
 'use strict';
 
-var SpeciesGalleryCtrl = function SpeciesGalleryCtrl($scope) {
-    'use strict';
+var SpeciesGallery = [{
+    name: 'Isbjørn',
+    eng: 'Polar bear',
+    family: 'Ursus maritimus',
+    image: 'src/img/species/isbjorn.jpg',
+    link: 'http://www.npolar.no/en/species/polar-bear.html',
+    rights: 'Ann Kristin Balto / Norwegian Polar Institute'
+}, {
+    name: 'Hvalross',
+    eng: 'Walrus',
+    family: 'Odobenus rosmarus',
+    image: 'src/img/species/hvalross.jpg',
+    link: 'http://www.npolar.no/en/species/walrus.html',
+    rights: 'Tor Ivan Karlsen / Norwegian Polar Institute'
+}, {
+    name: 'Storkobbe',
+    eng: 'Bearded seal',
+    family: 'Erignathus barbatus',
+    image: 'src/img/species/storkobbe.jpg',
+    link: 'http://www.npolar.no/en/species/bearded-seal.html',
+    rights: 'Inger Lise Næss / Norwegian Polar Institute'
+}, {
+    name: 'Steinkobbe',
+    eng: 'Harbor seal',
+    family: 'Phoca vitulina',
+    image: 'src/img/species/steinkobbe.jpg',
+    link: 'http://www.npolar.no/en/species/harbour-seal.html',
+    rights: 'Kit Kovacs / Norwegian Polar Institute'
+}, {
+    name: 'Grønlandssel',
+    eng: 'Harp seal',
+    family: 'Phoca groenlandica',
+    image: 'src/img/species/gronlandssel.jpg',
+    link: 'http://www.npolar.no/en/species/harp-seal.html',
+    rights: 'G. Bangjord / Norwegian Polar Institute'
+}, {
+    name: 'Klappmyss',
+    eng: 'Hooded seal',
+    family: 'Cystophora cristata',
+    image: 'src/img/species/klappmyss.jpg',
+    link: 'http://www.npolar.no/en/species/hooded-seal.html',
+    rights: 'Norwegian Polar Institute'
+}, {
+    name: 'Ringsel',
+    eng: 'Ringed seal',
+    family: 'Pusa hispida',
+    image: 'src/img/species/ringsel.jpg',
+    link: 'http://www.npolar.no/en/species/ringed-seal.html',
+    rights: 'Kit Kovacs / Norwegian Polar Institute'
+}, { name: 'Hvithval',
+    eng: 'Beluga whale',
+    family: 'Delphinapterus leucas',
+    image: 'src/img/species/hvithval.jpg',
+    link: 'http://www.npolar.no/en/species/white-whale.html',
+    rights: 'E. Johansen / Norwegian Polar Institute'
+}, { name: 'Blåhval',
+    eng: 'Blue whale',
+    family: 'Balaenoptera musculus',
+    image: 'src/img/species/blahval.jpg',
+    link: 'http://www.npolar.no/en/species/blue-whale.html',
+    rights: 'http://commons.wikimedia.org/wiki/File:Blue_Whale_001_body_bw.jpg, NOAA Fisheries, Tom Bjørnstad'
+}, { name: 'Grønlandshval',
+    eng: 'Bowhead whale',
+    family: 'Balaena mysticetus',
+    image: 'src/img/species/gronlandshval.jpg',
+    link: 'http://www.npolar.no/en/species/bowhead-whale.html',
+    rights: 'Norwegian Polar Institute'
+}, { name: 'Vågehval',
+    eng: 'Common minke whale',
+    family: 'Balaenoptera acutorostrata',
+    image: 'src/img/species/vagehval.jpg',
+    link: 'http://www.npolar.no/en/species/minke-whale.html',
+    rights: 'Ann Kristin Balto / Norwegian Polar Institute'
+}, { name: 'Finnhval',
+    eng: 'Fin whale',
+    family: 'Balaenoptera physalus',
+    image: 'src/img/species/finnhval.jpg',
+    link: 'http://www.npolar.no/en/species/fin-whale.html',
+    rights: 'Aqqa Rosing-Asvid, http://en.wikipedia.org/wiki/Fin_whale#mediaviewer/File:Finhval.jpg'
+}, { name: 'Knølhval',
+    eng: 'Humpback whale',
+    family: 'Megaptera novaeangliae',
+    image: 'src/img/species/knolhval.jpg',
+    link: 'http://www.npolar.no/en/species/humpback-whale.html',
+    rights: 'tromsofoto.net - it this ok??'
+}, { name: 'Spekkhugger',
+    eng: 'Killer whale',
+    family: 'Orcinus orca',
+    image: 'src/img/species/spekkhugger.jpg',
+    link: 'http://www.npolar.no/en/species/killer-whale.html',
+    rights: 'Robert Pittman, http://www.afsc.noaa.gov/Quarterly/amj2005/divrptsNMML3.htm'
+}, { name: 'Narhval',
+    eng: 'Narwhal',
+    family: 'Monodon monoceros',
+    image: 'src/img/species/narhval.jpg',
+    link: 'http://www.npolar.no/en/species/narwhal.html',
+    rights: 'Glenn Williams, National Institute of Standards and Technology, http://commons.wikimedia.org/wiki/File:Narwhals_breach.jpg'
+}, { name: 'Nebbhval',
+    eng: 'Northern northern-bottlenose-whale',
+    family: 'Hyperoodon ampullatus',
+    image: 'src/img/species/nebbhval.jpg',
+    link: 'http://www.npolar.no/en/species/northern-bottlenose-whale.html',
+    rights: 'NOAA Photo Library / National Oceanic and Atmospheric'
+}, { name: 'Grindhval',
+    eng: 'Pilot whale',
+    family: 'Globicephala melas',
+    image: 'src/img/species/grindhval.jpg',
+    link: 'http://www.npolar.no/en/species/pilot-whale.html',
+    rights: '"Pilot whale spyhop" by Barney Moss - Watching Whales 4. Licensed under CC BY 2.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:Pilot_whale_spyhop.jpg#mediaviewer/File:Pilot_whale_spyhop.jpg'
+}, { name: 'Seihval',
+    eng: 'Sei whale',
+    family: 'Balaenoptera borealis',
+    image: 'src/img/species/seihval.jpg',
+    link: 'http://www.npolar.no/en/species/sei-whale.html',
+    rights: 'Christin Khan, NOAA / NEFSC'
+}, { name: 'Spermhval',
+    eng: 'Sperm whale',
+    family: 'Physeter macrocephalus',
+    image: 'src/img/species/spermhval.jpg',
+    link: 'http://www.npolar.no/en/species/sperm-whale.html',
+    rights: 'Gabriel Barathieu, http://commons.wikimedia.org/wiki/File:Mother_and_baby_sperm_whale.jpg'
+}, { name: 'Kvitnos',
+    eng: 'White beaked dolphin',
+    family: 'Lagenorhynchus albirostris',
+    image: 'src/img/species/kvitnos.jpg',
+    link: 'http://www.npolar.no/en/species/white-beaked-dolphin.html',
+    rights: 'Hannah Beker,  http://commons.wikimedia.org/wiki/File:White_beaked_dolphin.jpg'
+}];
 
-    $scope.speciesgallery = [{
-        name: 'Isbjørn',
-        eng: 'Polar bear',
-        family: 'Ursus maritimus',
-        image: 'src/img/species/isbjorn.jpg',
-        link: 'http://www.npolar.no/en/species/polar-bear.html',
-        rights: 'Ann Kristin Balto / Norwegian Polar Institute'
-    }, {
-        name: 'Hvalross',
-        eng: 'Walrus',
-        family: 'Odobenus rosmarus',
-        image: 'src/img/species/hvalross.jpg',
-        link: 'http://www.npolar.no/en/species/walrus.html',
-        rights: 'Tor Ivan Karlsen / Norwegian Polar Institute'
-    }, {
-        name: 'Storkobbe',
-        eng: 'Bearded seal',
-        family: 'Erignathus barbatus',
-        image: 'src/img/species/storkobbe.jpg',
-        link: 'http://www.npolar.no/en/species/bearded-seal.html',
-        rights: 'Inger Lise Næss / Norwegian Polar Institute'
-    }, {
-        name: 'Steinkobbe',
-        eng: 'Harbor seal',
-        family: 'Phoca vitulina',
-        image: 'src/img/species/steinkobbe.jpg',
-        link: 'http://www.npolar.no/en/species/harbour-seal.html',
-        rights: 'Kit Kovacs / Norwegian Polar Institute'
-    }, {
-        name: 'Grønlandssel',
-        eng: 'Harp seal',
-        family: 'Phoca groenlandica',
-        image: 'src/img/species/gronlandssel.jpg',
-        link: 'http://www.npolar.no/en/species/harp-seal.html',
-        rights: 'G. Bangjord / Norwegian Polar Institute'
-    }, {
-        name: 'Klappmyss',
-        eng: 'Hooded seal',
-        family: 'Cystophora cristata',
-        image: 'src/img/species/klappmyss.jpg',
-        link: 'http://www.npolar.no/en/species/hooded-seal.html',
-        rights: 'Norwegian Polar Institute'
-    }, {
-        name: 'Ringsel',
-        eng: 'Ringed seal',
-        family: 'Pusa hispida',
-        image: 'src/img/species/ringsel.jpg',
-        link: 'http://www.npolar.no/en/species/ringed-seal.html',
-        rights: 'Kit Kovacs / Norwegian Polar Institute'
-    }, { name: 'Hvithval',
-        eng: 'Beluga whale',
-        family: 'Delphinapterus leucas',
-        image: 'src/img/species/hvithval.jpg',
-        link: 'http://www.npolar.no/en/species/white-whale.html',
-        rights: 'E. Johansen / Norwegian Polar Institute'
-    }, { name: 'Blåhval',
-        eng: 'Blue whale',
-        family: 'Balaenoptera musculus',
-        image: 'src/img/species/blahval.jpg',
-        link: 'http://www.npolar.no/en/species/blue-whale.html',
-        rights: 'http://commons.wikimedia.org/wiki/File:Blue_Whale_001_body_bw.jpg, NOAA Fisheries, Tom Bjørnstad'
-    }, { name: 'Grønlandshval',
-        eng: 'Bowhead whale',
-        family: 'Balaena mysticetus',
-        image: 'src/img/species/gronlandshval.jpg',
-        link: 'http://www.npolar.no/en/species/bowhead-whale.html',
-        rights: 'Norwegian Polar Institute'
-    }, { name: 'Vågehval',
-        eng: 'Common minke whale',
-        family: 'Balaenoptera acutorostrata',
-        image: 'src/img/species/vagehval.jpg',
-        link: 'http://www.npolar.no/en/species/minke-whale.html',
-        rights: 'Ann Kristin Balto / Norwegian Polar Institute'
-    }, { name: 'Finnhval',
-        eng: 'Fin whale',
-        family: 'Balaenoptera physalus',
-        image: 'src/img/species/finnhval.jpg',
-        link: 'http://www.npolar.no/en/species/fin-whale.html',
-        rights: 'Aqqa Rosing-Asvid, http://en.wikipedia.org/wiki/Fin_whale#mediaviewer/File:Finhval.jpg'
-    }, { name: 'Knølhval',
-        eng: 'Humpback whale',
-        family: 'Megaptera novaeangliae',
-        image: 'src/img/species/knolhval.jpg',
-        link: 'http://www.npolar.no/en/species/humpback-whale.html',
-        rights: 'tromsofoto.net - it this ok??'
-    }, { name: 'Spekkhugger',
-        eng: 'Killer whale',
-        family: 'Orcinus orca',
-        image: 'src/img/species/spekkhugger.jpg',
-        link: 'http://www.npolar.no/en/species/killer-whale.html',
-        rights: 'Robert Pittman, http://www.afsc.noaa.gov/Quarterly/amj2005/divrptsNMML3.htm'
-    }, { name: 'Narhval',
-        eng: 'Narwhal',
-        family: 'Monodon monoceros',
-        image: 'src/img/species/narhval.jpg',
-        link: 'http://www.npolar.no/en/species/narwhal.html',
-        rights: 'Glenn Williams, National Institute of Standards and Technology, http://commons.wikimedia.org/wiki/File:Narwhals_breach.jpg'
-    }, { name: 'Nebbhval',
-        eng: 'Northern northern-bottlenose-whale',
-        family: 'Hyperoodon ampullatus',
-        image: 'src/img/species/nebbhval.jpg',
-        link: 'http://www.npolar.no/en/species/northern-bottlenose-whale.html',
-        rights: 'NOAA Photo Library / National Oceanic and Atmospheric'
-    }, { name: 'Grindhval',
-        eng: 'Pilot whale',
-        family: 'Globicephala melas',
-        image: 'src/img/species/grindhval.jpg',
-        link: 'http://www.npolar.no/en/species/pilot-whale.html',
-        rights: '"Pilot whale spyhop" by Barney Moss - Watching Whales 4. Licensed under CC BY 2.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:Pilot_whale_spyhop.jpg#mediaviewer/File:Pilot_whale_spyhop.jpg'
-    }, { name: 'Seihval',
-        eng: 'Sei whale',
-        family: 'Balaenoptera borealis',
-        image: 'src/img/species/seihval.jpg',
-        link: 'http://www.npolar.no/en/species/sei-whale.html',
-        rights: 'Christin Khan, NOAA / NEFSC'
-    }, { name: 'Spermhval',
-        eng: 'Sperm whale',
-        family: 'Physeter macrocephalus',
-        image: 'src/img/species/spermhval.jpg',
-        link: 'http://www.npolar.no/en/species/sperm-whale.html',
-        rights: 'Gabriel Barathieu, http://commons.wikimedia.org/wiki/File:Mother_and_baby_sperm_whale.jpg'
-    }, { name: 'Kvitnos',
-        eng: 'White beaked dolphin',
-        family: 'Lagenorhynchus albirostris',
-        image: 'src/img/species/kvitnos.jpg',
-        link: 'http://www.npolar.no/en/species/white-beaked-dolphin.html',
-        rights: 'Hannah Beker,  http://commons.wikimedia.org/wiki/File:White_beaked_dolphin.jpg'
-    }];
-};
-
-module.exports = SpeciesGalleryCtrl;
+module.exports = SpeciesGallery;
 
 },{}],262:[function(require,module,exports){
 /* User module */

@@ -45,9 +45,9 @@ appSighting.config(require('./src/js/router'));
 
 
 // API HTTP interceptor - adds tokens to server + (gir probl routing)
-appSighting.config(function ($httpProvider) {
+/* appSighting.config(function ($httpProvider) {
   $httpProvider.interceptors.push('npolarApiInterceptor');
-});
+}); */
 
 
 //Routing to the individual pages
@@ -69,7 +69,7 @@ appSighting.controller('UploadObservationsCtrl', require('./src/js/UploadObserva
 appSighting.service('SightingDBUpdate', require('./src/js/SightingDBUpdate'));
 appSighting.service('CSVService', require('./src/js/CSVService'));
 appSighting.directive('fileInput', require('./src/js/fileInput'));
-appSighting.controller('SpeciesGalleryCtrl', require('./src/js/SpeciesGalleryCtrl'));
+appSighting.constant(require('./src/js/SpeciesGallery'));
 
 
 

@@ -1,7 +1,7 @@
 //New entry created here
 var NewObservationCtrl = function($scope, $http, $routeParams, npolarApiSecurity, npolarApiUser, Sighting, SightingDBUpdate) {
    'use strict';
-   var speciesgallery = require('./SpeciesGalleryCtrl');
+   var speciesgallery = require('./SpeciesGallery');
 
 
    /*If new has an id, then it's the old id to be copyed into a new entry */
@@ -29,7 +29,7 @@ var NewObservationCtrl = function($scope, $http, $routeParams, npolarApiSecurity
 
 
    /*Set select menu for species*/
-   $scope.species = speciesgallery.speciesgallery;
+   $scope.species = speciesgallery;
 
 
 
