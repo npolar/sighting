@@ -48,7 +48,6 @@ appSighting.controller('PanelCtrl', require('./src/js/PanelCtrl'));
 appSighting.controller('SightingCtrl', require('./src/js/SightingCtrl'));
 appSighting.controller('AdminObservationsCtrl', require('./src/js/AdminObservationsCtrl'));
 appSighting.controller('QualityCtrl', require('./src/js/QualityCtrl'));
-appSighting.controller('MapCtrl', require('./src/js/MapCtrl'));
 appSighting.controller('CSVCtrl', require('./src/js/CSVCtrl'));
 appSighting.controller('MyObservationsCtrl', require('./src/js/MyObservationsCtrl'));
 appSighting.controller('ViewObservationCtrl', require('./src/js/ViewObservationCtrl'));
@@ -69,7 +68,7 @@ appSighting.run(["npolarApiConfig", function (npolarApiConfig) {
   console.log("npolarApiConfig", npolarApiConfig);
 }]);
 
-},{"./src/js/AdminObservationsCtrl":249,"./src/js/CSVCtrl":250,"./src/js/CSVService":251,"./src/js/DeleteObservationCtrl":252,"./src/js/EditObservationCtrl":253,"./src/js/MapCtrl":254,"./src/js/MyObservationsCtrl":255,"./src/js/NewObservationCtrl":256,"./src/js/PanelCtrl":257,"./src/js/QualityCtrl":258,"./src/js/SightingCtrl":259,"./src/js/SightingDBUpdate":260,"./src/js/SpeciesGallery":261,"./src/js/UploadObservationsCtrl":262,"./src/js/ViewObservationCtrl":263,"./src/js/fileInput":264,"./src/js/router":265,"angular":29,"angular-npolar":12,"angular-resource":25,"angular-route":27,"elasticsearch":32,"formula":61,"leaflet":63,"leaflet-draw":62,"npdc-common":65}],2:[function(require,module,exports){
+},{"./src/js/AdminObservationsCtrl":249,"./src/js/CSVCtrl":250,"./src/js/CSVService":251,"./src/js/DeleteObservationCtrl":252,"./src/js/EditObservationCtrl":253,"./src/js/MyObservationsCtrl":254,"./src/js/NewObservationCtrl":255,"./src/js/PanelCtrl":256,"./src/js/QualityCtrl":257,"./src/js/SightingCtrl":258,"./src/js/SightingDBUpdate":259,"./src/js/SpeciesGallery":260,"./src/js/UploadObservationsCtrl":261,"./src/js/ViewObservationCtrl":262,"./src/js/fileInput":263,"./src/js/router":264,"angular":29,"angular-npolar":12,"angular-resource":25,"angular-route":27,"elasticsearch":32,"formula":61,"leaflet":63,"leaflet-draw":62,"npdc-common":65}],2:[function(require,module,exports){
 /**
  * npolarApiConfig, meant to be .run and merged with overrides for the current environment
  *
@@ -62240,6 +62239,7 @@ If you find a bug or make an improvement, it would be courteous to let the autho
 /*Admin module*/
 
 /* Respond to search to get relevant entries */
+/* First respond to squares drawn */
 'use strict';
 
 var AdminObservationsCtrl = function AdminObservationsCtrl($scope, $http) {
@@ -62249,8 +62249,8 @@ var AdminObservationsCtrl = function AdminObservationsCtrl($scope, $http) {
 
   var url = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
       attrib = '&copy; <a href="http://openstreetmap.org/copyright">Norwegian Polar Institute</a>',
-      osm = L.tileLayer(url, { maxZoom: 18, attribution: attrib }),
-      map = new L.Map('map', { layers: [osm], center: new L.LatLng(78.000, 16.000), zoom: 4 });
+      tiles = L.tileLayer(url, { maxZoom: 18, attribution: attrib }),
+      map = new L.Map('map', { layers: [tiles], center: new L.LatLng(78.000, 16.000), zoom: 4 });
 
   var drawnItems = new L.FeatureGroup();
   map.addLayer(drawnItems);
@@ -62258,26 +62258,10 @@ var AdminObservationsCtrl = function AdminObservationsCtrl($scope, $http) {
   var drawControl = new L.Control.Draw({
     draw: {
       position: 'topleft',
-      polygon: {
-        title: 'Draw a polygon!',
-        allowIntersection: false,
-        drawError: {
-          color: '#b00b00',
-          timeout: 1000
-        },
-        shapeOptions: {
-          color: '#bada55'
-        },
-        showArea: true
-      },
-      polyline: {
-        metric: false
-      },
-      circle: {
-        shapeOptions: {
-          color: '#662d91'
-        }
-      }
+      polygon: false,
+      polyline: false,
+      circle: false,
+      marker: false
     },
     edit: {
       featureGroup: drawnItems
@@ -62285,212 +62269,30 @@ var AdminObservationsCtrl = function AdminObservationsCtrl($scope, $http) {
   });
   map.addControl(drawControl);
 
+  //When finishing the drawing catch event
   map.on('draw:created', function (e) {
     var type = e.layerType,
         layer = e.layer;
 
-    if (type === 'marker') {
+    //When finishing a rectangle, show lat lon in input fields
+    if (type === 'rectangle') {
+      var res = layer.toGeoJSON().geometry.coordinates;
+
+      /*fetch zero and second coordinate pair to get a rectangle */
+      $scope.lat1 = res[0][0][0];
+      $scope.lng1 = res[0][0][1];
+      $scope.lat2 = res[0][2][0];
+      $scope.lng2 = res[0][2][1];
       layer.bindPopup('A popup!');
+      console.log(res[0][0][0]);
     }
 
     drawnItems.addLayer(layer);
   });
-
-  // create a map in the "map" div, set the view to a given place and zoom
-  /*$scope.submit = function() {
-  	console.log($scope);
-      $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
-      $scope.full = data;
-      console.log(data);
-  });
-  }; */ /*$scope.submit*/
-};
-
-module.exports = AdminObservationsCtrl;
-
-},{"leaflet":63,"leaflet-draw":62}],250:[function(require,module,exports){
-/* Admin module */
-
-/*Controller for CSV print */
-'use strict';
-
-var CSVCtrl = function CSVCtrl($scope, CSVService) {
-  'use strict';
-  $scope.entries = CSVService.entryObject;
-};
-
-module.exports = CSVCtrl;
-
-},{}],251:[function(require,module,exports){
-/*Service*/
-
-/*Service to get CSV post*/
-'use strict';
-
-var CSVService = function CSVService() {
-    'use strict';
-    return { entryObject: { data: null } };
-};
-
-module.exports = CSVService;
-
-},{}],252:[function(require,module,exports){
-//Delete entry here by updating so entry is still available
-"use strict";
-
-var DeleteObservationCtrl = function DeleteObservationCtrl($scope, $http, $routeParams, Sighting, SightingDBUpdate) {
-   'use strict';
-
-   //Delete by put update, set _deleted to true
-   $scope.submit = function (id) {
-      var entry = new Sighting($scope.entry);
-      //Delete by setting _deleted to true
-      entry._deleted = true;
-      entry.$update();
-      console.log("entry object: ", entry);
-   };
-};
-
-module.exports = DeleteObservationCtrl;
-
-},{}],253:[function(require,module,exports){
-/* user module */
-//Update entry from Svalbard MMS couch database here
-'use strict';
-
-var EditObservationCtrl = function EditObservationCtrl($scope, $routeParams, $http, Sighting, SightingDBUpdate, npolarApiSecurity, npolarApiUser) {
-  'use strict';
-  var speciesgallery = require('./SpeciesGallery');
-
-  var entry = SightingDBUpdate.get({ id: $routeParams.id }, function () {
-    $scope.entry = entry;
-    /*Set abbreviated dates*/
-    $scope.entry.event_date = entry.event_date.substring(0, 10);
-    $scope.entry.expedition.start_date = entry.expedition.start_date.substring(0, 10);
-    $scope.entry.expedition.end_date = entry.expedition.end_date.substring(0, 10);
-    console.log('edit ' + JSON.stringify(entry));
-    $scope.species = speciesgallery;
-  });
-
-  //Store update
-  $scope.submit = function (id) {
-    var entry = new Sighting($scope.entry);
-    console.log('edit ' + JSON.stringify(entry));
-    console.log("http " + JSON.stringify($http.defaults.headers.common));
-    entry.$update();
-  };
-};
-
-module.exports = EditObservationCtrl;
-
-},{"./SpeciesGallery":261}],254:[function(require,module,exports){
-/* Admin module */
-
-'use strict';
-
-var MapCtrl = function MapCtrl($scope, $http) {
-  'use strict';
-
-  // var angular = require('angular');
-  var L = require('leaflet');
-  require('leaflet-draw');
-  var speciesgallery = require('./SpeciesGallery');
-
-  $scope.items = speciesgallery;
-
-  var markers = [];
-
-  console.log("hei");
-  var osmUrl = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
-      osmAttrib = '&copy; <a href="http://www.npolar.no">NPI</a>',
-      osm = L.tileLayer(osmUrl, { maxZoom: 18, attribution: osmAttrib }),
-      map = new L.Map('map', { layers: [osm], center: new L.LatLng(78.000, 16.000), zoom: 4 });
-
-  var drawnItems = new L.FeatureGroup();
-  map.addLayer(drawnItems);
-
-  var drawControl = new L.Control.Draw({
-    draw: {
-      position: 'topleft',
-      polygon: {
-        title: 'Draw a sexy polygon!',
-        allowIntersection: false,
-        drawError: {
-          color: '#b00b00',
-          timeout: 1000
-        },
-        shapeOptions: {
-          color: '#bada55'
-        },
-        showArea: true
-      },
-      polyline: {
-        metric: false
-      },
-      circle: {
-        shapeOptions: {
-          color: '#662d91'
-        }
-      }
-    },
-    edit: {
-      featureGroup: drawnItems
-    }
-  });
-  map.addControl(drawControl);
-
-  map.on('draw:created', function (e) {
-    var type = e.layerType,
-        layer = e.layer;
-
-    if (type === 'marker') {
-      layer.bindPopup('A popup!');
-    }
-
-    drawnItems.addLayer(layer);
-  });
-
-  /* Setting up the map  */
-  /*angular.extend($scope, {
-    center: {
-                  lat: 78.000,
-                  lng: 16.000,
-                  zoom: 4
-    },
-    layers: {
-      tileLayer: "http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png",
-      maxZoom: 14
-    },
-    controls: {
-      draw: { position : 'topleft',
-      polygon : false,
-      polyline : false,
-      rectangle : true,
-      circle : false,
-      marker: false }
-    }
-  }); */
-
-  /*Draw a rectangle on the map to get coordinates from */
-  /*  leafletData.getMap().then(function(map) {
-          var drawnItems = $scope.controls.edit.featureGroup;
-          //console.log($scope.controls);
-          map.on('draw:created', function (e) {
-                  var layer = e.layer;
-                  drawnItems.addLayer(layer);
-  
-                  var res = (layer.toGeoJSON()).geometry.coordinates; */
-
-  /*fetch zero and second coordinate pair to get a rectangle */
-  /*          $scope.lat1= res[0][0][0];
-            $scope.lng1= res[0][0][1];
-            $scope.lat2= res[0][2][0];
-            $scope.lng2= res[0][2][1];
-    });
-  }); */
 
   /* Execute this function when search button is pressed */
   $scope.submit = function () {
+    var markers = [];
 
     /* First find out which paramaters are not empty */
     var sok = '';var lat = '';var lng = '';var edate = '';
@@ -62601,9 +62403,94 @@ function convertDate(idate) {
   return temp_date;
 }
 
-module.exports = MapCtrl;
+// create a map in the "map" div, set the view to a given place and zoom
+/*$scope.submit = function() {
+	console.log($scope);
+    $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
+    $scope.full = data;
+    console.log(data);
+});
+}; */ /*$scope.submit*/
+/*};*/
 
-},{"./SpeciesGallery":261,"leaflet":63,"leaflet-draw":62}],255:[function(require,module,exports){
+module.exports = AdminObservationsCtrl;
+
+},{"leaflet":63,"leaflet-draw":62}],250:[function(require,module,exports){
+/* Admin module */
+
+/*Controller for CSV print */
+'use strict';
+
+var CSVCtrl = function CSVCtrl($scope, CSVService) {
+  'use strict';
+  $scope.entries = CSVService.entryObject;
+};
+
+module.exports = CSVCtrl;
+
+},{}],251:[function(require,module,exports){
+/*Service*/
+
+/*Service to get CSV post*/
+'use strict';
+
+var CSVService = function CSVService() {
+    'use strict';
+    return { entryObject: { data: null } };
+};
+
+module.exports = CSVService;
+
+},{}],252:[function(require,module,exports){
+//Delete entry here by updating so entry is still available
+"use strict";
+
+var DeleteObservationCtrl = function DeleteObservationCtrl($scope, $http, $routeParams, Sighting, SightingDBUpdate) {
+   'use strict';
+
+   //Delete by put update, set _deleted to true
+   $scope.submit = function (id) {
+      var entry = new Sighting($scope.entry);
+      //Delete by setting _deleted to true
+      entry._deleted = true;
+      entry.$update();
+      console.log("entry object: ", entry);
+   };
+};
+
+module.exports = DeleteObservationCtrl;
+
+},{}],253:[function(require,module,exports){
+/* user module */
+//Update entry from Svalbard MMS couch database here
+'use strict';
+
+var EditObservationCtrl = function EditObservationCtrl($scope, $routeParams, $http, Sighting, SightingDBUpdate, npolarApiSecurity, npolarApiUser) {
+  'use strict';
+  var speciesgallery = require('./SpeciesGallery');
+
+  var entry = SightingDBUpdate.get({ id: $routeParams.id }, function () {
+    $scope.entry = entry;
+    /*Set abbreviated dates*/
+    $scope.entry.event_date = entry.event_date.substring(0, 10);
+    $scope.entry.expedition.start_date = entry.expedition.start_date.substring(0, 10);
+    $scope.entry.expedition.end_date = entry.expedition.end_date.substring(0, 10);
+    console.log('edit ' + JSON.stringify(entry));
+    $scope.species = speciesgallery;
+  });
+
+  //Store update
+  $scope.submit = function (id) {
+    var entry = new Sighting($scope.entry);
+    console.log('edit ' + JSON.stringify(entry));
+    console.log("http " + JSON.stringify($http.defaults.headers.common));
+    entry.$update();
+  };
+};
+
+module.exports = EditObservationCtrl;
+
+},{"./SpeciesGallery":260}],254:[function(require,module,exports){
 /*User module*/
 
 //Fetch from svalbard sightings couch database here the owner's observations
@@ -62620,7 +62507,7 @@ var MyObservationsCtrl = function MyObservationsCtrl($scope, $http, SightingDBUp
 
 module.exports = MyObservationsCtrl;
 
-},{}],256:[function(require,module,exports){
+},{}],255:[function(require,module,exports){
 //New entry created here
 'use strict';
 
@@ -62700,7 +62587,7 @@ var NewObservationCtrl = function NewObservationCtrl($scope, $http, $routeParams
 
 module.exports = NewObservationCtrl;
 
-},{"./SpeciesGallery":261}],257:[function(require,module,exports){
+},{"./SpeciesGallery":260}],256:[function(require,module,exports){
 /*Controller not behind login*/
 
 /* Menu choices */
@@ -62753,7 +62640,7 @@ var PanelCtrl = function PanelCtrl($location) {
 
 module.exports = PanelCtrl;
 
-},{}],258:[function(require,module,exports){
+},{}],257:[function(require,module,exports){
 /* Admin module */
 
 /* Respond to search to get relevant entries */
@@ -62772,7 +62659,7 @@ var QualityCtrl = function QualityCtrl($scope, $http) {
 
 module.exports = QualityCtrl;
 
-},{}],259:[function(require,module,exports){
+},{}],258:[function(require,module,exports){
 /*Controller not behind login*/
 
 //Get species gallery for images, education/links to NPs home pages.
@@ -62794,7 +62681,7 @@ var SightingCtrl = function SightingCtrl($scope, $http) {
 
 module.exports = SightingCtrl;
 
-},{"./SpeciesGallery":261}],260:[function(require,module,exports){
+},{"./SpeciesGallery":260}],259:[function(require,module,exports){
 /*service */
 
 'use strict';
@@ -62809,7 +62696,7 @@ var SightingDBUpdate = function SightingDBUpdate($resource) {
 
 module.exports = SightingDBUpdate;
 
-},{}],261:[function(require,module,exports){
+},{}],260:[function(require,module,exports){
 /*Array - gallery of species */
 'use strict';
 
@@ -62944,7 +62831,7 @@ var SpeciesGallery = [{
 
 module.exports = SpeciesGallery;
 
-},{}],262:[function(require,module,exports){
+},{}],261:[function(require,module,exports){
 /* User module */
 
 //Controller for Excel file upload
@@ -62981,7 +62868,7 @@ var UploadObservationsCtrl = function UploadObservationsCtrl($scope, $http) {
 
 module.exports = UploadObservationsCtrl;
 
-},{"angular":29}],263:[function(require,module,exports){
+},{"angular":29}],262:[function(require,module,exports){
 /**
  * @ngInject
  */
@@ -62996,7 +62883,7 @@ var ViewObservationCtrl = function ViewObservationCtrl($scope, $controller, Sigh
 
 module.exports = ViewObservationCtrl;
 
-},{}],264:[function(require,module,exports){
+},{}],263:[function(require,module,exports){
 /* directive */
 
 'use strict';
@@ -63018,7 +62905,7 @@ var fileInput = function fileInput($parse) {
 
 module.exports = fileInput;
 
-},{}],265:[function(require,module,exports){
+},{}],264:[function(require,module,exports){
 /**
  * @ngInject
  */
@@ -63081,11 +62968,11 @@ var router = function router($routeProvider, $locationProvider) {
 
 module.exports = router;
 
-},{}],266:[function(require,module,exports){
+},{}],265:[function(require,module,exports){
 'use strict'; module.exports = angular.module("templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("angular-npolar/ui/auth/_user.html","<div class=\"login-logout\">\n  <div ng-if=\"user.jwt\">\n    <button ng-click=\"logout()\">Logout</button> <a href=\"/user/account\">{{user.name}}</a>\n  </div>\n  <div ng-if=\"!user.jwt\">\n    \n    <form role=\"form\">\n      <section ng-show=\"loginClicked\" ng-init=\"loginClicked = false;\">\n      <div>\n        <label for=\"username\">Username</label>\n        <input type=\"text\" ng-model=\"user.username\" id=\"username\" placeholder=\"Username (email)\">\n      </div>\n      <div>\n        <label for=\"password\">Password</label>\n        <input type=\"password\" id=\"password\" ng-model=\"user.password\" placeholder=\"Password\">\n      </div>\n      <button id=\"login2\" type=\"submit\" ng-click=\"login()\">Login</button> <a href=\"/user/reset\">Forgot password?</a>\n      </section>\n      <section ng-show=\"!loginClicked\"><button id=\"login1\" type=\"submit\" ng-click=\"loginClicked = !loginClicked;\">Login</button> <a href=\"/user/register\">Register</a></section>\n    </form>\n  </div>\n</div>");
 $templateCache.put("partials/additional/panel.html","\n\n<div  ng-controller=\"PanelCtrl as panel\">\n<nav>\n<ul>\n   <li ng-class=\"{ active: panel.isSelected(1) }\">\n      <a href ng-click=\"panel.choosePath(1)\">Login</a>\n   </li>\n   <li ng-class=\"{ active: panel.isSelected(2) }\">\n      <a href ng-click=\"panel.choosePath(2)\">Become observer</a>\n   </li>\n   <li ng-class=\"{ active: panel.isSelected(3) }\">\n      <a href ng-click=\"panel.choosePath(3)\">Species</a>\n   </li>\n   <li ng-class=\"{ active: panel.isSelected(4) }\">\n       <a href ng-click=\"panel.choosePath(4)\">Participants</a>\n   </li>\n <!--  <li ng-class=\"{ active: panel.isSelected(5) }\">\n       <a href ng-click=\"panel.choosePath(5)\">Photos</a>\n   </li>\n   <li ng-class=\"{ active: panel.isSelected(6) }\">\n       <a href ng-click=\"panel.choosePath(6)\">Statistics</a>\n   </li>  -->\n<!--   <li ng-class=\"{ active: panel.isSelected(7) }\">\n       <a href ng-click=\"panel.choosePath(7)\">Documents</a>\n   </li>\n    <li ng-class=\"{ active: panel.isSelected(13) }\">\n       <a href ng-click=\"panel.choosePath(13)\">Maps</a>\n   </li>  -->\n    <li id=\"second\" ng-class=\"{ active: panel.isSelected(8) }\">\n       <a href ng-click=\"panel.choosePath(8)\">My observations</a>\n       <ul class=\"second-level-menu\">\n           <li><a href ng-click=\"panel.choosePath(10)\">New observation</a></li>\n           <li><a href ng-click=\"panel.choosePath(11)\">Upload Excel file</a></li>\n     <!--      <li><a href ng-click=\"panel.choosePath(12)\">Profile</a></li>   -->\n       </ul>\n   </li>\n   <li ng-class=\"{ active: panel.isSelected(9) }\">\n       <a href ng-click=\"panel.choosePath(9)\">Administrators</a>\n   </li>\n\n</ul>\n\n<br /><br />\n</nav>\n\n</div>\n");
 $templateCache.put("angular-npolar/ui/navigation/_nav.html","\n <nav class=\"navbar top-menu\">\n        <div class=\"container-fluid\">\n          <!-- Small screen menu toggle -->\n          <div class=\"navbar-header\">\n            <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#top-menu-collapse\">\n              <span class=\"sr-only\">Toggle navigation</span>\n              <span class=\"icon-bar\"></span>\n              <span class=\"icon-bar\"></span>\n              <span class=\"icon-bar\"></span>\n            </button>\n          </div>\n          <!-- Collect the nav links, forms, and other content for toggling -->\n          <div class=\"collapse navbar-collapse\" id=\"top-menu-collapse\" style=\"height: auto !important;\">\n            <ul class=\"nav navbar-nav menu\">\n              <li><a href=\"\">Norwegian polar data centre</a></li>\n              <li class=\"dropdown\">\n               <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-expanded=\"false\">\n                 <span class=\"glyphicon glyphicon-hdd\" aria-hidden=\"true\"></span> Data <span class=\"caret\"></span></a>\n               \n               \n               <ul class=\"dropdown-menu\" role=\"menu\">\n    <!-- ngRepeat: link in nav --><li ng-repeat=\"link in nav\" class=\"ng-scope\"><a href=\"/home\" title=\"Home\" class=\"ng-binding\">home</a></li><!-- end ngRepeat: link in nav --><li ng-repeat=\"link in nav\" class=\"ng-scope\"><a href=\"/dataset\" title=\"Datasets\" class=\"ng-binding\">datasets</a></li><!-- end ngRepeat: link in nav --><li ng-repeat=\"link in nav\" class=\"ng-scope\"><a href=\"/publication\" title=\"Publications\" class=\"ng-binding\">publications</a></li><!-- end ngRepeat: link in nav --><li ng-repeat=\"link in nav\" class=\"ng-scope\"><a href=\"/projects\" title=\"Projects\" class=\"ng-binding\">projects</a></li><!-- end ngRepeat: link in nav --><li ng-repeat=\"link in nav\" class=\"ng-scope\"><a href=\"/people\" title=\"People\" class=\"ng-binding\">people</a></li><!-- end ngRepeat: link in nav --><li ng-repeat=\"link in nav\" class=\"ng-scope\"><a href=\"/geodata\" title=\"Geographic services and map data\" class=\"ng-binding\">geodata</a></li><!-- end ngRepeat: link in nav --><li ng-repeat=\"link in nav\" class=\"ng-scope\"><a href=\"/dashboard\" title=\"Dashboard\" class=\"ng-binding\">dashboard</a></li><!-- end ngRepeat: link in nav --><li ng-repeat=\"link in nav\" class=\"ng-scope\"><a href=\"/latest\" title=\"Latest of everything\" class=\"ng-binding\">latest</a></li><!-- end ngRepeat: link in nav --><li ng-repeat=\"link in nav\" class=\"ng-scope\"><a href=\"/indicator\" title=\"Long-term environmental monitoring indicators\" class=\"ng-binding\">indicators</a></li><!-- end ngRepeat: link in nav --><li ng-repeat=\"link in nav\" class=\"ng-scope\"><a href=\"/vessel\" title=\"Kjell-G. Kjær\'s Historic Vessel archive\" class=\"ng-binding\">vessel</a></li><!-- end ngRepeat: link in nav --><li ng-repeat=\"link in nav\" class=\"ng-scope\"><a href=\"/_login\" title=\"Sign in\" class=\"ng-binding\">login</a></li><!-- end ngRepeat: link in nav -->\n  </ul>\n               \n               <ul class=\"dropdown-menu\" role=\"menu\">\n                 <li><a href=\"https://data.npolar.no/datasets\">Datasets</a></li>\n                 <li><a href=\"https://data.npolar.no/biology/marine\">Marine biology</a></li>\n                 <li><a href=\"/hello\">People</a></li>\n                 <li><a href=\"https://data.npolar.no/projects\">Projects</a></li>\n                 <li><a href=\"https://data.npolar.no/publications\">Publications</a></li>\n                 \n                 \n                 \n               </ul>\n             </li>\n             <li><a href=\"https://data.npolar.no/geodata\"><span class=\"glyphicon glyphicon-map-marker\" aria-hidden=\"true\"></span> Map services</a></li>\n             <li><a href=\"http://api.npolar.no\"><span class=\"glyphicon glyphicon-console\" aria-hidden=\"true\"></span> Developer</a></li>\n            </ul>\n            <form class=\"navbar-form\" role=\"search\">\n              <div class=\"input-group\">\n                <input type=\"text\" class=\"form-control\" placeholder=\"Search for...\">\n                <span class=\"input-group-btn\">\n                  <button class=\"btn btn-default\" type=\"button\"><span class=\"glyphicon glyphicon-search\" aria-hidden=\"true\"></span></button>\n                </span>\n              </div><!-- /input-group -->\n            </form>\n            <ul class=\"nav navbar-nav navbar-right login\">\n              <li>\n                     \n               <a href=\"#\" class=\"navbar-link\" data-toggle=\"popover\" role=\"button\" aria-expanded=\"false\">\n                 <span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span> Login <span class=\"caret\"></span></a>\n               <a href=\"#\" class=\"navbar-link\" data-toggle=\"modal\" data-target=\"#login-modal\" role=\"button\" aria-expanded=\"false\">\n                 <span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span> Login</a>\n               <div class=\"popover-wrapper\">\n                 <div class=\"popover-content\">\n                   <form>\n                     <div class=\"form-group\">\n                       <label for=\"exampleInputEmail1\">Email address</label>\n                       <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" placeholder=\"Enter email\">\n                     </div>\n                     <div class=\"form-group\">\n                       <label for=\"exampleInputPassword1\">Password</label>\n                       <input type=\"password\" class=\"form-control\" id=\"exampleInputPassword1\" placeholder=\"Password\">\n                     </div>\n                     <button type=\"button\" class=\"btn btn-default do-login\">Submit</button>\n                    </form>\n                 </div>\n               </div>\n             </li>\n           </ul>\n          </div><!-- /.navbar-collapse -->\n        </div><!-- /.container-fluid -->\n      </nav>");
-$templateCache.put("partials/admin/all.html","\n\n\n<h1><b>Map search <b></h1>\n\n<a href=\"#/quality_check\">Quality check</a>\n\n\n<div>\n\n<form ng-submit=\"submit()\" class=\"pure-form pure-form-stacked\">\n\n\n<!-- View map -->\n<div id=\"map\"></div>\n\n\n  <p >Select an area on the map by dragging/dropping</p>\n\n  <br />\n\n  <!-- Search ------>\n\n\n\n  <label for=\"search\">General search:&nbsp;</label><input type=\"text\" placeholder=\"Search Svalbard Sightings..\" ng-model=\"search\" />\n\n\n\n  <legend>or field search:</legend>\n\n<div class=\"pure-g\">\n<div class=\"pure-u-1 pure-u-md-1-1\">\n  <label for=\"entry.species\">Species: </label><select  ng-model=\"entry.species\" ng-options=\"item  as item.eng + \' (\' + item.name + \')\' for item in items\">\n</select>\n</div>\n\n\n<div class=\"pure-u-1 pure-u-md-1-2\">\n  <label for=\"start_time\">Start time:</label><datepicker date-format=\"yyyy.MM.dd\"><input type=\"text\" ng-model=\"start_date\" ></datepicker>\n</div>\n\n<div class=\"pure-u-1 pure-u-md-1-2\">\n  <label for=\"end_time\">End time:</label><datepicker date-format=\"yyyy.MM.dd\"><input type=\"text\" ng-model=\"end_date\" ></datepicker>\n</div>\n\n<div class=\"pure-u-1 pure-u-md-1-2\">\n  <label for=\"lat2\">Latitude start:</label><input type=\"text\" ng-model=\"lat1\" size=\"5\" class=\"lightblue\">\n</div>\n<div class=\"pure-u-1 pure-u-md-1-2\">\n <label for=\"lat2\">Latitude end:</label> <input type=\"text\" ng-model=\"lat2\" size=\"5\" >\n</div>\n\n<div class=\"pure-u-1 pure-u-md-1-2\">\n  <label for=\"lng2\">Longitude start:</label><input type=\"text\" ng-model=\"lng1\" size=\"5\" class=\"lightblue\">\n</div>\n\n<div class=\"pure-u-1 pure-u-md-1-2\">\n   <label for=\"lng2\">Longitude end:</label><input type=\"text\" ng-model=\"lng2\" size=\"5\" >\n</div>\n\n<div class=\"pure-u-1 pure-u-md-1-1\">\n<input type=\"submit\" id=\"submit\" value=\"Search\" />\n</div>\n\n</div>\n\n<p></p>\n\n\n<!-- Create CSV -->\n <a href=\"#/csv\">Create CSV</a><br /><br />\n\n<!--Table listing part -->\n\n <table class=\"layout1\">\n    <thead>\n <th>Count</th><th>Date</th><th>Species</th><th>Location</th><th>Assessment</th><th>Excelfile</th><th>View</th><th>Edit</th><th>Delete</th>\n    </thead>\n    <tbody>\n   <tr ng-repeat=\"entry in entries\"><td>{{$index + 1}}</td> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>\n\n        <td><a href=\"partials/edit_observations.html?id={{ entry.id }}\">{{ entry.species }}&nbsp;</td>\n        <td>{{ entry.locality }}&nbsp;</td>\n        <td>{{ entry.editor_assessment }}&nbsp;</td>\n        <td><a href=\"http://{{hostname}}/{{entry.excelfile.filename}}\">{{ entry.excelfile.filename }}&nbsp;</td>\n        <td><a href=\"#/observation/{{entry.id}}\">View&nbsp;</a></td>\n         <td><a href=\"#/observation/edit/{{entry.id}}\">Edit&nbsp;</a></td>\n        <td><a href=\"#/observation/delete/{{entry.id}}\">Delete</a></td>\n  </tr>\n</tbody>\n</table>\n\n\n</form>\n</div>\n");
+$templateCache.put("partials/admin/all.html","\n\n\n<h1><b>Map search <b></h1>\n\n<a href=\"#/quality_check\">Quality check</a>\n\n\n<div>\n\n<form ng-submit=\"submit()\" class=\"pure-form pure-form-stacked\">\n\n\n<!-- View map -->\n<div id=\"map\"></div>\n\n\n  <p >Select an area on the map by dragging/dropping</p>\n\n  <br />\n\n  <!-- Search ------>\n\n\n\n  <label for=\"search\">General search:&nbsp;</label><input type=\"text\" placeholder=\"Search Svalbard Sightings..\" ng-model=\"search\" />\n\n\n\n  <legend>or field search:</legend>\n\n<div class=\"pure-g\">\n<div class=\"pure-u-1 pure-u-md-1-1\">\n  <label for=\"entry.species\">Species: </label><select  ng-model=\"entry.species\" ng-options=\"item  as item.eng + \' (\' + item.name + \')\' for item in items\">\n</select>\n</div>\n\n\n<div class=\"pure-u-1 pure-u-md-1-2\">\n  <label for=\"start_time\">Start time:</label><datepicker date-format=\"yyyy.MM.dd\"><input type=\"text\" ng-model=\"start_date\" ></datepicker>\n</div>\n\n<div class=\"pure-u-1 pure-u-md-1-2\">\n  <label for=\"end_time\">End time:</label><datepicker date-format=\"yyyy.MM.dd\"><input type=\"text\" ng-model=\"end_date\" ></datepicker>\n</div>\n\n<div class=\"pure-u-1 pure-u-md-1-2\">\n  <label for=\"lat1\">Latitude start:</label><input type=\"text\" ng-model=\"lat1\" size=\"5\" class=\"lightblue\">\n</div>\n<div class=\"pure-u-1 pure-u-md-1-2\">\n <label for=\"lat2\">Latitude end:</label> <input type=\"text\" ng-model=\"lat2\" size=\"5\" >\n</div>\n\n<div class=\"pure-u-1 pure-u-md-1-2\">\n  <label for=\"lng1\">Longitude start:</label><input type=\"text\" ng-model=\"lng1\" size=\"5\" class=\"lightblue\">\n</div>\n\n<div class=\"pure-u-1 pure-u-md-1-2\">\n   <label for=\"lng2\">Longitude end:</label><input type=\"text\" ng-model=\"lng2\" size=\"5\" >\n</div>\n\n<div class=\"pure-u-1 pure-u-md-1-1\">\n<input type=\"submit\" id=\"submit\" value=\"Search\" />\n</div>\n\n</div>\n\n<p></p>\n\n\n<!-- Create CSV -->\n <a href=\"#/csv\">Create CSV</a><br /><br />\n\n<!--Table listing part -->\n\n <table class=\"layout1\">\n    <thead>\n <th>Count</th><th>Date</th><th>Species</th><th>Location</th><th>Assessment</th><th>Excelfile</th><th>View</th><th>Edit</th><th>Delete</th>\n    </thead>\n    <tbody>\n   <tr ng-repeat=\"entry in entries\"><td>{{$index + 1}}</td> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>\n\n        <td><a href=\"partials/edit_observations.html?id={{ entry.id }}\">{{ entry.species }}&nbsp;</td>\n        <td>{{ entry.locality }}&nbsp;</td>\n        <td>{{ entry.editor_assessment }}&nbsp;</td>\n        <td><a href=\"http://{{hostname}}/{{entry.excelfile.filename}}\">{{ entry.excelfile.filename }}&nbsp;</td>\n        <td><a href=\"#/observation/{{entry.id}}\">View&nbsp;</a></td>\n         <td><a href=\"#/observation/edit/{{entry.id}}\">Edit&nbsp;</a></td>\n        <td><a href=\"#/observation/delete/{{entry.id}}\">Delete</a></td>\n  </tr>\n</tbody>\n</table>\n\n\n</form>\n</div>\n");
 $templateCache.put("angular-npolar/ui/template/_delete.html","<div class=\"npolar-confirm-delete\">\n  <span>Really DELETE?</span>\n\n  <button type=\"button\" ng-click=\"deleteClicked=false && back()\" class=\"btn btn-default\">no</button>\n  <button type=\"button\" ng-click=\"delete()\" class=\"btn btn-danger\">yes</button>\n</div>\n");
 $templateCache.put("partials/admin/csv.html","\n\n\n<h1><b>CSV <b></h1>\n\n<div ng-controller=\"CSVCtrl\">\nId | Date | Latitude | Longitude | Location | Location comment | Species | Adult M | Adult F | Adult | Subadult | Polar bear condition | Cub/calf/pup | Bear cubs | Unidentified | Total | Habitat | Occurrence remark | Excel filename | Expedition name | Expedition contact info | Expedition organisation | Platform | Platform comment  <br />\n\n<p ng-repeat=\"entry in entries\">\n{{ entry.id }} | {{ (entry.event_date).substring(0,10) }} | {{ entry.latitude }} |\n{{ entry.longitude }} | {{ entry.locality }} |{{ entry.location_comment }} |\n{{ entry.species }} | {{entry.adult_m }} | {{ entry.adult_f }} | {{ entry.adult }} |\n {{ entry.subadult }} | {{ entry.polar_bear_condition }} | {{ entry.cub_calf_pup}} |\n {{ entry.bear_cubs }} | {{ entry.unidentified }} | {{ entry.total }} | {{ entry.habitat }} | {{ entry.occurrence_remark }} | {{entry.excelfile.filename}} | {{entry.expedition.name}} | {{entry.expedition.contact_info}} | {{entry.expedition.organisation}} | {{entry.expedition.platform}} |\n {{entry.expedition.platform_comment}} | {{ ((entry.expedition.start_date).substring(0,10)) }} | {{ ((entry.expedition.end_date).substring(0,10)) }}\n</p>\n\n\n</div>\n\n\n\n\n\n\n");
 $templateCache.put("angular-npolar/ui/template/_error.html","<h2 ng-if=\"error\" class=\"alert alert-danger\" role=\"alert\"><strong>{{error.status}} {{error.statusText}}</strong> {{error.data}}</h2>");
@@ -63113,7 +63000,7 @@ $templateCache.put("partials/user/upload.html","\n\n<h1><b>Upload Excelfile. <b>
 $templateCache.put("partials/user/view.html","<h1><b> Observation {{ entry.species }} <b></h1>\n\n<table>\n<tr><td colspan=\"2\"><h2>Expedition</h2></td></tr>\n\n<tr><td>Platform (ship, helicopter etc):</td><td>{{ entry.expedition.platform }}</td></tr>\n<tr><td>Platform name: </td><td>{{ entry.expedition.name }}</td></tr>\n<tr><td>Expedition start date: </td><td>{{entry.expedition.start_date.substring(0,10) }}</td></tr>\n<tr><td>Expedition end date: </td><td>{{entry.expedition.end_date.substring(0,10) }}</td></tr>\n<tr><td>Platform comment: </td><td>{{ entry.expedition.platform_comment }}</td></tr>\n\n<tr><td colspan=\"2\"><h2>Observation info</h2></td></tr>\n<tr><td>Observation date:</td><td> {{ entry.event_date.substring(0,10) }}</td></tr>\n<tr><td>Location name: </td><td> {{ entry.locality }}</td></tr>\n<tr><td>Longitude: </td><td>{{ entry.longitude }}</td></tr>\n<tr><td>Latitude: </td><td>{{ entry.latitude }}</td></tr>\n<tr><td>Location comment: </td><td>{{ entry.location_comment }}</td></tr>\n<tr><td>Species: </td><td>{{ entry.species }}</td></tr>\n<tr><td>Adult M:</td><td>{{ entry.adult_m }}</td></tr>\n<tr><td>Adult F:</td><td>{{ entry.adult_f }}</td></tr>\n<tr><td>Adult:</td><td>{{ entry.adult }}</td></tr>\n<tr><td>Subadult:</td><td>{{ entry.sub_adult }}</td></tr>\n<tr><td>Polar bear condition:{{ entry.polar_bear_condition }}</td></tr>\n<tr><td>Cub, calf, pup:</td><td> {{ entry.cub_calf_pup }}</td></tr>\n<tr><td>Bear cubs:</td><td> {{ entry.bear_cubs }} </td></tr>\n<tr><td>Unidentified:</td><td> {{ entry.unidentified }}</td></tr>\n<tr><td>Alive or dead:</td><td> {{ entry.dead_alive }}</td></tr>\n<tr><td>Total: </td><td>{{ entry.total }}</td></tr>\n<tr><td>Habitat: </td><td>{{ entry.habitat }}</td></tr>\n<tr><td>Comment: </td><td>{{ entry.occurrence_remarks }}</td></tr>\n<tr><td colspan=\"2\"><h2>Admin:</h2></td></tr>\n<tr><td>Editor\'s assessment: </td><td> {{ entry.editor_assessment }}</td></tr>\n<tr><td>Editor comment: </td><td> {{ entry.editor_comment }}</td></tr>\n<tr><td colspan=\"2\"><h2>Pictures:</h2></td></tr>\n</table>\nPictures goes here\n\n");
 $templateCache.put("partials/user/view_observation.html","<!--\n  <div ng-include=\"\'angular-npolar/ui/template/_head.html\'\"></div>\n-->\n<h3>{{document.title}}</h3>\n<a ng-if=\"document.id && isAuthenticated()\" ng-href=\"{{document.id}}/edit\"><button class=\"btn btn-danger\">edit</button></a>\n<button ng-click=\"locationBase()\" class=\"btn btn-default\">back</button></a>\n<div ng-repeat=\"(k,v) in document\">\n  <h4>{{k}}</h4>\n  <p>{{v|json}}</p>\n</div>\n\n<section ng-repeat=\"link in document.links\">\n  <a ng-href=\"{{link.href}}\">{{link.title}}</a>\n</section>\n\n\n\n\n\n<!--<div ng-controller=\"ViewObservationCtrl as entry\">\n\n<div ng-include=\"view.html\"></div>\n<br /> -->\n\n<table>\n<tr><td><b>Images</b></td></tr>\n\n<tr ng-repeat=\"picture in entry.pictures\">\n<td><b><a href=\"http://{{hostname}}/image_upload/{{entry.id}}/{{picture.filename}}\">{{picture.filename}}&nbsp;</a></b></td>\n<td><b>Size:&nbsp; {{picture.content_size}} &nbsp;</b></td>\n<td><b>Photographer:&nbsp;{{picture.photographer}}&nbsp;</b></td>\n</tr>\n\n</table>\n\n</div>\n\n\n<h3>{{document.title}}</h3>\n<a ng-if=\"document.id && isAuthenticated()\" ng-href=\"{{document.id}}/edit\"><button class=\"btn btn-danger\">edit</button></a>\n<button ng-click=\"locationBase()\" class=\"btn btn-default\">back</button></a>\n<div ng-repeat=\"(k,v) in document\">\n  <h4>{{k}}</h4>\n  <p>{{v|json}}</p>\n</div>\n\n<section ng-repeat=\"link in document.links\">\n  <a ng-href=\"{{link.href}}\">{{link.title}}</a>\n</section>\n");}]);
 
-},{}]},{},[232,1,266])
+},{}]},{},[232,1,265])
 
 
 //# sourceMappingURL=app.js.map
