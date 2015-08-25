@@ -11,6 +11,7 @@ require('leaflet-draw');
 require('elasticsearch');
 require('formula');
 require('angular-npolar');
+require('angularjs-datepicker');
 
 var AutoConfig = require('npdc-common').AutoConfig;
 
@@ -20,9 +21,7 @@ var appSighting = angular.module('sighting',[
   'npolarApi', /*NP logon*/
   'npolarUi',
   'templates',
-/*  'sightingServices', */   /*Edit service*/
-/*  'leaflet-directive', */   /*Map*/
-/*  '720kb.datepicker', */    /*Calendar*/
+  '720kb.datepicker',    /*Calendar*/
   'ngResource'
 ]);
 

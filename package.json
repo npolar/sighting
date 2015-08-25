@@ -28,11 +28,12 @@
   },
   "dependencies": {
     "angular": "^1.4.3",
+    "angular-datepicker": "^1.0.5",
     "angular-leaflet-directive": "^0.8.5",
     "angular-npolar": "git://github.com/npolar/angular-npolar.git#http-message",
     "angular-resource": "^1.4.3",
     "angular-route": "^1.4.3",
-    "angularjs-datepicker": "^0.2.6",
+    "angularjs-datepicker": "720kb/angular-datepicker",
     "elasticsearch": "^6.0.0",
     "formula": "git://github.com/npolar/formula.git",
     "leaflet": "^0.7.3",

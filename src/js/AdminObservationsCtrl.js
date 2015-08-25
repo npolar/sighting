@@ -6,6 +6,13 @@ var AdminObservationsCtrl = function($scope, $http) {
  'use strict';
   var L =require('leaflet');
   require('leaflet-draw');
+  require('angularjs-datepicker');
+
+
+  var speciesgallery = require('./SpeciesGallery');
+
+     $scope.species = speciesgallery;
+
 
 
   var url = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
@@ -47,7 +54,7 @@ var AdminObservationsCtrl = function($scope, $http) {
   				layer.bindPopup('A popup!');
           console.log(res[0][0][0]);
   			}
-
+        // map.addLayer(layer);
   			drawnItems.addLayer(layer);
   		});
 
