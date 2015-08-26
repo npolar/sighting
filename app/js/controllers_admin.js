@@ -46,6 +46,7 @@ sightingControllers.controller('MapCtrl',
       },
       layers: {
         tileLayer: "http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png",
+				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap2</a> contributors',
         maxZoom: 14
       },
       controls: {
@@ -197,6 +198,3 @@ function convertDate(idate) {
            console.log(temp_date);
            return temp_date;
 }
-
-
-

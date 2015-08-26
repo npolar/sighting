@@ -10,6 +10,7 @@ var appSighting = angular.module('sighting',[
   'angular-jwt',       /* JWT interaction*/
   'ngResource',
   'base64',
+  'formula',
   'npolarApi'   /*Logon NP style*/
 ]);
 
@@ -118,4 +119,3 @@ appSighting.run(function(npolarApiConfig, $http, npolarApiSecurity, npolarApiUse
   });
 
 });
-
