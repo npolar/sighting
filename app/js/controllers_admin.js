@@ -158,8 +158,8 @@ sightingControllers.controller('MapCtrl',
     /* Fetch the lat/lon entries. Have to switch lat/lon for display */
     for (var i=0; i< data.feed.entries.length; i++) {
        markers.push({
-                lng: parseFloat(data.feed.entries[i].longitude),
-                lat: parseFloat(data.feed.entries[i].latitude),
+                lat: parseFloat(data.feed.entries[i].longitude),
+                lng: parseFloat(data.feed.entries[i].latitude),
                 focus: true,
                 draggable: false,
                 message: data.feed.entries[i].locality,
