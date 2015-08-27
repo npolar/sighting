@@ -47,7 +47,8 @@ sightingControllers.controller('MapCtrl',
       layers: {
         tileLayer: "http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png",
 				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap2</a> contributors',
-        maxZoom: 14
+        maxZoom: 14,
+				minZoom: 2
       },
       controls: {
         draw: { position : 'topleft',
