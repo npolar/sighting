@@ -1,7 +1,7 @@
 
 //Fetch from svalbard sightings couch database here the owner's observations
 sightingControllers.controller('MyObservationsCtrl', function($scope, $http, SightingDBUpdate) {
-   $http.jsonp('http://apptest.data.npolar.no/sighting/?q=&format=json&callback=JSON_CALLBACK&locales=utf-8')
+   $http.jsonp('https://apptest.data.npolar.no/sighting/?q=&format=json&callback=JSON_CALLBACK&locales=utf-8')
     .success(function(data) {
         $scope.full = data;
      }).error(function (data, status, headers, config) {
@@ -55,9 +55,9 @@ sightingControllers.controller('NewObservationCtrl', function($scope, $http, $ro
       /* Populate with inital values */
       console.log($scope.entry);
       entry = $scope.entry
-      entry.schema = 'http://api.npolar.no/schema/sighting.json';
+      entry.schema = 'https://api.npolar.no/schema/sighting.json';
       entry.collection = 'sighting';
-      entry.base = 'http://api.npolar.no';
+      entry.base = 'https://api.npolar.no';
       entry.language = 'en';
       entry.basis_of_record = 'HumanObservation';
       entry.rights = 'No licence announced on the web site';
@@ -103,6 +103,15 @@ sightingControllers.controller('NewObservationCtrl', function($scope, $http, $ro
 //Update entry from Svalbard MMS couch database here
 sightingControllers.controller('EditObservationCtrl',  function($scope, $routeParams, $http,
   Sighting, SightingDBUpdate, npolarApiSecurity, npolarApiUser) {
+    $scope.formulaData = {
+      schema: "https://api.npolar.no/schema/sighting.json",
+      form: "./partials/user/formula.json",
+      model: {},
+      onsave: function(doc) {
+        alert("test");
+      }
+    };
+
     var entry = SightingDBUpdate.get({id: $routeParams.id }, function(){
     $scope.entry = entry;
     /*Set abbreviated dates*/
