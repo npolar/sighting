@@ -2,7 +2,8 @@
 
 
 //Get species gallery for images, education/links to NPs home pages.
-sightingControllers.controller('SightingCtrl', ['$scope', '$http', function( $scope, $http) {
+sightingControllers.controller('SightingCtrl', function( $scope, $http, npolarApiSecurity) {
+   $scope.security = npolarApiSecurity;
    this.species = species_gallery;
 
 
@@ -10,7 +11,7 @@ sightingControllers.controller('SightingCtrl', ['$scope', '$http', function( $sc
    $http.jsonp('https://data.npolar.no/sighting/?q=&facets=recorded_by&size-facet=1000&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
      $scope.full = data;
    });
-}]);
+});
 
 var species_gallery = [
 {
@@ -174,30 +175,16 @@ sightingControllers.controller("PanelCtrl", ['$location', function($location){
 
    this.choosePath = function(chooseTab) {
      /* select the right path */
-     if (chooseTab === 2) {
+     if (chooseTab === 'observer') {
         $location.path("/observe");
-     } else if (chooseTab === 3){
+     } else if (chooseTab === 'learn'){
         $location.path("/learn");
-     } else if (chooseTab === 4){
+     } else if (chooseTab === 'observers'){
         $location.path("/observers");
-     } else if (chooseTab === 5){
-        $location.path("/photos");
-     } else if (chooseTab === 6){
-        $location.path("/stats");
-     } else if (chooseTab === 7){
-        $location.path("/docs");
-     } else if (chooseTab === 8){
+     } else if (chooseTab === 'observations'){
         $location.path("/observations");
-     } else if (chooseTab === 9){
+     } else if (chooseTab === 'all'){
         $location.path("/all");
-     } else if (chooseTab === 10){
-        $location.path("/observation");
-     } else if (chooseTab === 11){
-        $location.path("/upload");
-     } else if (chooseTab === 12){
-        $location.path("/profile");
-     } else if (chooseTab === 13){
-        $location.path("/maps");
      } else {
         $location.path("/");
      }

@@ -35,12 +35,12 @@
 <nav class="menu">
 <a href="#" id="menu-icon"></a>
 <ul ng-controller="PanelCtrl as panel">
-<li><a href ng-click="panel.choosePath(1)" class="current">Login</a></li>
-<li><a href ng-click="panel.choosePath(2)" class="menu">Become observer</a></li>
-<li><a href ng-click="panel.choosePath(3)" class="menu">Species</a></li>
-<li><a href ng-click="panel.choosePath(4)" class="menu">Observers</a></li>
-<li><a href ng-click="panel.choosePath(8)" class="menu">My observations</a></li>
-<li><a href ng-click="panel.choosePath(9)" class="menu">Administrators</a></li>
+<li><a href ng-click="panel.choosePath('login')" class="current">Login</a></li>
+<li><a href ng-click="panel.choosePath('observer')" class="menu">Become observer</a></li>
+<li><a href ng-click="panel.choosePath('learn')" class="menu">Species</a></li>
+<li><a href ng-click="panel.choosePath('observers')" class="menu">Observers</a></li>
+<li ng-if="security.isAuthenticated()"><a href ng-click="panel.choosePath('observations')" class="menu">My observations</a></li>
+<li ng-if="security.isAuthenticated()"><a href ng-click="panel.choosePath('all')" class="menu">Administrators</a></li>
 </ul>
 </nav>
 
