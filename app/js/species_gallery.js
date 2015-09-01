@@ -1,26 +1,5 @@
-'use strict';
-
-
-
-//Service replaces $HTTP service
-var sightingServices = angular.module('sightingServices', ['ngResource']);
-
-sightingServices.factory('SightingDBUpdate', ['$resource', function($resource){
-    return $resource( 'https://apptest.data.npolar.no/sighting/:id' , { id:'@id'}, {
-    	query: {method: 'GET'}
-    	//update: {method: 'PUT'}
-    });
-}]);
-
-/*Service to get CSV post*/
-sightingServices.factory('CSVService', function () {
-    return {entryObject: {data: null} }
-});
-
-
-/*Service to get CSV post*/
-sightingServices.factory('Species_GalleryService', function () {
-  return [{
+var species_gallery = [
+{
   name: 'Isbjørn',
     eng: 'Polar bear',
     family: 'Ursus maritimus',
@@ -168,8 +147,4 @@ sightingServices.factory('Species_GalleryService', function () {
     rights: 'Hannah Beker,  http://commons.wikimedia.org/wiki/File:White_beaked_dolphin.jpg'
 }
 ];
-
-});
-
-
 

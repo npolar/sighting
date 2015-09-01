@@ -2,9 +2,10 @@
 
 
 //Get species gallery for images, education/links to NPs home pages.
-sightingControllers.controller('SightingCtrl', function( $scope, $http, npolarApiSecurity) {
+sightingControllers.controller('SightingCtrl', function( $scope, $http, npolarApiSecurity, Species_GalleryService) {
    $scope.security = npolarApiSecurity;
-   this.species = species_gallery;
+   this.species = Species_GalleryService;
+   console.log(this.species);
 
 
    //Get observers
@@ -12,156 +13,6 @@ sightingControllers.controller('SightingCtrl', function( $scope, $http, npolarAp
      $scope.full = data;
    });
 });
-
-var species_gallery = [
-{
-  name: 'Isbjørn',
-    eng: 'Polar bear',
-    family: 'Ursus maritimus',
-    image:  'img/species/isbjorn.jpg',
-    link: 'http://www.npolar.no/en/species/polar-bear.html',
-    rights: 'Ann Kristin Balto / Norwegian Polar Institute'
-},
-{
-    name: 'Hvalross',
-    eng: 'Walrus',
-    family: 'Odobenus rosmarus',
-    image:  'img/species/hvalross.jpg',
-    link: 'http://www.npolar.no/en/species/walrus.html',
-    rights: 'Tor Ivan Karlsen / Norwegian Polar Institute'
-},
-{
-    name: 'Storkobbe',
-    eng: 'Bearded seal',
-    family: 'Erignathus barbatus',
-    image: 'img/species/storkobbe.jpg',
-    link: 'http://www.npolar.no/en/species/bearded-seal.html',
-    rights: 'Inger Lise Næss / Norwegian Polar Institute'
-},
-{
-    name: 'Steinkobbe',
-    eng: 'Harbor seal',
-    family: 'Phoca vitulina',
-    image:  'img/species/steinkobbe.jpg',
-    link: 'http://www.npolar.no/en/species/harbour-seal.html',
-    rights: 'Kit Kovacs / Norwegian Polar Institute'
-},
-{
-  name: 'Grønlandssel',
-    eng: 'Harp seal',
-    family: 'Phoca groenlandica',
-    image:  'img/species/gronlandssel.jpg',
-    link: 'http://www.npolar.no/en/species/harp-seal.html',
-    rights: 'G. Bangjord / Norwegian Polar Institute'
-},
-{
-    name: 'Klappmyss',
-    eng: 'Hooded seal',
-    family: 'Cystophora cristata',
-    image:  'img/species/klappmyss.jpg',
-    link: 'http://www.npolar.no/en/species/hooded-seal.html',
-    rights: 'Norwegian Polar Institute'
-},
-{
-    name: 'Ringsel',
-    eng: 'Ringed seal',
-    family: 'Pusa hispida',
-    image:  'img/species/ringsel.jpg',
-    link: 'http://www.npolar.no/en/species/ringed-seal.html',
-    rights: 'Kit Kovacs / Norwegian Polar Institute'
-},
-{ name: 'Hvithval',
-    eng: 'Beluga whale',
-    family: 'Delphinapterus leucas',
-    image:  'img/species/hvithval.jpg',
-    link: 'http://www.npolar.no/en/species/white-whale.html',
-    rights: 'E. Johansen / Norwegian Polar Institute'
-},
-{  name: 'Blåhval',
-    eng: 'Blue whale',
-    family: 'Balaenoptera musculus',
-    image:  'img/species/blahval.jpg',
-    link: 'http://www.npolar.no/en/species/blue-whale.html',
-    rights: 'http://commons.wikimedia.org/wiki/File:Blue_Whale_001_body_bw.jpg, NOAA Fisheries, Tom Bjørnstad'
-},
-{ name: 'Grønlandshval',
-    eng: 'Bowhead whale',
-    family: 'Balaena mysticetus',
-    image:  'img/species/gronlandshval.jpg',
-    link: 'http://www.npolar.no/en/species/bowhead-whale.html',
-    rights: 'Norwegian Polar Institute'
-},
-{ name: 'Vågehval',
-    eng: 'Common minke whale',
-    family: 'Balaenoptera acutorostrata',
-    image:  'img/species/vagehval.jpg',
-    link: 'http://www.npolar.no/en/species/minke-whale.html',
-    rights: 'Ann Kristin Balto / Norwegian Polar Institute'
-},
-{ name: 'Finnhval',
-    eng: 'Fin whale',
-    family: 'Balaenoptera physalus',
-    image:  'img/species/finnhval.jpg',
-    link: 'http://www.npolar.no/en/species/fin-whale.html',
-    rights: 'Aqqa Rosing-Asvid, http://en.wikipedia.org/wiki/Fin_whale#mediaviewer/File:Finhval.jpg'
-},
-{ name: 'Knølhval',
-    eng: 'Humpback whale',
-    family: 'Megaptera novaeangliae',
-    image:  'img/species/knolhval.jpg',
-    link: 'http://www.npolar.no/en/species/humpback-whale.html',
-    rights: 'tromsofoto.net - it this ok??'
-},
-{ name: 'Spekkhugger',
-    eng: 'Killer whale',
-    family: 'Orcinus orca',
-    image:  'img/species/spekkhugger.jpg',
-    link: 'http://www.npolar.no/en/species/killer-whale.html',
-    rights: 'Robert Pittman, http://www.afsc.noaa.gov/Quarterly/amj2005/divrptsNMML3.htm'
-},
-{ name: 'Narhval',
-    eng: 'Narwhal',
-    family: 'Monodon monoceros',
-    image:  'img/species/narhval.jpg',
-    link: 'http://www.npolar.no/en/species/narwhal.html',
-    rights: 'Glenn Williams, National Institute of Standards and Technology, http://commons.wikimedia.org/wiki/File:Narwhals_breach.jpg'
-},
-{ name: 'Nebbhval',
-    eng: 'Northern northern-bottlenose-whale',
-    family: 'Hyperoodon ampullatus',
-    image:  'img/species/nebbhval.jpg',
-    link: 'http://www.npolar.no/en/species/northern-bottlenose-whale.html',
-    rights: 'NOAA Photo Library / National Oceanic and Atmospheric'
-},
-{ name: 'Grindhval',
-    eng: 'Pilot whale',
-    family: 'Globicephala melas',
-    image:  'img/species/grindhval.jpg',
-    link: 'http://www.npolar.no/en/species/pilot-whale.html',
-    rights: '"Pilot whale spyhop" by Barney Moss - Watching Whales 4. Licensed under CC BY 2.0 via Wikimedia Commons - http://commons.wikimedia.org/wiki/File:Pilot_whale_spyhop.jpg#mediaviewer/File:Pilot_whale_spyhop.jpg'
-},
-{ name: 'Seihval',
-    eng: 'Sei whale',
-    family: 'Balaenoptera borealis',
-    image:  'img/species/seihval.jpg',
-    link: 'http://www.npolar.no/en/species/sei-whale.html',
-    rights:'Christin Khan, NOAA / NEFSC'
-},
-{ name: 'Spermhval',
-    eng: 'Sperm whale',
-    family: 'Physeter macrocephalus',
-    image:  'img/species/spermhval.jpg',
-    link: 'http://www.npolar.no/en/species/sperm-whale.html',
-    rights: 'Gabriel Barathieu, http://commons.wikimedia.org/wiki/File:Mother_and_baby_sperm_whale.jpg'
-},
-{ name: 'Kvitnos',
-    eng:'White beaked dolphin',
-    family: 'Lagenorhynchus albirostris',
-    image:  'img/species/kvitnos.jpg',
-    link: 'http://www.npolar.no/en/species/white-beaked-dolphin.html',
-    rights: 'Hannah Beker,  http://commons.wikimedia.org/wiki/File:White_beaked_dolphin.jpg'
-}
-];
 
 
 
@@ -197,9 +48,8 @@ sightingControllers.controller("PanelCtrl", ['$location', function($location){
 
 
 //Fetch entry from svalbard sightings couch database here
-sightingControllers.controller('MapCtrl', ['$scope', '$http', 'leafletData',
- function($scope, $http, leafletData) {
-    $scope.items = species_gallery;
+sightingControllers.controller('MapCtrl', function($scope, $http, leafletData, Species_GalleryService) {
+    $scope.items = Species_GalleryService;
 
     var markers = [];
 
@@ -333,7 +183,7 @@ sightingControllers.controller('MapCtrl', ['$scope', '$http', 'leafletData',
   })};
 
 
-}]);
+});
 
 
 /*Convert to the search date format */
@@ -349,11 +199,5 @@ function convertDate(idate) {
 //Update entry from Svalbard MMS couch database here
 sightingControllers.controller('LoginCtrl', ['$scope', 'jwtHelper', 'npolarApiSecurity', function($scope, jwtHelper, npolarApiSecurity) {
 
-
-    /* Angular-jwt */
-    //var expToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3NhbXBsZXMuYXV0aDAuY29tLyIsInN1YiI6ImZhY2Vib29rfDEwMTU0Mjg3MDI3NTEwMzAyIiwiYXVkIjoiQlVJSlNXOXg2MHNJSEJ3OEtkOUVtQ2JqOGVESUZ4REMiLCJleHAiOjE0MTIyMzQ3MzAsImlhdCI6MTQxMjE5ODczMH0.7M5sAV50fF1-_h9qVbdSgqAnXVF7mz3I6RjS6JiH0H8';
-    //$scope.tokenPayload = jwtHelper.decodeToken(expToken);
-    //$scope.date = jwtHelper.getTokenExpirationDate(expToken);
-    //$scope.bool = jwtHelper.isTokenExpired(expToken);
 
 }]);
