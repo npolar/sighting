@@ -1,15 +1,19 @@
 'use strict';
 
 /* Respond to search to get relevant entries */
-sightingControllers.controller('AdminObservationsCtrl',
-	 ['$scope', '$http', function( $scope, $http) {
+sightingControllers.controller('AdminObservationsCtrl',function( $scope, $http, npolarApiSecurity, npolarApiConfig) {
+
+$scope.endpoint = npolarApiConfig.base+"/sighting";
+
+$scope.security = npolarApiSecurity;
+
 $scope.submit = function() {
 	console.log($scope);
     $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
     $scope.full = data;
     console.log(data);
 })};
-}]);
+});
 
 /* Respond to search to get relevant entries */
 sightingControllers.controller('QualityCtrl',

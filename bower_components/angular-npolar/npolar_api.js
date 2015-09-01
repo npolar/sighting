@@ -4,7 +4,7 @@
 /**
  * npolarApi: Angular 1.x module for the [Npolar API](http://api.npolar.no/)
  */
-angular.module("npolarApi", ["ngResource", "base64", "angular-jwt"]);
+angular.module("npolarApi", ["ngResource", 'ab-base64', "angular-jwt"]);
 
 /**
  * npolarApiConfig, meant to be .run and merged with overrides for the current environment
@@ -110,7 +110,7 @@ angular.module("npolarApi").service("npolarApiText", function() {
 
 
 // FIXME This service is misnamed and will probably die (it's just a thin session storage wrapper)
-angular.module("npolarApi").service('npolarApiUser', function($base64, npolarApiConfig) {
+angular.module("npolarApi").service('npolarApiUser', function(base64, npolarApiConfig) {
 
 
   this.isWriter = function() {
@@ -118,9 +118,11 @@ angular.module("npolarApi").service('npolarApiUser', function($base64, npolarApi
   };
 
   this.getUser = function() {
+    //console.log("getUser()");
   var user = sessionStorage.getItem(this.getStorageKey());
+  //console.log("user", JSON.parse(base64.decode(user)));
   if (angular.isString(user)) {
-    return JSON.parse($base64.decode(user));
+    return JSON.parse(base64.decode(user));
   } else {
     return {};
   }
@@ -128,7 +130,7 @@ angular.module("npolarApi").service('npolarApiUser', function($base64, npolarApi
 
   this.setUser = function(user) {
   var key = this.getStorageKey(user);
-  sessionStorage.setItem(key, $base64.encode(JSON.stringify(user)));
+  sessionStorage.setItem(key, base64.encode(JSON.stringify(user)));
   }
 
   this.removeUser = function() {
@@ -147,54 +149,129 @@ angular.module("npolarApi").service('npolarApiUser', function($base64, npolarApi
  *
  *
  */
-angular.module("npolarApi").service("npolarApiSecurity", function($base64, jwtHelper, npolarApiConfig, npolarApiUser) {
+angular.module("npolarApi").service("npolarApiSecurity", function(base64, jwtHelper, npolarApiConfig, npolarApiUser) {
+ var base64 = base64;
 
-  this.authorization = function(type) {
+ this.authorization = function () {
 
-  var user = npolarApiUser.getUser();
+   var user = npolarApiUser.getUser();
 
-  if ("basic" == npolarApiConfig.security.authorization) {
-    return "Basic "+ this.basicToken(user);
-  } else if ("jwt" == npolarApiConfig.security.authorization) { // or bearer?
-    return "Bearer "+ this.jsonWebToken(user);
-  } else {
-    console.error("npolarApiSecurity authorization not implemented: " + npolarApiConfig.security.authorization);
-    return "";
-  }
-  };
+   if ('basic' === npolarApiConfig.security.authorization) {
+     return 'Basic '+ this.basicToken(user);
+   } else if ('jwt' === npolarApiConfig.security.authorization) {
+     return 'Bearer '+ user.jwt;
+   } else {
+     console.error('NpolarApiSecurity authorization not implemented: ' + npolarApiConfig.security.authorization);
+     return '';
+   }
+ };
 
-  this.basicToken = function(user) {
-  return $base64.encode(user.username + ':' + user.password);
-  };
+ this.basicToken = function(user) {
+   return base64.encode(user.username + ':' + user.password);
+ };
 
-  this.jsonWebToken = function(user) {
-    return user.jwt;
-  };
+ this.decodeJwt = function(jwt) {
+   return jwtHelper.decodeToken(jwt);
+ };
 
-  this.decodeJwt = function(jwt) {
-    return jwtHelper.decodeToken(jwt);
-  }
+ this.getUser = function() {
+   try {
+     return npolarApiUser.getUser();
+   } catch (e) {
+
+     return {};
+   }
+};
+
+ this.getJwt = function() {
+   return this.getUser().jwt;
+ };
+
+ this.isAuthenticated = function() {
+    //console.log("isAuthenticated()", this.isJwtValid());
+   return this.isJwtValid();
+ };
+
+ // Is user authenticated and authorized to perform action on current URI?
+ // @var action "create" | "read" | "update" | "delete"
+ this.isAuthorized = function(action, uri) {
+   // @todo support relative URIs
+   //if (uri instanceof String && (/^\/[^/]/).test(uri)) {
+   //  uri = npolarApiConfig.base + uri;
+   //  console.log(uri);
+   //}
+   console.log("isAuthorized()", action, uri);
+   uri = uri.split('//')[1];
+
+   // 1. First, verify login
+   if (false === this.isAuthenticated()) {
+     return false;
+   }
+
+   // 2. Find all systems URIs matching current URI or *
+   var user = this.getUser();
+   //console.log(user);
+   var systems = this.getUser().systems.filter(function(system) {
 
 
-  this.user = function(user) {
-  // if user not void and valid => setUser
-  return this.getUser();
-  };
+     system.uri = system.uri.split('//')[1];
 
-  this.getUser = function() {
-  return npolarApiUser.getUser();
-  };
+     if (system.uri === uri) {
+       return true;
+     } else if (system.uri === npolarApiConfig.base.split('//')[1]+"/*") {
+       return true;
+     } else {
+       return false;
+     }
 
-  this.setUser = function(user) {
-  // if valid... @todo
-  return npolarApiUser.setUser(user);
-  };
+   });
 
-  this.removeUser = function() {
-  return npolarApiUser.removeUser();
-  };
+   // 3. Does any matching system include the right to perform action?
+   /*systems = systems.filter(
+     system => {
+       return system.rights.includes(action);
+     }
+   );*/
 
+    // User is authorized if we are left with at least 1 system
+    console.log(systems);
+    return (systems.length > 0);
+ };
 
+ this.isJwtExpired = function() {
+   var jwt = this.getJwt();
+   //console.log("0", jwt);
+   if (jwt === undefined || jwt === null || !angular.isString(jwt)) {
+     return true;
+   }
+   var now = (Date.now() / 1000);
+   //console.log("2", jwt);
+
+   try {
+     return ((Date.now() / 1000) > this.decodeJwt(jwt).exp );
+   } catch (e) {
+     return true;
+   }
+ };
+
+ this.isJwtValid = function() {
+   //console.log("isJwtValid()");
+   return (false === this.isJwtExpired());
+ };
+
+ //this.notAuthenticated = () => { return !this.isAuthenticated(); };
+
+ this.removeUser = function() {
+   return npolarApiUser.removeUser();
+ };
+
+ this.user = function() {
+   return this.getUser();
+ };
+
+ this.setUser = function(user) {
+   return nNpolarApiUser.setUser(user);
+ };
 
 });
 
@@ -229,6 +306,7 @@ angular.module("npolarApi").controller("NpolarApiBaseController", function($scop
     $scope.environment = npolarApiConfig.environment;
     $scope.lang = npolarApiConfig.lang;
     $scope.user = npolarApiSecurity.getUser();
+    $scope.security = npolarApiSecurity;
   };
 
   // back() click handler
@@ -247,13 +325,14 @@ angular.module("npolarApi").controller("NpolarApiBaseController", function($scop
       headers: { "Authorization": "Basic "+npolarApiSecurity.basicToken($scope.user) } //, data: { test: 'test' }
     };
     $http(req).success(function(data) {
+      var user = npolarApiSecurity.decodeJwt(data.token);
+      user.name = $scope.user.username;
+      user.username = $scope.user.username;
+      user.jwt = data.token;
 
-        $scope.user.jwt = data.token;
-        $scope.user.name = $scope.user.username;
+      $scope.user= user;
 
-        //var d = npolarApiSecurity.decodeJwt(data.token);
-        // FIXME extract rights
-        npolarApiUser.setUser($scope.user);
+      npolarApiUser.setUser(user);
 
     }).error(function(error){
       console.error(error);

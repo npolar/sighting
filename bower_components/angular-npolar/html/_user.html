@@ -1,7 +1,7 @@
-<div ng-if="user.name">
+<div ng-show="security.isAuthenticated()">
  <b>{{user.name}}</b> <button ng-click="logout()">Logout</button>
 </div>
-<div ng-if="!user.name">
+<div ng-show="!security.isAuthenticated()">
 
  <form role="form" class="pure-form pure-form-stacked">
         <div class="form-group">

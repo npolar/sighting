@@ -9,7 +9,7 @@ var appSighting = angular.module('sighting',[
   '720kb.datepicker',    /*Calendar*/
   'angular-jwt',       /* JWT interaction*/
   'ngResource',
-  'base64',
+/* 'utf8-base64', */
   'formula',
   'npolarApi'   /*Logon NP style*/
 ]);
@@ -105,6 +105,7 @@ appSighting.config(function($httpProvider, npolarApiAuthInterceptorProvider) {
 });
 
 
+
 // Inject config and run
 appSighting.run(function(npolarApiConfig, $http, npolarApiSecurity, npolarApiUser) {
 
@@ -112,10 +113,10 @@ appSighting.run(function(npolarApiConfig, $http, npolarApiSecurity, npolarApiUse
 
     var environment = config.environment || npolarApiConfig.environment;
     angular.extend(npolarApiConfig, _.find(config.config, { environment: environment}));
-
+console.log("npolarApiConfig", npolarApiConfig);
 
   }).error(function(response) {
-    console.log("npolarApiConfig -error", npolarApiConfig);
+    console.error("npolarApiConfig -error", npolarApiConfig);
   });
 
 });

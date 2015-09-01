@@ -1,7 +1,12 @@
 
 
 
-<h1><b>Map search <b></h1>
+
+
+<div ng-if="security.isAuthorized('read', endpoint)">
+
+  <h1><b>Map search <b></h1>
+
 
 <a href="#/quality_check">Quality check</a>
 
@@ -94,7 +99,14 @@
 </form>
 </div>
 
+</div>
 
+
+
+  <div ng-if="!security.isAuthorized('read', endpoint)">
+  <h1><b>Administrators <b></h1>
+  <p>You need an administrator's account in order to use this module. </p>
+</div>
 
 
 

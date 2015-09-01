@@ -5,10 +5,10 @@
 sightingControllers.controller('SightingCtrl', ['$scope', '$http', function( $scope, $http) {
    this.species = species_gallery;
 
+
    //Get observers
    $http.jsonp('https://data.npolar.no/sighting/?q=&facets=recorded_by&size-facet=1000&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
      $scope.full = data;
-    // console.log("----", $scope.full.feed.entries[0].recorded_by);
    });
 }]);
 

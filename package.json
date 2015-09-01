@@ -29,6 +29,7 @@
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
   },
   "dependencies": {
+    "angular-utf8-base64": "0.0.2",
     "angularjs-datepicker": "git://github.com/720kb/angular-datepicker",
     "elasticsearch": "^4.0.2",
     "leaflet-draw": "git://github.com/leaflet/leaflet.draw"

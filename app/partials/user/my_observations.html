@@ -1,8 +1,10 @@
 
-
 <h1><b> My observations <b></h1>
 <p></p>
 <p></p>
+
+<div ng-if="security.isAuthenticated()">
+
 
 <a href="#/observation"> New</a>&nbsp;&nbsp;
 <a href="#/upload">Upload Excelsheet</a>
@@ -29,4 +31,7 @@
    </tbody>
 </table>
 </div>
+</div>
+<div ng-if="!security.isAuthenticated()">
+  <p>Please <a href="#/">log in</a> in order to view your sightings</p>
 </div>

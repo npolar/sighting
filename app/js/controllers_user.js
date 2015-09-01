@@ -1,6 +1,7 @@
 
 //Fetch from svalbard sightings couch database here the owner's observations
-sightingControllers.controller('MyObservationsCtrl', function($scope, $http, SightingDBUpdate) {
+sightingControllers.controller('MyObservationsCtrl', function($scope, $http, SightingDBUpdate, npolarApiSecurity) {
+   $scope.security = npolarApiSecurity;
    $http.jsonp('https://apptest.data.npolar.no/sighting/?q=&format=json&callback=JSON_CALLBACK&locales=utf-8')
     .success(function(data) {
         $scope.full = data;
@@ -76,15 +77,6 @@ sightingControllers.controller('NewObservationCtrl', function($scope, $http, $ro
       if (typeof entry.species != "undefined") {
         $scope.entry.species = entry.species.family;
       }
-     /* if (typeof $scope.entry.event_date != "undefined") {
-          $scope.entry.event_date = (entry.event_date).toISOString();
-      } */
- /*     if (typeof $scope.entry.expedition.start_date != "undefined") {
-          $scope.entry.expedition.start_date = entry.expedition.start_date;
-      } */
-     /* if (typeof $scope.entry.expedition.end_date != "undefined") {
-          $scope.entry.expedition.end_date = entry.expedition.end_date;
-      } */
 
        console.log(JSON.stringify($scope.entry));
 
