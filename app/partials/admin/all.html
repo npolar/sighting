@@ -103,7 +103,8 @@
 
 
 
-  <div ng-if="!security.isAuthorized('read', endpoint)">
+  <!--<div ng-if="!security.isAuthorized('read', endpoint)">  -->
+    <div ng-if="!security.isAuthenticated()">
   <h1><b>Administrators <b></h1>
   <p>You need an administrator's account in order to use this module. </p>
 </div>
