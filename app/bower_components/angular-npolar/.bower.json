@@ -1,0 +1,14 @@
+{
+  "name": "angular-npolar",
+  "homepage": "https://github.com/npolar/angular-npolar",
+  "_release": "0d5736821a",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "0d5736821a5cadae1ee73d13e50d5b2028081bb7"
+  },
+  "_source": "git://github.com/npolar/angular-npolar.git",
+  "_target": "*",
+  "_originalSource": "angular-npolar",
+  "_direct": true
+}
