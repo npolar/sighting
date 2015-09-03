@@ -2,21 +2,32 @@
 
 
 //Get species gallery for images, education/links to NPs home pages.
-sightingControllers.controller('SightingCtrl', function( $scope, $http, npolarApiSecurity, Species_GalleryService) {
+sightingControllers.controller('SightingCtrl', function( $scope, $http, npolarApiSecurity, Species_GalleryService, npolarApiConfig) {
    $scope.security = npolarApiSecurity;
    this.species = Species_GalleryService;
-   console.log(this.species);
 
+   var url = npolarApiConfig.base + "/sighting/?q=&facets=recorded_by&size-facet=1000&locales=utf-8";
 
-   //Get observers
-   $http.jsonp('https://data.npolar.no/sighting/?q=&facets=recorded_by&size-facet=1000&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
+    $http({method: 'GET', url: url, headers: {
+   'Content-type': 'application/json; charset=utf-8',
+   'Authorization': 'Basic '
+ }, }).
+        then(function(response) {
+          $scope.status = response.status;
+          $scope.full = response.data;
+        }, function(response) {
+          $scope.data = response.data || "Request failed";
+          $scope.status = response.status;
+      });
+    });
+
+  /* $http.jsonp('http://api.npolar.no/sighting/?q=&facets=recorded_by&size-facet=1000&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
      $scope.full = data;
-   });
-});
+   }); */
 
 
 
-/* Menu choices */
+/* Menu choices  mobile menu*/
 sightingControllers.controller("PanelCtrl", ['$location', function($location){
    this.tab = 1;
 

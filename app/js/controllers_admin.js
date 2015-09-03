@@ -9,17 +9,17 @@ $scope.security = npolarApiSecurity;
 
 $scope.submit = function() {
 	console.log($scope);
-    $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
+    $http.jsonp(npolarApiConfig.base + '/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
     $scope.full = data;
     console.log(data);
 })};
 });
 
 /* Respond to search to get relevant entries */
-sightingControllers.controller('QualityCtrl',function( $scope, $http) {
+sightingControllers.controller('QualityCtrl',function( $scope, $http, npolarApiConfig) {
 $scope.submit = function() {
   console.log($scope);
-    $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
+    $http.jsonp(npolarApiConfig.base + '/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
     $scope.full = data;
     console.log(data);
 })};
@@ -34,7 +34,7 @@ sightingControllers.controller('CSVCtrl', function($scope, CSVService) {
 
 //Fetch entry from svalbard sightings couch database here
 sightingControllers.controller('MapCtrl',
- function($scope, $http, leafletData, CSVService, Species_GalleryService) {
+ function($scope, $http, leafletData, CSVService, Species_GalleryService, npolarApiConfig) {
     $scope.items = Species_GalleryService;
 
 
@@ -150,7 +150,7 @@ sightingControllers.controller('MapCtrl',
 
     console.log(sok);
 
-    $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ sok
+    $http.jsonp(npolarApiConfig.base + '/sighting/?q='+ sok
       +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
 
       //console.log($scope);

@@ -1,8 +1,10 @@
 
 //Fetch from svalbard sightings couch database here the owner's observations
-sightingControllers.controller('MyObservationsCtrl', function($scope, $http, SightingDBUpdate, npolarApiSecurity) {
+sightingControllers.controller('MyObservationsCtrl', function($scope, $http, SightingDBUpdate, npolarApiSecurity, npolarApiConfig) {
    $scope.security = npolarApiSecurity;
-   $http.jsonp('https://apptest.data.npolar.no/sighting/?q=&format=json&callback=JSON_CALLBACK&locales=utf-8')
+
+
+   $http.jsonp(npolarApiConfig.base + '/sighting/?q=&format=json&callback=JSON_CALLBACK&locales=utf-8')
     .success(function(data) {
         $scope.full = data;
      }).error(function (data, status, headers, config) {
@@ -141,7 +143,7 @@ sightingControllers.controller('DeleteObservationCtrl',
 
 
 //Controller for Excel file upload
-sightingControllers.controller('UploadObservationsCtrl', function($scope, $http) {
+sightingControllers.controller('UploadObservationsCtrl', function($scope, $http, npolarApiConfig) {
      $scope.filesChanged = function(elm){
         $scope.files=elm.files;
         $scope.$apply();
@@ -156,7 +158,7 @@ sightingControllers.controller('UploadObservationsCtrl', function($scope, $http)
 
         console.log(fd);
 
-        $http.post('https://apptest.data.npolar.no:4444/upload_excel', fd,
+        $http.post(npolarApiConfig.base + ':4444/upload_excel', fd,
         {
           transformrequest:angular.identity,
           headers:{'Content-Type':'multipart/form-data'}

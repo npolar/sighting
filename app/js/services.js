@@ -12,10 +12,12 @@ sightingServices.factory('SightingDBUpdate', ['$resource', function($resource){
     });
 }]);
 
+
 /*Service to get CSV post*/
 sightingServices.factory('CSVService', function () {
     return {entryObject: {data: null} }
 });
+
 
 
 /*Service to get CSV post*/
