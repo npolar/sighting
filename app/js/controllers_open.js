@@ -1,8 +1,9 @@
-'use strict';
+
 
 
 //Get species gallery for images, education/links to NPs home pages.
 sightingControllers.controller('SightingCtrl', function( $scope, $http, npolarApiSecurity, Species_GalleryService, npolarApiConfig) {
+   'use strict';
    $scope.security = npolarApiSecurity;
    this.species = Species_GalleryService;
 
@@ -29,6 +30,7 @@ sightingControllers.controller('SightingCtrl', function( $scope, $http, npolarAp
 
 /* Menu choices  mobile menu*/
 sightingControllers.controller("PanelCtrl", ['$location', function($location){
+   'use strict';
    this.tab = 1;
 
    this.selectTab = function(setTab) {
@@ -60,6 +62,7 @@ sightingControllers.controller("PanelCtrl", ['$location', function($location){
 
 //Fetch entry from svalbard sightings couch database here
 sightingControllers.controller('MapCtrl', function($scope, $http, leafletData, Species_GalleryService) {
+    'use strict';
     $scope.items = Species_GalleryService;
 
     var markers = [];
@@ -199,6 +202,7 @@ sightingControllers.controller('MapCtrl', function($scope, $http, leafletData, S
 
 /*Convert to the search date format */
 function convertDate(idate) {
+          'use strict';
           console.log(idate);
            var temp_date = idate.substring(0,4) + '-' + idate.substring(5,7) + '-' +idate.substring(8,10);
            temp_date += 'T00:00:00.000';
