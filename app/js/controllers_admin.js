@@ -83,11 +83,21 @@ sightingControllers.controller('MapCtrl',
   });
 
 
- /* Execute this function when search button is pressed */
+
+ /* Execute this function when advanced search button is pressed */
  $scope.submit = function() {
 
     /* First find out which paramaters are not empty */
     var sok = ''; var lat = ''; var lng = ''; var edate = '';
+
+    console.log("event_date1 " + $scope.event_date1);
+    console.log("event_date2 " + $scope.event_date2);
+    console.log("lat1 " + $scope.lat1);
+    console.log("lat2 " + $scope.lat2);
+    console.log("lng1 " + $scope.lng1);
+    console.log("lng2 " + $scope.lng2);
+    console.log($scope.entry.species.family);
+    console.log("end");
 
 
     /* If event_date exists */
@@ -133,9 +143,9 @@ sightingControllers.controller('MapCtrl',
 
     }
 
-    /*Include species */
-    if (typeof $scope.species != "undefined") {
-           sok = sok + '&filter-species=' + $scope.species.family;
+    /*Include species search */
+    if ($scope.entry.species && (typeof $scope.entry.species.family != "undefined") && ($scope.entry.species != '' )) {
+           sok = sok + '&filter-species=' + ($scope.entry.species.family).toLowerCase();
            sok = sok.replace(/ /g,"+");
     };
 

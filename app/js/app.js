@@ -45,7 +45,7 @@ appSighting.run(function(npolarApiConfig, $http, npolarApiSecurity, npolarApiUse
     var environment = config.environment;
 
     angular.extend(npolarApiConfig, _.find(config.config, { environment: environment}));
-console.log("npolarApiConfig", npolarApiConfig);
+//console.log("npolarApiConfig", npolarApiConfig);
 
   }).error(function(response) {
     console.error("npolarApiConfig -error", npolarApiConfig);

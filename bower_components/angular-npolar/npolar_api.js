@@ -200,7 +200,7 @@ angular.module("npolarApi").service("npolarApiSecurity", function(base64, jwtHel
    //  uri = npolarApiConfig.base + uri;
    //  console.log(uri);
    //}
-   console.log("isAuthorized()", action, uri);
+   //console.log("isAuthorized()", action, uri);
    uri = uri.split('//')[1];
 
    // 1. First, verify login
@@ -234,7 +234,7 @@ angular.module("npolarApi").service("npolarApiSecurity", function(base64, jwtHel
    );*/
 
     // User is authorized if we are left with at least 1 system
-    console.log(systems);
+    //console.log(systems);
     return (systems.length > 0);
  };
 

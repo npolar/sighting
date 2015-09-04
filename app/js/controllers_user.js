@@ -87,8 +87,8 @@ sightingControllers.controller('NewObservationCtrl', function($scope, $http, $ro
 
       var ret = entry.$save();
 
-      console.log("New entry" + JSON.stringify(entry));
-      console.log("New entry2 " + JSON.stringify(ret));
+      //console.log("New entry" + JSON.stringify(entry));
+      //console.log("New entry2 " + JSON.stringify(ret));
 
   }
 });
