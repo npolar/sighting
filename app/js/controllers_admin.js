@@ -32,14 +32,26 @@ sightingControllers.controller('CSVCtrl', function($scope, CSVService) {
 })
 
 
-//Fetch entry from svalbard sightings couch database here
+/*Fetch entry from svalbard sightings couch database here */
 sightingControllers.controller('MapCtrl',
  function($scope, $http, leafletData, CSVService, Species_GalleryService, npolarApiConfig) {
     $scope.items = Species_GalleryService;
 
+    /*Reset search select menu*/
+    $scope.resetDropDown = function() {
+        /*Set species to empty string*/
+        $scope.species = "";
+        /*Remove markers and squares*/
+        $scope.markers = [];
+
+        /*Remove first item in select menu*/
+        if(angular.isDefined($scope.first)){
+            delete $scope.first;
+        }
+    }
+
 
     var markers = [];
-
 
     /* Setting up the map  */
     angular.extend($scope, {
@@ -67,11 +79,10 @@ sightingControllers.controller('MapCtrl',
   /*Draw a rectangle on the map to get coordinates from */
   leafletData.getMap().then(function(map) {
         var drawnItems = $scope.controls.edit.featureGroup;
-        //console.log($scope.controls);
-        map.on('draw:created', function (e) {
-                var layer = e.layer;
-                drawnItems.addLayer(layer);
 
+        map.on('draw:created', function (e) {
+                 var layer = e.layer;
+                drawnItems.addLayer(layer);
                 var res = (layer.toGeoJSON()).geometry.coordinates;
 
                 /*fetch zero and second coordinate pair to get a rectangle */
@@ -80,6 +91,35 @@ sightingControllers.controller('MapCtrl',
                 $scope.lat2= res[0][2][0];
                 $scope.lng2= res[0][2][1];
         });
+
+
+       map.on('draw:edited', function (e) {
+
+           var layers = e.layers;
+           layers.eachLayer(function (layer) {
+             /*update lng/lat from search */
+             var res = (layer.toGeoJSON()).geometry.coordinates;
+
+                /*fetch zero and second coordinate pair to get a rectangle */
+                $scope.lat1= res[0][0][0];
+                $scope.lng1= res[0][0][1];
+                $scope.lat2= res[0][2][0];
+                $scope.lng2= res[0][2][1];
+           });
+        });
+
+        map.on('draw:deleted', function (e) {
+
+         /*Remove lat/lng from search inputs */
+         $scope.lat1= $scope.lng1= $scope.lat2 = $scope.lng2 = undefined;
+
+         /*Remove markers and squares*/
+         $scope.markers = [];
+        });
+
+
+
+
   });
 
 
@@ -96,8 +136,7 @@ sightingControllers.controller('MapCtrl',
     console.log("lat2 " + $scope.lat2);
     console.log("lng1 " + $scope.lng1);
     console.log("lng2 " + $scope.lng2);
-    console.log($scope.entry.species.family);
-    console.log("end");
+    console.log("species" + $scope.species + "end");
 
 
     /* If event_date exists */
@@ -120,7 +159,8 @@ sightingControllers.controller('MapCtrl',
     /* If lat1 exists */
     if (typeof $scope.lat1 != "undefined" && $scope.lat1 != "") {
            lat = '&filter-latitude=' + $scope.lat1 + '..';
-           console.log(lat);
+
+
            if (typeof $scope.lat2 != "undefined" && $scope.lat2 != "") {
                lat = lat + $scope.lat2;
            }
@@ -129,12 +169,14 @@ sightingControllers.controller('MapCtrl',
                lat = '&filter-latitude=..' + $scope.lat2;
     }
 
+
     /* If lng1 exists */
     if (typeof $scope.lng1 != "undefined" && $scope.lng1 != "") {
-           lat = '&filter-longitude=' + $scope.lng1 + '..';
+           lng = '&filter-longitude=' + $scope.lng1 + '..';
 
+           /*If both exists */
            if (typeof $scope.lng2 != "undefined" && $scope.lng2 != "") {
-               lat = lat + $scope.lng2;
+               lng = lng + $scope.lng2;
 
            }
     /*Else if lng2 exists */
@@ -144,8 +186,8 @@ sightingControllers.controller('MapCtrl',
     }
 
     /*Include species search */
-    if ($scope.entry.species && (typeof $scope.entry.species.family != "undefined") && ($scope.entry.species != '' )) {
-           sok = sok + '&filter-species=' + ($scope.entry.species.family).toLowerCase();
+    if ((typeof $scope.species != "undefined") && ($scope.species != null) && ($scope.species != '' )) {
+           sok = sok + '&filter-species=' + ($scope.species.family).toLowerCase();
            sok = sok.replace(/ /g,"+");
     };
 
@@ -156,7 +198,6 @@ sightingControllers.controller('MapCtrl',
        sok = sok+lat+lng+edate;
     }
 
-    //console.log($scope.search);
 
     console.log(sok);
 
