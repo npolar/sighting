@@ -5,12 +5,22 @@
 //Service replaces $HTTP service
 var sightingServices = angular.module('sightingServices', ['ngResource']);
 
-sightingServices.factory('SightingDBUpdate', ['$resource', function($resource){
-    return $resource( 'https://apptest.data.npolar.no/sighting/:id' , { id:'@id'}, {
-    	query: {method: 'GET'}
-    	//update: {method: 'PUT'}
+sightingServices.factory('SightingDBUpdate', function($resource, npolarApiConfig, npolarApiSecurity){
+    return $resource(npolarApiConfig.base + '/sighting/:id' , { id:'@id'}, {
+        //query:{method:'GET'}
+    	query: {method: 'GET', headers: { Accept:'application/json', Authorization: npolarApiSecurity.authorization()}}
     });
-}]);
+});
+
+
+sightingServices.factory('SightingDBGet', function($resource, npolarApiConfig, npolarApiSecurity){
+    return $resource(npolarApiConfig.base + '/sighting?q=' , {
+        //query:{method:'GET'}
+        query: {method: 'GET', headers: { Accept:'application/json', Authorization: npolarApiSecurity.authorization()}}
+    });
+});
+
+
 
 
 /*Service to get CSV post*/

@@ -1,14 +1,18 @@
 
 //Fetch from svalbard sightings couch database here the owner's observations
-sightingControllers.controller('MyObservationsCtrl', function($scope, $http, SightingDBUpdate, npolarApiSecurity, npolarApiConfig) {
+sightingControllers.controller('MyObservationsCtrl', function($scope, $http, SightingDBGet, npolarApiSecurity, npolarApiConfig) {
    $scope.security = npolarApiSecurity;
 
+    $scope.full = SightingDBGet.get({}, function(){
+        console.log($scope.full);
+    });
 
-   $http.jsonp(npolarApiConfig.base + '/sighting/?q=&format=json&callback=JSON_CALLBACK&locales=utf-8')
+
+ /*  $http.jsonp(npolarApiConfig.base + '/sighting/?q=&format=json&callback=JSON_CALLBACK&locales=utf-8')
     .success(function(data) {
         $scope.full = data;
      }).error(function (data, status, headers, config) {
-     });
+     }); */
 });
 
 
