@@ -1,29 +1,26 @@
 'use strict';
 
 /* Respond to search to get relevant entries */
-sightingControllers.controller('AdminObservationsCtrl',function( $scope, $http, npolarApiSecurity, npolarApiConfig) {
+/*sightingControllers.controller('AdminObservationsCtrl',function( $scope, $http, npolarApiSecurity, npolarApiConfig, SightingDBGetAdmin) {
 
-$scope.endpoint = npolarApiConfig.base+"/sighting";
 
-$scope.security = npolarApiSecurity;
-
-$scope.submit = function() {
-	console.log($scope);
-    $http.jsonp(npolarApiConfig.base + '/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
-    $scope.full = data;
-    console.log(data);
-})};
-});
+});*/
 
 /* Respond to search to get relevant entries */
-sightingControllers.controller('QualityCtrl',function( $scope, $http, npolarApiConfig) {
+sightingControllers.controller('QualityCtrl',function( $scope, $http, npolarApiConfig, npolarApiSecurity, SightingDBGetAdmin) {
+
+ $scope.security = npolarApiSecurity;
+
+ //Define endpoint for authorization
+ $scope.endpoint = npolarApiConfig + '/sighting';
+
 $scope.submit = function() {
-  console.log($scope);
-    $http.jsonp(npolarApiConfig.base + '/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
-    $scope.full = data;
-    console.log(data);
-})};
+    $scope.full = SightingDBGetAdmin.get({}, function(){
+         console.log($scope.full);
 });
+
+
+}});
 
 
 /*Controller for CSV print */
@@ -34,8 +31,13 @@ sightingControllers.controller('CSVCtrl', function($scope, CSVService) {
 
 /*Fetch entry from svalbard sightings couch database here */
 sightingControllers.controller('MapCtrl',
- function($scope, $http, leafletData, CSVService, Species_GalleryService, npolarApiConfig) {
+ function($scope, $http, leafletData, CSVService, npolarApiSecurity, Species_GalleryService, npolarApiConfig, SightingDBGetAdmin) {
+
     $scope.items = Species_GalleryService;
+    $scope.security = npolarApiSecurity;
+
+    //Define endpoint for authorization
+    $scope.endpoint = npolarApiConfig + '/sighting';
 
     /*Reset search select menu*/
     $scope.resetDropDown = function() {
@@ -78,6 +80,15 @@ sightingControllers.controller('MapCtrl',
 
   /*Draw a rectangle on the map to get coordinates from */
   leafletData.getMap().then(function(map) {
+        console.log('controls');
+        console.log($scope.controls);
+
+       /* var drawnItems = new L.featureGroup().addTo(map);
+
+        map.addControl(new L.Control.Draw({
+          edit: {featureGroup: drawnItems }
+        })); */
+
         var drawnItems = $scope.controls.edit.featureGroup;
 
         map.on('draw:created', function (e) {
@@ -117,9 +128,6 @@ sightingControllers.controller('MapCtrl',
          $scope.markers = [];
         });
 
-
-
-
   });
 
 
@@ -129,14 +137,6 @@ sightingControllers.controller('MapCtrl',
 
     /* First find out which paramaters are not empty */
     var sok = ''; var lat = ''; var lng = ''; var edate = '';
-
-    console.log("event_date1 " + $scope.event_date1);
-    console.log("event_date2 " + $scope.event_date2);
-    console.log("lat1 " + $scope.lat1);
-    console.log("lat2 " + $scope.lat2);
-    console.log("lng1 " + $scope.lng1);
-    console.log("lng2 " + $scope.lng2);
-    console.log("species" + $scope.species + "end");
 
 
     /* If event_date exists */
@@ -185,7 +185,7 @@ sightingControllers.controller('MapCtrl',
 
     }
 
-    /*Include species search */
+    /*Include species search if it exists */
     if ((typeof $scope.species != "undefined") && ($scope.species != null) && ($scope.species != '' )) {
            sok = sok + '&filter-species=' + ($scope.species.family).toLowerCase();
            sok = sok.replace(/ /g,"+");
@@ -201,10 +201,13 @@ sightingControllers.controller('MapCtrl',
 
     console.log(sok);
 
-    $http.jsonp(npolarApiConfig.base + '/sighting/?q='+ sok
-      +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
 
-      //console.log($scope);
+    //Define endpoint for authorization
+   $scope.endpoint = npolarApiConfig + '/sighting';
+
+   $scope.full = SightingDBGetAdmin.get({}, function(){
+        console.log($scope.full);
+        console.log("admin_map");
 
     var redIcon = {
     iconUrl: 'img/icons/reddot.png',
@@ -212,13 +215,13 @@ sightingControllers.controller('MapCtrl',
     }
 
     /* Fetch the lat/lon entries. Have to switch lat/lon for display */
-    for (var i=0; i< data.feed.entries.length; i++) {
+    for (var i=0; i< $scope.full.feed.entries.length; i++) {
        markers.push({
-                lat: parseFloat(data.feed.entries[i].longitude),
-                lng: parseFloat(data.feed.entries[i].latitude),
+                lat: parseFloat($scope.full.feed.entries[i].longitude),
+                lng: parseFloat($scope.full.feed.entries[i].latitude),
                 focus: true,
                 draggable: false,
-                message: data.feed.entries[i].locality,
+                message: $scope.full.feed.entries[i].locality,
                 icon: redIcon
        });
     };
@@ -230,7 +233,7 @@ sightingControllers.controller('MapCtrl',
     markers = [];
 
     //Display data for all entries
-    $scope.entries = data.feed.entries;
+    $scope.entries = $scope.full.feed.entries;
 
     //Transfer info to CSV file via service
     CSVService.entryObject = $scope.entries;
@@ -240,9 +243,6 @@ sightingControllers.controller('MapCtrl',
    // console.log($scope.hostname);
 
   })};
-
-
-
 });
 
 

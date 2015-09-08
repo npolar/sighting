@@ -5,6 +5,7 @@ sightingControllers.controller('MyObservationsCtrl', function($scope, $http, Sig
 
     $scope.full = SightingDBGet.get({}, function(){
         console.log($scope.full);
+        console.log("user");
     });
 
 

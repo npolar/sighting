@@ -54,7 +54,7 @@ angular.module('routes', ['ngRoute']).config(['$routeProvider', function($routeP
       }).
       when('/all', {
         templateUrl: 'partials/admin/all.html',
-        controller: 'AdminObservationsCtrl'
+        controller: 'MapCtrl'
       }).
       when('/csv', {
         templateUrl: 'partials/admin/csv.html',

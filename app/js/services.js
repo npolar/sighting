@@ -21,6 +21,12 @@ sightingServices.factory('SightingDBGet', function($resource, npolarApiConfig, n
 });
 
 
+sightingServices.factory('SightingDBGetAdmin', function($resource, npolarApiConfig, npolarApiSecurity){
+    return $resource(npolarApiConfig.base + '/sighting?q=' , {
+        //query:{method:'GET'}
+        query: {method: 'GET', headers: { Accept:'application/json', Authorization: npolarApiSecurity.authorization()}}
+    });
+});
 
 
 /*Service to get CSV post*/

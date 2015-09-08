@@ -49,7 +49,7 @@ angular.module("npolarApi").factory('npolarApiAuthInterceptor', function ($rootS
       // Only intercept Npolar API requests
       if (config.url.indexOf(npolarApiConfig.base) === 0) {
         config.headers = config.headers || {};
-        //console.log(config.headers);
+        console.log(config.headers);
         if (!config.headers.Authorization) {
           config.headers.Authorization = npolarApiSecurity.authorization();
         }
@@ -210,7 +210,7 @@ angular.module("npolarApi").service("npolarApiSecurity", function(base64, jwtHel
 
    // 2. Find all systems URIs matching current URI or *
    var user = this.getUser();
-   //console.log(user);
+   console.log(user);
    var systems = this.getUser().systems.filter(function(system) {
 
 
