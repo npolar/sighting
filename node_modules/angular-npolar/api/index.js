@@ -1,8 +1,6 @@
 'use strict';
 var angular = require('angular');
 
-// angular modules
-//window.angular = angular;
 require('angular-resource');
 require('angular-utf8-base64');
 require('angular-jwt');
@@ -15,7 +13,9 @@ npolarApi.value('npolarApiConfig', require('./config'));
 npolarApi.service('NpolarApiUser', require('./session/User'));
 npolarApi.service('NpolarApiSecurity', require('./http/Security'));
 npolarApi.service('NpolarApiResource', require('./http/Resource'));
-npolarApi.factory('npolarApiAuthInterceptor', require('./http/authInterceptor'));
+npolarApi.factory('npolarApiInterceptor', require('./http/HttpInterceptor'));
+npolarApi.factory('NpolarApiMessage', require('./http/HttpMessage'));
+
 npolarApi.service('NpolarApiText', require('./util/Text'));
 npolarApi.directive('npolarJsonText', require('./util/jsonText'));
 
