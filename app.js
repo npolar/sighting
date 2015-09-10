@@ -12,7 +12,10 @@ require('elasticsearch');
 require('formula');
 require('angular-npolar');
 
-var AutoConfig = require('npdc-common').AutoConfig;
+//var environment = require('../environment');
+var npdcCommon = require('npdc-common');
+var AutoConfig = npdcCommon.AutoConfig;
+
 
 var appSighting = angular.module('sighting',[
   'ngRoute',
@@ -25,30 +28,6 @@ var appSighting = angular.module('sighting',[
 /*  '720kb.datepicker', */    /*Calendar*/
   'ngResource'
 ]);
-
-
-// Bootstrap ngResource models using NpolarApiResource
-var resources = [
-  {'path': '/user', 'resource': 'User'},
-  {'path': '/sighting', 'resource': 'Sighting' }
-];
-
-resources.forEach(function (service) {
-  // Expressive DI syntax is needed here
-  appSighting.factory(service.resource, ['NpolarApiResource', function (NpolarApiResource) {
-    return NpolarApiResource.resource(service);
-  }]);
-});
-
-// Routing
-appSighting.config(require('./src/js/router'));
-
-
-// API HTTP interceptor - adds tokens to server + (gir probl routing)
-/* appSighting.config(function ($httpProvider) {
-  $httpProvider.interceptors.push('npolarApiInterceptor');
-}); */
-
 
 //Routing to the individual pages
 //Open - open to all,
@@ -65,17 +44,47 @@ appSighting.controller('NewObservationCtrl', require('./src/js/NewObservationCtr
 appSighting.controller('EditObservationCtrl', require('./src/js/EditObservationCtrl'));
 appSighting.controller('DeleteObservationCtrl', require('./src/js/DeleteObservationCtrl'));
 appSighting.controller('UploadObservationsCtrl', require('./src/js/UploadObservationsCtrl'));
+appSighting.controller('ngLoginLogout', require('./src/js/ngLoginlogout'));
 appSighting.service('SightingDBUpdate', require('./src/js/SightingDBUpdate'));
 appSighting.service('CSVService', require('./src/js/CSVService'));
 appSighting.directive('fileInput', require('./src/js/fileInput'));
 appSighting.constant(require('./src/js/SpeciesGallery'));
 
 
+// Bootstrap ngResource models using NpolarApiResource
+var resources = [
+  {'path': '/user', 'resource': 'User'},
+  {'path': '/sighting', 'resource': 'Sighting' }
+];
+
+
+
+resources.forEach(service => {
+  // Expressive DI syntax is needed here
+  appSighting.factory(service.resource, ['NpolarApiResource', function (NpolarApiResource) {
+    return NpolarApiResource.resource(service);
+  }]);
+});
+
+
+
+// Routing
+appSighting.config(require('./src/js/router'));
+
+
+// API HTTP interceptor - adds tokens to server + (gir probl routing)
+/* appSighting.config(function ($httpProvider) {
+  $httpProvider.interceptors.push('npolarApiInterceptor');
+}); */
+
+// API HTTP interceptor
+appSighting.config($httpProvider => {
+  $httpProvider.interceptors.push('npolarApiInterceptor');
+});
 
 // Inject npolarApiConfig and run
-appSighting.run(function(npolarApiConfig) {
-  var environment; // development | test | production
+appSighting.run(npolarApiConfig => {
   var autoconfig = new AutoConfig(environment);
-  angular.extend(npolarApiConfig, autoconfig);
+  angular.extend(npolarApiConfig, autoconfig, { resources, formula : { template : 'material' } });
   console.log("npolarApiConfig", npolarApiConfig);
 });
