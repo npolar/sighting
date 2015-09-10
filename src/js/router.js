@@ -1,11 +1,11 @@
 /**
  * @ngInject
  */
-var router = function($routeProvider, $locationProvider) {
+var router = function($routeProvider) {
   'use strict';
 
 /*Fix deep linking - ref base tag in index.html */
-  $locationProvider.html5Mode(true).hashPrefix('!');
+ // $locationProvider.html5Mode(true).hashPrefix('!');
 
   $routeProvider.when('/', {
         templateUrl: './src/partials/open/login.html',
@@ -24,10 +24,10 @@ var router = function($routeProvider, $locationProvider) {
         controller: 'SightingCtrl'
       }).
       when('/observations', {
-        templateUrl: './src/partials/user/my_observations.html',
+        templateUrl: './src/partials/user/my_observation.html',
         controller: 'MyObservationsCtrl'
       }).
-      when('/observations/new', {
+      when('/observation', {
         templateUrl: './src/partials/user/new_observation.html',
         controller: 'NewObservationCtrl'
       }).
