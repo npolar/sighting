@@ -7,13 +7,12 @@ var AdminObservationsCtrl = function($scope, $http) {
   var L =require('leaflet');
   require('leaflet-draw');
 
-
   var url = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
   			attrib = '&copy; <a href="http://openstreetmap.org/copyright">Norwegian Polar Institute</a>',
   			tiles = L.tileLayer(url, {maxZoom: 18, attribution: attrib}),
   			map = new L.Map('map', {layers: [tiles], center: new L.LatLng(78.000, 16.000), zoom: 4 });
 
-  		var drawnItems = new L.FeatureGroup();
+      var drawnItems = new L.FeatureGroup();
   		map.addLayer(drawnItems);
 
     	var drawControl = new L.Control.Draw({

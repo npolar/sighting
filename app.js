@@ -4,8 +4,8 @@
 var angular = require('angular');
 require('angular-route');
 require('angular-resource');
-var L = require('leaflet');
-require('leaflet-draw');
+//var L = require('leaflet');
+//require('leaflet-draw');
 /*require('angular-leaflet-directive');*/
 /*require('angularjs-datepicker');*/
 require('elasticsearch');
@@ -13,8 +13,8 @@ require('formula');
 require('angular-npolar');
 
 //var environment = require('../environment');
-var npdcCommon = require('npdc-common');
-var AutoConfig = npdcCommon.AutoConfig;
+/*var npdcCommon = require('npdc-common');
+var AutoConfig = npdcCommon.AutoConfig; */
 
 
 var appSighting = angular.module('sighting',[
@@ -22,7 +22,7 @@ var appSighting = angular.module('sighting',[
   'formula',
   'npolarApi', /*NP logon*/
   'npolarUi',
-  'templates',
+ /* 'templates',*/
 /*  'sightingServices', */   /*Edit service*/
 /*  'leaflet-directive', */   /*Map*/
 /*  '720kb.datepicker', */    /*Calendar*/
@@ -59,17 +59,17 @@ var resources = [
 
 
 
-resources.forEach(service => {
+/*resources.forEach(service => {
   // Expressive DI syntax is needed here
   appSighting.factory(service.resource, ['NpolarApiResource', function (NpolarApiResource) {
     return NpolarApiResource.resource(service);
   }]);
-});
+});*/
 
 
 
 // Routing
-appSighting.config(require('./src/js/router'));
+appSighting.config(require('./router'));
 
 
 // API HTTP interceptor - adds tokens to server + (gir probl routing)
@@ -78,13 +78,13 @@ appSighting.config(require('./src/js/router'));
 }); */
 
 // API HTTP interceptor
-appSighting.config($httpProvider => {
+/*appSighting.config($httpProvider => {
   $httpProvider.interceptors.push('npolarApiInterceptor');
-});
+});*/
 
 // Inject npolarApiConfig and run
-appSighting.run(npolarApiConfig => {
+/*appSighting.run(npolarApiConfig => {
   var autoconfig = new AutoConfig(environment);
   angular.extend(npolarApiConfig, autoconfig, { resources, formula : { template : 'material' } });
   console.log("npolarApiConfig", npolarApiConfig);
-});
+});*/
