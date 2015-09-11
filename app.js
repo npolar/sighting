@@ -13,6 +13,7 @@ require('formula');
 require('angular-npolar');
 require('angularjs-datepicker');
 
+
 var AutoConfig = require('npdc-common').AutoConfig;
 
 var appSighting = angular.module('sighting',[
