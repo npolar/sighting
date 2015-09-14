@@ -1,8 +1,9 @@
+ 'use strict';
 /*Service*/
 
 /*Service to get CSV post*/
+// @ngInject
 var CSVService =  function () {
-    'use strict';
     return {entryObject: {data: null} };
 };
 

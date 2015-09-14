@@ -1,8 +1,9 @@
+'use strict';
 /* Admin module */
 
 /*Controller for CSV print */
+// @ngInject
 var CSVCtrl = function($scope, CSVService) {
-   'use strict';
     $scope.entries = CSVService.entryObject;
 };
 

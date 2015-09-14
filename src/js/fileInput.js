@@ -1,7 +1,8 @@
+'use strict';
 /* directive */
 
+// @ngInject
 var fileInput =  function($parse){
-       'use strict';
       return {
         restrict:'A',
     link:function(scope,elm,attrs){

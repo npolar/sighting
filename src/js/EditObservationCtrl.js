@@ -1,7 +1,8 @@
+'use strict';
 /* user module */
 //Update entry from Svalbard MMS couch database here
+// @ngInject
 var EditObservationCtrl =  function($scope, $routeParams, $http, Sighting, SightingDBUpdate, npolarApiSecurity, npolarApiUser) {
-    'use strict';
     var speciesgallery = require('./SpeciesGallery');
 
 

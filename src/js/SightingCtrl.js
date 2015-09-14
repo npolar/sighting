@@ -1,8 +1,9 @@
+'use strict';
 /*Controller not behind login*/
 
 //Get species gallery for images, education/links to NPs home pages.
+// @ngInject
 var SightingCtrl = function ($scope, $http) {
-   'use strict';
 
 //   require('./SpeciesGalleryCtrl');
 var speciesgallery = require('./SpeciesGallery');

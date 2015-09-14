@@ -1,6 +1,7 @@
+'use strict';
 //Delete entry here by updating so entry is still available
+// @ngInject
 var DeleteObservationCtrl =  function($scope, $http, $routeParams, Sighting, SightingDBUpdate) {
-   'use strict';
 
      //Delete by put update, set _deleted to true
     $scope.submit = function(id) {

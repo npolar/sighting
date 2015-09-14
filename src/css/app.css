@@ -14,7 +14,7 @@ body {
       margin: 0px;
       padding: 20px;
       line-height:150%;
-   /*   background: url('../img/frontpage1200.jpg');
+   /*   background: url('./img/frontpage1200.jpg');
         background-repeat: no-repeat;
         background-position: center center;
         background-attachment: fixed;
@@ -32,7 +32,7 @@ body {
 #right_elem {
    width: 50%;
     float: right;
-   background-image: url('../img/frontpage1200.jpg');
+   background-image: url('./img/frontpage1200.jpg');
    background-repeat: no-repeat;
    background-size:contain;
 
@@ -112,7 +112,7 @@ header {
   float: left;
   width: 40px;
   height: 40px;
-  background: url(../img/icons/logo_40.png) no-repeat center;
+  background: url(./img/icons/logo_40.png) no-repeat center;
   display: block;
   border-bottom: none;
 }
@@ -129,7 +129,7 @@ nav {
   display: hidden;
   width: 100px;
   height: 40px;
-  background: #4C8FEC url(../img/icons/menu_403.png) center;
+  background: #4C8FEC url(./img/icons/menu_403.png) center;
   border-bottom: none;
 
 }
@@ -302,7 +302,7 @@ only screen and (max-width: 1024px){
 #right_elem {
    width: 50%;
     float: right;
-   background-image: url('../img/frontpage480.jpg');
+   background-image: url('./img/frontpage480.jpg');
    background-repeat: no-repeat;
    background-size:contain;
 

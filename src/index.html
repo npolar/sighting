@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" ng-app="sighting" ng-strict-di>
+<head>
+  <meta charset="utf-8">
+  <title>Svalbard Marine Mammal Sightings</title>
+  <!--base href - needed for routing $locationProvider -->
+  <base href="/sighting/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="./npdc-sighting-routes-latest.css">
+
+
+  <!--[if lte IE 8]>
+    <link rel="stylesheet" href="/assets/grids-responsive-old-ie-min.css">
+<![endif]-->
+<!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="/assets/leaflet.css">
+  <link rel="stylesheet" href="/assets/leaflet.draw.css">
+  <link rel="stylesheet" href="/assets/grids-responsive-min.css">
+  <!--<![endif]-->
+
+</head>
+
+<body class="container" ng-controller="SightingCtrl as sighting">
+
+
+<br />
+
+
+<!--Menu -->
+<header>
+  <a href="http://www.npolar.no/no/tjenester/mms/index.html" id="logo"></a>
+
+
+<nav>
+<a href="#" id="menu-icon"></a>
+<ul ng-controller="PanelCtrl as panel">
+  <ul>
+<li><a href ng-click="panel.choosePath(1)" class="current">Login</a></li>
+<li><a href ng-click="panel.choosePath(2)" class="menu">Become observer</a></li>
+<li><a href ng-click="panel.choosePath(3)" class="menu">Species</a></li>
+<li><a href ng-click="panel.choosePath(4)" class="menu">Observers</a></li>
+<li><a href ng-click="panel.choosePath(8)" class="menu">My observations</a></li>
+<li><a href ng-click="panel.choosePath(9)" class="menu">Administrators</a></li>
+</ul>
+</nav>
+
+</header>
+
+<section>
+<div ng-view></div>
+<script src="app.js"></script>
+</section>
+
+
+</body>
+
+</html>

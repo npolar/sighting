@@ -1,27 +1,17 @@
 {
   "version": "0.0.0",
   "private": true,
-  "name": "sighting",
+  "name": "npdc-sighting",
   "description": "Sightings observations marine mammals at Svalbard",
   "repository": "https://github.com/npolar/sighting",
   "license": "MIT",
   "devDependencies": {
-    "browser-sync": "^2.8.2",
-    "browserify": "^11.0.1",
-    "cssify": "^0.7.0",
     "gulp": "^3.9.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-concat-css": "^2.2.0",
-    "gulp-csso": "^1.0.0",
-    "gulp-jshint": "^1.11.2",
-    "gulp-minify-css": "^1.2.0",
-    "gulp-notify": "^2.2.0",
-    "gulp-uglify": "^1.2.0",
-    "http-server": "^0.8.0",
-    "leaflet": "^0.7.3",
-    "leaflet-draw": "^0.2.3",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "npdc-gulp": "npolar/npdc-gulp",
+    "babelify": "*",
+    "browserify": "*",
+    "browserify-ngannotate": "*",
+    "partialify": "*"
   },
   "scripts": {
     "start": "http-server -a 0.0.0.0 -p 8000"
@@ -29,16 +19,23 @@
   "dependencies": {
     "angular": "^1.4.3",
     "angular-leaflet-directive": "^0.8.5",
-    "angular-npolar": "git://github.com/npolar/angular-npolar.git#http-message",
+    "angular-npolar": "npolar/angular-npolar",
     "angular-resource": "^1.4.3",
     "angular-route": "^1.4.3",
     "angularjs-datepicker": "^0.2.6",
     "elasticsearch": "^6.0.0",
-    "formula": "git://github.com/npolar/formula.git",
+    "formula": "npolar/formula",
     "leaflet": "^0.7.3",
     "leaflet-draw": "^0.2.3",
     "lodash": "^3.10.1",
-    "npdc-common": "git://github.com/npolar/npdc-common.git",
-    "tv4": "^1.2.3"
+    "npdc-common": "npolar/npdc-common",
+    "purecss": "^0.6.0"
+  },
+  "browserify": {
+    "transform": [
+      "babelify",
+      "partialify",
+      "browserify-ngannotate"
+    ]
   }
 }

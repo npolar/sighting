@@ -1,6 +1,7 @@
+'use strict';
 //New entry created here
+// @ngInject
 var NewObservationCtrl = function($scope, $http, $routeParams, npolarApiSecurity, npolarApiUser, Sighting, SightingDBUpdate) {
-   'use strict';
    var speciesgallery = require('./SpeciesGallery');
 
 

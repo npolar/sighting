@@ -1,13 +1,15 @@
+ 'use strict';
 /*Admin module*/
 
 /* Respond to search to get relevant entries */
 /* First respond to squares drawn */
+// @ngInject
 var AdminObservationsCtrl = function($scope, $http) {
- 'use strict';
-  var L =require('leaflet');
-  require('leaflet-draw');
 
-  var url = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
+        //Remove old map before reloading
+        if (map != undefined) { map.remove(); }
+
+        var url = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
   			attrib = '&copy; <a href="http://openstreetmap.org/copyright">Norwegian Polar Institute</a>',
   			tiles = L.tileLayer(url, {maxZoom: 18, attribution: attrib}),
   			map = new L.Map('map', {layers: [tiles], center: new L.LatLng(78.000, 16.000), zoom: 4 });

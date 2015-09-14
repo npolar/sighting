@@ -1,8 +1,9 @@
+'use strict';
 /*Controller not behind login*/
 
 /* Menu choices */
+// @ngInject
 var PanelCtrl = function ($location) {
-   'use strict';
 //sightingControllers.controller("PanelCtrl", ['$location', function($location){
    this.tab = 1;
 

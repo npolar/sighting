@@ -1,8 +1,9 @@
+'use strict';
 /* User module */
 
 //Controller for Excel file upload
+// @ngInject
 var UploadObservationsCtrl = function($scope, $http) {
-     'use strict';
      var angular = require('angular');
 
      $scope.filesChanged = function(elm){
