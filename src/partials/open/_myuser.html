@@ -3,7 +3,7 @@
 
     <button ng-click="logout()">Logout</button> <b>{{ user.name }}</b> (<a title="View profile for user {{user.username}}" ng-href="/user/{{user.username}}">{{ user.username }} </a>)
 
-    <p>Login session expires {{ 1000*user.exp | date:'HH:mm' }}</p>
+   <!-- <p>Login session expires {{ 1000*user.exp | date:'HH:mm' }}</p>  -->
 
     <!--<section>
     <h2>Recent edits</h2>
@@ -13,13 +13,13 @@
     </dl>
     </section>-->
 
-    <section>
+   <!-- <section>
       <h2>Permissions</h2>
       <dl ng-repeat="system in user.systems">
         <dt>{{ system.uri }}</dt>
         <dd>{{ system.rights }}</dd>
       </dl>
-    </section>
+    </section>-->
   </div>
 
   <div ng-show="security.notAuthenticated()">
@@ -30,13 +30,16 @@
         <label for="username">Username</label>
         <input type="text" ng-model="user.username" id="username" placeholder="Username (email)">
       </div>
+      <p></p>
       <div>
         <label for="password">Password</label>
         <input type="password" id="password" ng-model="user.password" placeholder="Password">
       </div>
+      <p></p>
       <button id="login2" type="submit" ng-click="login()">Login</button>
       </section>
-      <a ng-href="/user/reset?username={{user.username}}">Forgot password?</a> <a href="/user/register">Sign up</a></section>
+      <a ng-href="/user/reset?username={{user.username}}">Forgot password?</a>&nbsp;
+      <a href="/user/register">Sign up</a></section>
     </form>
   </div>
 </div>
