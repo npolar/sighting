@@ -26,7 +26,7 @@ var router = function($routeProvider, $locationProvider) {
         templateUrl: 'partials/user/my_observations.html',
         controller: 'MyObservationsCtrl'
       }).
-       when('/observations/new', {
+       when('/observation/new', {
         templateUrl: 'partials/user/upload.html',
         controller: 'UploadObservationsCtrl'
       }).

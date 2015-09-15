@@ -4,8 +4,6 @@
 var angular = require('angular');
 require('angular-route');
 require('angular-resource');
-var L = require('leaflet');
-require('leaflet-draw');
 /*require('angular-leaflet-directive');*/
 /*require('angularjs-datepicker');*/
 require('elasticsearch');

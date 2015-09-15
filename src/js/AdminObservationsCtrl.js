@@ -6,8 +6,11 @@
 // @ngInject
 var AdminObservationsCtrl = function($scope, $http) {
 
+  var L = require('leaflet');
+  require('leaflet-draw');
+
         //Remove old map before reloading
-        if (map != undefined) { map.remove(); }
+        if (map !== undefined) { map.remove(); }
 
         var url = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
   			attrib = '&copy; <a href="http://openstreetmap.org/copyright">Norwegian Polar Institute</a>',
@@ -164,7 +167,6 @@ var AdminObservationsCtrl = function($scope, $http) {
 
       /*Convert to the search date format */
       function convertDate(idate) {
-               'use strict';
                console.log(idate);
                 var temp_date = idate.substring(0,4) + '-' + idate.substring(5,7) + '-' +idate.substring(8,10);
                 temp_date += 'T00:00:00.000';
