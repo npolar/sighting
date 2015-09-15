@@ -3,8 +3,10 @@
 
 /* Menu choices */
 // @ngInject
-var PanelCtrl = function ($location) {
-//sightingControllers.controller("PanelCtrl", ['$location', function($location){
+var PanelCtrl = function ($location, $scope, NpolarApiSecurity) {
+
+   $scope.security = NpolarApiSecurity;
+
    this.tab = 1;
 
    this.selectTab = function(setTab) {

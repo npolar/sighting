@@ -3,12 +3,13 @@
 
 <h1><b>Map search <b></h1>
 
+<!--<div ng-if="security.isAuthorized('read', endpoint)"> -->
+
 <a href="quality_check">Quality check</a>
 
 
-<div ng-controller ='AdminObservationsCtrl'>
 
-<form ng-submit="submit()" class="pure-form pure-form-stacked">
+<form ng-submit="submit()" class="pure-form pure-form-stacked" ng-controller ='AdminObservationsCtrl'>
 
 
 <!-- View map -->
@@ -24,7 +25,6 @@
 
 
   <label for="search">General search:&nbsp;</label><input type="text" placeholder="Search Svalbard Sightings.." ng-model="search" />
-
 
 
   <legend>or field search:</legend>
@@ -93,4 +93,12 @@
 
 
 </form>
-</div>
+
+
+<!--</div> -->
+<!-- if not logged in -->
+ <!--   <div ng-if="!security.isAuthenticated()">
+  <h1><b>Administrators <b></h1>
+  <p>You need an administrator's account in order to use this module. </p>
+</div> -->
+

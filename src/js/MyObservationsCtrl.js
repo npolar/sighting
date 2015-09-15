@@ -4,14 +4,30 @@
 
 //Fetch from svalbard sightings couch database here the owner's observations
 // @ngInject
-var MyObservationsCtrl = function($scope, $http, SightingDBGet, npolarApiSecurity, npolarApiConfig) {
-   $scope.security = npolarApiSecurity;
+var MyObservationsCtrl = function($scope, $http, Sighting, NpolarApiSecurity, npolarApiConfig) {
+   $scope.security = NpolarApiSecurity;
 
 
-    $scope.full = SightingDBGet.get({}, function(){
+
+
         console.log($scope.full);
-        console.log("user");
-    });
+    //    console.log("user");
+    //});
+
+
+Sighting.feed({ fields: "*"}, response => {
+    //$scope.filters = response._filters();
+    //$scope.feed = response.feed;
+    $scope.feed = response.feed;
+
+
+  console.log($scope.feed);
+   });
+
+
+
+
+
 };
 
 

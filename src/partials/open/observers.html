@@ -9,8 +9,9 @@
     </p>
 
 
-    <p ng-repeat="observer in full.feed.facets[0].recorded_by">
-     <b>{{ observer.term }}&nbsp;</b>
+
+    <p ng-repeat="observer in feed.entries">
+     <b>{{ observer.recorded_by }}&nbsp;</b>
     </p>
 
 

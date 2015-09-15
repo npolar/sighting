@@ -4,18 +4,28 @@
 /* Respond to search to get relevant entries */
 /* First respond to squares drawn */
 // @ngInject
-var AdminObservationsCtrl = function($scope, $http) {
+var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
+
+  $scope.security = NpolarApiSecurity;
+
+  console.log($scope);
+
 
   var L = require('leaflet');
+  L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images/';
   require('leaflet-draw');
 
-        //Remove old map before reloading
-        if (map !== undefined) { map.remove(); }
+  console.log(L);
 
-        var url = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
-  			attrib = '&copy; <a href="http://openstreetmap.org/copyright">Norwegian Polar Institute</a>',
-  			tiles = L.tileLayer(url, {maxZoom: 18, attribution: attrib}),
-  			map = new L.Map('map', {layers: [tiles], center: new L.LatLng(78.000, 16.000), zoom: 4 });
+
+
+          //Remove old map before reloading
+      //  if (map !== undefined) { map.remove(); }
+
+      var url = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
+  		attrib = '&copy; <a href="http://openstreetmap.org/copyright">Norwegian Polar Institute</a>',
+  		tiles = L.tileLayer(url, {maxZoom: 18, attribution: attrib}),
+      map = new L.Map('map', {layers: [tiles], center: new L.LatLng(78.000, 16.000), zoom: 4 });
 
       var drawnItems = new L.FeatureGroup();
   		map.addLayer(drawnItems);
@@ -46,13 +56,16 @@ var AdminObservationsCtrl = function($scope, $http) {
           /*fetch zero and second coordinate pair to get a rectangle */
           $scope.lat1= res[0][0][0];
           $scope.lng1= res[0][0][1];
-          $scope.lat2= res[0][2][0];
-          $scope.lng2= res[0][2][1];
-  				layer.bindPopup('A popup!');
+          $scope.$parent.lat2= res[0][2][0];
+          this.lng2 = res[0][2][1];
+
+          console.log($scope);
           console.log(res[0][0][0]);
   			}
 
+        console.log(layer);
   			drawnItems.addLayer(layer);
+        //map.addLayer(layer);
   		});
 
       /* Execute this function when search button is pressed */
@@ -61,6 +74,8 @@ var AdminObservationsCtrl = function($scope, $http) {
 
          /* First find out which paramaters are not empty */
          var sok = ''; var lat = ''; var lng = ''; var edate = '';
+         console.log("hei");
+         console.log($scope);
 
 
          /* If event_date exists */

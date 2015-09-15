@@ -2,6 +2,9 @@
 
 <h1><b>Upload Excelfile. <b></h1>
 
+<div ng-if="security.isAuthenticated()">
+
+
 
 <form ng-controller="UploadObservationsCtrl">
     <input type="file" onchange="angular.element(this).scope().filesChanged(this)" multiple />
@@ -10,8 +13,10 @@
 </form>
 
 
-
-
+</div>
+<div ng-show="!security.isAuthenticated()">
+  <p>Please <a href="#/">log in</a> in order to upload excel files.</p>
+</div>
 
 
 

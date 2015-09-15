@@ -4,6 +4,8 @@
 <p></p>
 <p></p>
 
+<!--<div ng-if="security.isAuthenticated()"> -->
+
 <a href="upload">Upload Excelsheet</a>
  <a href="observation/new">New</a>
 
@@ -16,7 +18,7 @@
     </thead>
 
     <tbody>
-    <tr ng-repeat="entry in full.feed.entries"> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
+    <tr ng-repeat="entry in feed.entries"> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
         <td>{{ entry.species}}&nbsp;</td>
         <td>{{ entry.locality }}&nbsp;</td>
         <td>{{ entry.latitude }}&nbsp;</td>
@@ -31,3 +33,8 @@
 </table>
 </div>
 </div>
+
+<!--</div>
+<div ng-show="!security.isAuthenticated()">
+  <p>Please <a href="#/">log in</a> in order to view your sightings</p>
+</div> -->

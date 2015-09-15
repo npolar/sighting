@@ -10,6 +10,7 @@ require('elasticsearch');
 require('formula');
 require('angular-npolar');
 
+
 //var environment = require('../environment');
 var npdcCommon = require('npdc-common');
 var AutoConfig = npdcCommon.AutoConfig;
@@ -20,9 +21,8 @@ var appSighting = angular.module('sighting',[
   'formula',
   'npolarApi', /*NP logon*/
   'npolarUi',
- /* 'templates',*/
 /*  'sightingServices', */   /*Edit service*/
-/*  'leaflet-directive', */   /*Map*/
+ /* 'leaflet-directive',*/
 /*  '720kb.datepicker', */    /*Calendar*/
   'ngResource',
   'templates'
@@ -79,8 +79,8 @@ appSighting.config(function ($httpProvider) {
 
 // Inject npolarApiConfig and run
 appSighting.run(npolarApiConfig => {
-  var environment = 'production'; // 'test', 'development'
-  var autoconfig = new AutoConfig(environment);
+  //var environment; // 'test', 'development'
+  var autoconfig = new AutoConfig('production');
   angular.extend(npolarApiConfig, autoconfig, { resources });
-  console.log("npolarApiConfig", npolarApiConfig);
+  //console.log("npolarApiConfig", npolarApiConfig);
 });

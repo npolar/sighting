@@ -3,6 +3,7 @@
 <h1><b> Quality check new observations<b></h1>
 <p></p>
 <p></p>
+<div ng-if="security.isAuthorized('read', endpoint)">
 
 <p></p>
  <div ng-controller="QualityCtrl as entry">
@@ -23,4 +24,12 @@
    </tbody>
 </table>
 </div>
+</div>
+
+
+</div>
+<!-- if not logged in -->
+    <div ng-if="!security.isAuthenticated()">
+  <h1><b>Administrators <b></h1>
+  <p>You need an administrator's account in order to use this module. </p>
 </div>
