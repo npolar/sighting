@@ -1,4 +1,4 @@
- 'use strict';
+  'use strict';
 /*Admin module*/
 
 /* Respond to search to get relevant entries */
@@ -23,34 +23,34 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
       //  if (map !== undefined) { map.remove(); }
 
       var url = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
-  		attrib = '&copy; <a href="http://openstreetmap.org/copyright">Norwegian Polar Institute</a>',
-  		tiles = L.tileLayer(url, {maxZoom: 18, attribution: attrib}),
+      attrib = '&copy; <a href="http://openstreetmap.org/copyright">Norwegian Polar Institute</a>',
+      tiles = L.tileLayer(url, {maxZoom: 18, attribution: attrib}),
       map = new L.Map('map', {layers: [tiles], center: new L.LatLng(78.000, 16.000), zoom: 4 });
 
       var drawnItems = new L.FeatureGroup();
-  		map.addLayer(drawnItems);
+      map.addLayer(drawnItems);
 
-    	var drawControl = new L.Control.Draw({
-  			draw: {
-  				position: 'topleft',
-  				polygon: false,
-  				polyline: false,
-  				circle: false,
+      var drawControl = new L.Control.Draw({
+        draw: {
+          position: 'topleft',
+          polygon: false,
+          polyline: false,
+          circle: false,
           marker: false,
-  			},
-  			edit: {
-  				featureGroup: drawnItems
-  			}
-  		});
-  		map.addControl(drawControl);
+        },
+        edit: {
+          featureGroup: drawnItems
+        }
+      });
+      map.addControl(drawControl);
 
       //When finishing the drawing catch event
-  		map.on('draw:created', function (e) {
-  			var type = e.layerType,
-  				layer = e.layer;
+      map.on('draw:created', function (e) {
+        var type = e.layerType,
+          layer = e.layer;
 
         //When finishing a rectangle, show lat lon in input fields
-  			if (type === 'rectangle') {
+        if (type === 'rectangle') {
           var res = (layer.toGeoJSON()).geometry.coordinates;
 
           /*fetch zero and second coordinate pair to get a rectangle */
@@ -61,12 +61,12 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
 
           console.log($scope);
           console.log(res[0][0][0]);
-  			}
+        }
 
         console.log(layer);
-  			drawnItems.addLayer(layer);
+        drawnItems.addLayer(layer);
         //map.addLayer(layer);
-  		});
+      });
 
       /* Execute this function when search button is pressed */
       $scope.submit = function() {
@@ -193,7 +193,7 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
 
  // create a map in the "map" div, set the view to a given place and zoom
 /*$scope.submit = function() {
-	console.log($scope);
+  console.log($scope);
     $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
     $scope.full = data;
     console.log(data);
@@ -204,3 +204,9 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
 
 
 module.exports = AdminObservationsCtrl;
+
+
+
+
+
+

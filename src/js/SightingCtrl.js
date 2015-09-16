@@ -6,6 +6,7 @@
 var SightingCtrl = function ($scope, $http, NpolarApiSecurity, Sighting) {
 $scope.security = NpolarApiSecurity;
 //   require('./SpeciesGalleryCtrl');
+   console.log("hei");
 var speciesgallery = require('./SpeciesGallery');
 
    $scope.species = speciesgallery;
@@ -16,15 +17,11 @@ var speciesgallery = require('./SpeciesGallery');
     //$scope.feed = response.feed;
     $scope.feed = response.feed;
 
-
-  console.log($scope.feed);
+    console.log($scope.feed);
    });
 
 
-   //Get observers
- /*  $http.jsonp('https://api.npolar.no/sighting/?q=&facets=recorded_by&size-facet=1000&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
-     $scope.full = data;
-   });*/
+
 };
 
 

@@ -6,7 +6,6 @@ require('angular-route');
 require('angular-resource');
 /*require('angular-leaflet-directive');*/
 /*require('angularjs-datepicker');*/
-require('elasticsearch');
 require('formula');
 require('angular-npolar');
 
