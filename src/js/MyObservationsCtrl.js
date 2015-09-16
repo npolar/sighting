@@ -8,13 +8,6 @@ var MyObservationsCtrl = function($scope, $http, Sighting, NpolarApiSecurity, np
    $scope.security = NpolarApiSecurity;
 
 
-
-
-        console.log($scope.full);
-    //    console.log("user");
-    //});
-
-
 Sighting.feed({ fields: "*"}, response => {
     //$scope.filters = response._filters();
     //$scope.feed = response.feed;

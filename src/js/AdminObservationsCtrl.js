@@ -4,18 +4,16 @@
 /* Respond to search to get relevant entries */
 /* First respond to squares drawn */
 // @ngInject
-var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
+var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting) {
 
   $scope.security = NpolarApiSecurity;
-
-  console.log($scope);
+  $scope.species = require('./SpeciesGallery');
 
 
   var L = require('leaflet');
   L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images/';
   require('leaflet-draw');
-
-  console.log(L);
+  require('elasticsearch');
 
 
 
@@ -56,26 +54,33 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
           /*fetch zero and second coordinate pair to get a rectangle */
           $scope.lat1= res[0][0][0];
           $scope.lng1= res[0][0][1];
-          $scope.$parent.lat2= res[0][2][0];
-          this.lng2 = res[0][2][1];
+          $scope.lat2= res[0][2][0];
+          $scope.lng2 = res[0][2][1];
 
-          console.log($scope);
-          console.log(res[0][0][0]);
+          console.log($scope.lat1);
+
         }
 
-        console.log(layer);
+
         drawnItems.addLayer(layer);
-        //map.addLayer(layer);
+
       });
 
       /* Execute this function when search button is pressed */
       $scope.submit = function() {
+          console.log("hei");
          var markers = [];
+
+
+          console.log($scope.lat1);
+          console.log($scope.lng1);
+          console.log($scope.lat2);
+          console.log($scope.lng2);
 
          /* First find out which paramaters are not empty */
          var sok = ''; var lat = ''; var lng = ''; var edate = '';
-         console.log("hei");
-         console.log($scope);
+
+
 
 
          /* If event_date exists */
@@ -138,7 +143,15 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
 
          console.log(sok);
 
-         $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ sok +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
+
+         Sighting.feed({ fields: "*"}, response => {
+             //$scope.filters = response._filters();
+             //$scope.feed = response.feed;
+             var feed = response.feed;
+
+
+              console.log($scope.feed);
+
 
            //console.log($scope);
 
@@ -149,13 +162,13 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
 
 
          /* Fetch the lat/lon entries. Have to switch lat/lon for display */
-         for (var i=0; i< data.feed.entries.length; i++) {
+         for (var i=0; i< feed.entries.length; i++) {
             markers.push({
-                     lng: parseFloat(data.feed.entries[i].longitude),
-                     lat: parseFloat(data.feed.entries[i].latitude),
+                     lng: parseFloat(feed.entries[i].longitude),
+                     lat: parseFloat(feed.entries[i].latitude),
                      focus: true,
                      draggable: false,
-                     message: data.feed.entries[i].locality,
+                     message: feed.entries[i].locality,
                      icon: redIcon
             });
          }
@@ -167,7 +180,7 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
          markers = [];
 
          //Display data for all entries
-         $scope.entries = data.feed.entries;
+         $scope.entries = feed.entries;
 
          //Transfer info to CSV file via service
        /*  CSVService.entryObject = $scope.entries; */
@@ -175,9 +188,9 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
          //Get hostname
          $scope.hostname = location.host;
         // console.log($scope.hostname);
-      });};
+      });
 
-      };
+       }; };
 
 
       /*Convert to the search date format */
@@ -188,19 +201,6 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
                 console.log(temp_date);
                 return temp_date;
       }
-
-
-
- // create a map in the "map" div, set the view to a given place and zoom
-/*$scope.submit = function() {
-  console.log($scope);
-    $http.jsonp('http://apptest.data.npolar.no/sighting/?q='+ $scope.search +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
-    $scope.full = data;
-    console.log(data);
-});
-}; */  /*$scope.submit*/
-/*};*/
-
 
 
 module.exports = AdminObservationsCtrl;

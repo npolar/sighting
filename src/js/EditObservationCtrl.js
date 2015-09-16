@@ -3,7 +3,7 @@
 //Update entry from Svalbard MMS couch database here
 // @ngInject
 var EditObservationCtrl =  function($scope, $routeParams, $http, Sighting) {
-    var speciesgallery = require('./SpeciesGallery');
+    //var speciesgallery = require('./SpeciesGallery');
 
     $scope.formulaData = {
       schema: "https://api.npolar.no/schema/sighting.json",
