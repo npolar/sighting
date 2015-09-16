@@ -6,6 +6,6 @@ npdcGulp.loadAppTasks(gulp, {
     'css': ['node_modules/purecss/build/pure.css'].concat(npdcGulp.baseConfig.deps.css),
     'assets': ['node_modules/purecss/build/grids-responsive-old-ie-min.css',
     		'node_modules/leaflet/dist/leaflet.css',
-    		'node_modules/leaflet-draw/dist/leaflet.draw.css',
-    		'node_modules/purecss/build/grids-responsive-min.css']
+    		'node_modules/purecss/build/grids-responsive-min.css',
+    		'node_modules/leaflet-draw/dist/**/*']
   }});
