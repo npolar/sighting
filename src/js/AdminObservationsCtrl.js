@@ -10,6 +10,7 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting)
   $scope.species = require('./SpeciesGallery');
 
 
+
   var L = require('leaflet');
   L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images/';
   require('leaflet-draw');
@@ -52,23 +53,27 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting)
           var res = (layer.toGeoJSON()).geometry.coordinates;
 
           /*fetch zero and second coordinate pair to get a rectangle */
-          $scope.lat1= res[0][0][0];
-          $scope.lng1= res[0][0][1];
-          $scope.lat2= res[0][2][0];
-          $scope.lng2 = res[0][2][1];
+         // document.getElementById('lat1').value = res[0][0][0];
+
+          $scope.$apply(function () {
+             $scope.lat1= res[0][0][0];
+             $scope.lng1= res[0][0][1];
+             $scope.lat2= res[0][2][0];
+             $scope.lng2 = res[0][2][1];
+          });
 
           console.log($scope.lat1);
 
+
         }
 
+          drawnItems.addLayer(layer);
 
-        drawnItems.addLayer(layer);
 
       });
 
       /* Execute this function when search button is pressed */
       $scope.submit = function() {
-          console.log("hei");
          var markers = [];
 
 
@@ -77,25 +82,27 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting)
           console.log($scope.lat2);
           console.log($scope.lng2);
 
+
+
          /* First find out which paramaters are not empty */
          var sok = ''; var lat = ''; var lng = ''; var edate = '';
 
 
 
 
-         /* If event_date exists */
+         // Build search string - if event_date exists
          if (typeof $scope.event_date1 !== "undefined" && $scope.event_date1 !== "") {
-                /*Remember to transform into the correct format*/
+                //Remember to transform into the correct format
                 edate = '&filter-event_date=' + convertDate($scope.event_date1) + '..';
 
                 if (typeof $scope.event_date2 !== "undefined" && $scope.event_date2 !== "") {
-                    /*Transform edate to correct format*/
+                    //Transform edate to correct format
                     edate = edate + convertDate($scope.event_date2);
 
                 }
-         /*Else if lat2 exists */
+         //Else if lat2 exists
        } else if (typeof $scope.event_date2 !== "undefined" && $scope.event_date2 !== "") {
-                    /*Transform edate to correct format*/
+                    //Transform edate to correct format
                     edate = '&filter-event_date=..' + convertDate($scope.event_date2);
          }
 
@@ -174,7 +181,8 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting)
          }
 
          //Display markers on map
-         $scope.markers = markers;
+          $scope.markers = markers;
+
 
          //Reset for next search
          markers = [];

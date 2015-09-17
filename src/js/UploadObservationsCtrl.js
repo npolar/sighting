@@ -4,7 +4,7 @@
 //Controller for Excel file upload
 // @ngInject
 var UploadObservationsCtrl = function($scope, $http) {
-     var angular = require('angular');
+
 
      $scope.filesChanged = function(elm){
         $scope.files=elm.files;
@@ -12,9 +12,9 @@ var UploadObservationsCtrl = function($scope, $http) {
        // console.log($scope.files);
      };
      $scope.upload = function() {
-        var fd = new FormData();
+        //var fd = new FormData();
 
-        angular.forEach($scope.files, function(file){
+      /*  angular.forEach($scope.files, function(file){
           fd.append('file',file);
         });
 
@@ -31,7 +31,7 @@ var UploadObservationsCtrl = function($scope, $http) {
         })
         .error(function(data, status, headers, config) {
          console.log('error' + data);
-        });
+        }); */
    };
 };
 

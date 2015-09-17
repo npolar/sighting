@@ -5,11 +5,11 @@ var DeleteObservationCtrl =  function($scope, $http, $routeParams, Sighting, Sig
 
      //Delete by put update, set _deleted to true
     $scope.submit = function(id) {
-          var entry = new Sighting($scope.entry);
+       /*   var entry = new Sighting($scope.entry);
           //Delete by setting _deleted to true
           entry._deleted = true;
           entry.$update();
-          console.log("entry object: ", entry);
+          console.log("entry object: ", entry); */
    };
 };
 

@@ -8,9 +8,9 @@ var NewObservationCtrl = function($scope, $http, $routeParams, npolarApiSecurity
    /*If new has an id, then it's the old id to be copyed into a new entry */
    if  ($routeParams.id) {
        /*Fetch info from copying the old id's info */
-      $scope.entry = SightingDBUpdate.get({id: $routeParams.id }, function(){
-      });
-     /* console.log($scope.entry); */
+     //---- $scope.entry = SightingDBUpdate.get({id: $routeParams.id }, function(){
+     //-- });
+      console.log($scope.entry);
 
       /* Shorten dates for display only*/
    /*   if (typeof $scope.entry.event_date != "undefined" && $scope.entry.event_date != "") {
