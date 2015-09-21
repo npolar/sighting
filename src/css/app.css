@@ -117,7 +117,7 @@ header {
   border-bottom: none;
 }
 
-nav {
+nav#nav_id {
 
   float: right;
   padding: 20px;
@@ -250,7 +250,6 @@ section {
 }
 
 /*}
-
   @media
 only screen and (max-width: 760px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {*/

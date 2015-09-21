@@ -2,38 +2,37 @@
 /* user module */
 //Update entry from Svalbard MMS couch database here
 // @ngInject
-var EditObservationCtrl =  function($scope, $routeParams, $http, Sighting) {
+var EditObservationCtrl =  function($scope, $controller, $routeParams, $http, Sighting) {
     //var speciesgallery = require('./SpeciesGallery');
 
-    $scope.formulaData = {
+     // EditController -> NpolarEditController
+  $controller('NpolarEditController', { $scope: $scope });
+
+  // Dataset -> npolarApiResource -> ngResource
+  $scope.resource = Sighting;
+
+  // Formula ($scope.formula set by parent)
+  $scope.formula.schema = 'https://api.npolar.no/schema/sighting';
+  $scope.formula.form = './partials/user/formula.json';
+  $scope.formula.validateHidden = true;
+  $scope.formula.saveHidden = true;
+
+  // edit (or new) action
+  $scope.edit();
+
+};
+
+
+  /*  $scope.formulaData = {
       schema: "https://api.npolar.no/schema/sighting.json",
       form: "./partials/user/formula.json",
       language: "./partials/user/translation.json",
       model: {},
       onsave: function(doc) {
-        alert("test");
+        alert($scope);
     }
-    };
+    }; */
 
 
-  /*  var entry = SightingDBUpdate.get({id: $routeParams.id }, function(){
-    $scope.entry = entry;
-    //Set abbreviated dates
-    $scope.entry.event_date = entry.event_date.substring(0,10);
-    $scope.entry.expedition.start_date = entry.expedition.start_date.substring(0,10);
-    $scope.entry.expedition.end_date = entry.expedition.end_date.substring(0,10);
-     console.log('edit ' + JSON.stringify(entry));
-    $scope.species = speciesgallery;
-
-  });*/
-
-    //Store update
-    /*$scope.submit = function(id) {
-      var entry = new Sighting($scope.entry);
-      console.log('edit ' + JSON.stringify(entry));
-      console.log("http "  + JSON.stringify($http.defaults.headers.common));
-      entry.$update();
-  };*/
-};
 
 module.exports = EditObservationCtrl;

@@ -1,17 +1,9 @@
 
 <h1><b> New observation <b></h1>
 
-<div ng-if="security.isAuthenticated()">
+<!--<div ng-if="security.isAuthenticated()"> -->
 
-
-<form novalidate name="entryForm" class="pure-form pure-form-stacked" ng-controller="NewObservationCtrl as entry" >
-
-<div  ng-include="'partials/user/form.html'"></div>
-
-
-<br/><br />
-<input type="submit" ng-click="submit()" value="Save" />
-</form>
+<form formula="formulaData"></form>
 
 <br /><br/>
 
@@ -20,10 +12,10 @@
 <!--<input type="submit"  ng-click="saveExcel()" value="Save Excel" /><br /><br /> -->
 
 
-</div>
+<!--</div>
 <div ng-show="!security.isAuthenticated()">
   <p>Please <a href="#/">log in</a> in order to upload excel files.</p>
-</div>
+</div> -->
 
 
 

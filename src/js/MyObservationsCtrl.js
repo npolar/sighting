@@ -13,13 +13,7 @@ Sighting.feed({ fields: "*"}, response => {
     //$scope.feed = response.feed;
     $scope.feed = response.feed;
 
-
-  console.log($scope.feed);
    });
-
-
-
-
 
 };
 
