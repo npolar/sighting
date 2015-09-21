@@ -3,7 +3,7 @@
 
 <h1><b>CSV <b></h1>
 
-<div ng-if="security.isAuthorized('read', endpoint)">
+<!--<div ng-if="security.isAuthorized('read', endpoint)">  -->
 
 <div ng-controller="CSVCtrl">
 Id | Date | Latitude | Longitude | Location | Location comment | Species | Adult M | Adult F | Adult | Subadult | Polar bear condition | Cub/calf/pup | Bear cubs | Unidentified | Total | Habitat | Occurrence remark | Excel filename | Expedition name | Expedition contact info | Expedition organisation | Platform | Platform comment  <br />
@@ -21,12 +21,12 @@ Id | Date | Latitude | Longitude | Location | Location comment | Species | Adult
 </div>
 
 
-</div>
+<!-- </div>  -->
 <!-- if not logged in -->
-    <div ng-if="!security.isAuthenticated()">
+ <!--   <div ng-if="!security.isAuthenticated()">
   <h1><b>Administrators <b></h1>
   <p>You need an administrator's account in order to use this module. </p>
-</div>
+</div>  -->
 
 
 

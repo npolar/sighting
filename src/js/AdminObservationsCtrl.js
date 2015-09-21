@@ -4,10 +4,12 @@
 /* Respond to search to get relevant entries */
 /* First respond to squares drawn */
 // @ngInject
-var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting) {
+var AdminObservationsCtrl = function($scope, $http, CSVService, NpolarApiSecurity, Sighting) {
 
   $scope.security = NpolarApiSecurity;
   $scope.species = require('./SpeciesGallery');
+
+  console.log($scope.species);
 
 
 
@@ -55,24 +57,44 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting)
           /*fetch zero and second coordinate pair to get a rectangle */
          // document.getElementById('lat1').value = res[0][0][0];
 
-          $scope.$apply(function () {
+
              $scope.lat1= res[0][0][0];
              $scope.lng1= res[0][0][1];
              $scope.lat2= res[0][2][0];
              $scope.lng2 = res[0][2][1];
-          });
+             $scope.$apply();
 
           console.log($scope.lat1);
-
-
         }
-
           drawnItems.addLayer(layer);
-
-
       });
 
-      /* Execute this function when search button is pressed */
+      map.on('draw:edited', function (e) {
+
+           var layers = e.layers;
+           layers.eachLayer(function (layer) {
+             //update lng/lat from search
+             var res = (layer.toGeoJSON()).geometry.coordinates;
+
+                //fetch zero and second coordinate pair to get a rectangle
+                $scope.lat1= res[0][0][0];
+                $scope.lng1= res[0][0][1];
+                $scope.lat2= res[0][2][0];
+                $scope.lng2= res[0][2][1];
+           });
+        });
+
+        map.on('draw:deleted', function (e) {
+
+         //Remove lat/lng from search inputs
+         $scope.lat1= $scope.lng1= $scope.lat2 = $scope.lng2 = undefined;
+
+         //Remove markers and squares
+         $scope.markers = [];
+        });
+
+
+      // Execute this function when search button is pressed
       $scope.submit = function() {
          var markers = [];
 
@@ -83,12 +105,8 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting)
           console.log($scope.lng2);
 
 
-
-         /* First find out which paramaters are not empty */
+         // First find out which paramaters are not empty
          var sok = ''; var lat = ''; var lng = ''; var edate = '';
-
-
-
 
          // Build search string - if event_date exists
          if (typeof $scope.event_date1 !== "undefined" && $scope.event_date1 !== "") {
@@ -106,8 +124,7 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting)
                     edate = '&filter-event_date=..' + convertDate($scope.event_date2);
          }
 
-
-         /* If lat1 exists */
+/* If lat1 exists */
          if (typeof $scope.lat1 !== "undefined" && $scope.lat1 !== "") {
                 lat = '&filter-latitude=' + $scope.lat1 + '..';
                 console.log(lat);
@@ -133,11 +150,14 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting)
 
          }
 
-         /*Include species */
-         if (typeof $scope.species !== "undefined") {
-                sok = sok + '&filter-species=' + $scope.species.family;
-                sok = sok.replace(/ /g,"+");
-         }
+
+          /*Include species search if it exists */
+          console.log($scope.species);
+          console.log("-------------");
+    if ((typeof $scope.species !== "undefined") && ($scope.species !== null) && ($scope.species !== '' )) {
+           sok = sok + '&filter-species=' + ($scope.species.family).toLowerCase();
+           sok = sok.replace(/ /g,"+");
+    }
 
          /*Sum up the query */
          if ($scope.search) {
@@ -146,72 +166,63 @@ var AdminObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting)
             sok = sok+lat+lng+edate;
          }
 
-         //console.log($scope.search);
+        $http.jsonp('http://api.npolar.no/sighting/?q='+ sok +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
 
-         console.log(sok);
+        console.log(data);
 
+        var redIcon = {
+           iconUrl: 'img/icons/reddot.png',
+           iconSize:   [8, 8] // size of the icon
+        };
 
-         Sighting.feed({ fields: "*"}, response => {
-             //$scope.filters = response._filters();
-             //$scope.feed = response.feed;
-             var feed = response.feed;
+    /* Fetch the lat/lon entries. Have to switch lat/lon for display */
+    for (var i=0; i< data.feed.entries.length; i++) {
+       markers.push({
+                lat: parseFloat(data.feed.entries[i].longitude),
+                lng: parseFloat(data.feed.entries[i].latitude),
+                focus: true,
+                draggable: false,
+                message: data.feed.entries[i].locality,
+                icon: redIcon
+       });
+    }
 
-
-              console.log($scope.feed);
-
-
-           //console.log($scope);
-
-         var redIcon = {
-         iconUrl: 'img/icons/reddot.png',
-         iconSize:     [8, 8] // size of the icon
-       };
-
-
-         /* Fetch the lat/lon entries. Have to switch lat/lon for display */
-         for (var i=0; i< feed.entries.length; i++) {
-            markers.push({
-                     lng: parseFloat(feed.entries[i].longitude),
-                     lat: parseFloat(feed.entries[i].latitude),
-                     focus: true,
-                     draggable: false,
-                     message: feed.entries[i].locality,
-                     icon: redIcon
-            });
-         }
-
-         //Display markers on map
-          $scope.markers = markers;
+    //Display markers on map
+    $scope.markers = markers;
 
 
-         //Reset for next search
-         markers = [];
 
-         //Display data for all entries
-         $scope.entries = feed.entries;
+    //Reset for next search
+    markers = [];
 
-         //Transfer info to CSV file via service
-       /*  CSVService.entryObject = $scope.entries; */
+    //Display data for all entries
+    $scope.entries = data.feed.entries;
+    //$scope.entries = $scope.full.feed.entries;
 
-         //Get hostname
-         $scope.hostname = location.host;
-        // console.log($scope.hostname);
-      });
+    //Transfer info to CSV file via service
+    CSVService.entryObject = $scope.entries;
 
-       }; };
+    //Get hostname
+    $scope.hostname = location.host;
+   // console.log($scope.hostname)
 
 
-      /*Convert to the search date format */
-      function convertDate(idate) {
+  });
+ };
+  };
+
+
+  /*Convert to the search date format */
+  function convertDate(idate) {
                console.log(idate);
                 var temp_date = idate.substring(0,4) + '-' + idate.substring(5,7) + '-' +idate.substring(8,10);
                 temp_date += 'T00:00:00.000';
                 console.log(temp_date);
                 return temp_date;
-      }
+  }
 
 
-module.exports = AdminObservationsCtrl;
+  module.exports = AdminObservationsCtrl;
 
 
 
