@@ -4,14 +4,10 @@
 /* Respond to search to get relevant entries */
 /* First respond to squares drawn */
 // @ngInject
-var AdminObservationsCtrl = function($scope, $http, CSVService, NpolarApiSecurity, Sighting) {
+var AdminObservationsCtrl = function($scope, $http, SPECIES, CSVService, NpolarApiSecurity, Sighting) {
 
   $scope.security = NpolarApiSecurity;
-  $scope.species = require('./SpeciesGallery');
-
-  console.log($scope.species);
-
-
+  $scope.species = SPECIES;
 
   var L = require('leaflet');
   L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images/';

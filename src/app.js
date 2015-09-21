@@ -9,7 +9,6 @@ require('angular-resource');
 require('formula');
 require('angular-npolar');
 
-
 //var environment = require('../environment');
 var npdcCommon = require('npdc-common');
 var AutoConfig = npdcCommon.AutoConfig;
@@ -26,6 +25,7 @@ var appSighting = angular.module('sighting',[
   'ngResource',
   'templates'
 ]);
+
 
 //Routing to the individual pages
 //Open - open to all,
@@ -48,7 +48,8 @@ appSighting.service('SightingDBGet', require('./js/SightingDBGet'));
 appSighting.service('CSVService', require('./js/CSVService'));
 appSighting.directive('fileInput', require('./js/fileInput'));
 appSighting.directive('npolarLoginLogout2', require('./js/ngloginLogout2'));
-appSighting.constant(require('./js/SpeciesGallery'));
+appSighting.constant('SPECIES', require('./js/SpeciesGallery'));
+
 
 
 // Bootstrap ngResource models using NpolarApiResource

@@ -1,0 +1,30 @@
+{
+	"iso639-3": "eng",
+
+	"fields": {
+		"species": {
+			"values": [
+				"Polar bear (Isbjørn)",
+				"Walrus (Hvalross)",
+				"Bearded seal (Storkobbe)",
+				"Harbor seal (Steinkobbe)",
+				"Harp seal (Grønlandssel)",
+				"Hooded seal (Klappmyss)",
+				"Ringed seal (Ringsel)",
+				"Beluga whale (Hvithval)",
+				"Balaenoptera musculus (Blåhval)",
+				"Bowhead whale (Grønlandshval)",
+				"Common minke whale (Vågehval)",
+				"Fin whale (Finnhval)",
+				"Humpback whale (Knølhval)",
+				"Killer whale (Spekhogger)",
+				"Narwhal (Narhval)",
+				"Northern northern-bottlenose-whale (Nebbhval)",
+				"Pilot whale (Grindhval)",
+				"Sei whale (Seihval)",
+				"Sperm whale (Spermhval)",
+				"White beaked dolphin (Kvitnos)"
+			]
+		}
+	}
+}

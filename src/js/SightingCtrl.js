@@ -3,13 +3,9 @@
 
 //Get species gallery for images, education/links to NPs home pages.
 // @ngInject
-var SightingCtrl = function ($scope, $http, NpolarApiSecurity, Sighting) {
-$scope.security = NpolarApiSecurity;
-//   require('./SpeciesGalleryCtrl');
-   console.log("hei");
-var speciesgallery = require('./SpeciesGallery');
-
-   $scope.species = speciesgallery;
+var SightingCtrl = function ($scope, $http, NpolarApiSecurity, Sighting, SPECIES) {
+  $scope.security = NpolarApiSecurity;
+  $scope.species = SPECIES;
 
 
   Sighting.feed({ fields: "*"}, response => {
