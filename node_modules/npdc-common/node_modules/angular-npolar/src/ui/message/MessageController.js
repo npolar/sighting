@@ -40,7 +40,7 @@ var MessageController = function ($scope, $route, $http, $location, $mdToast, np
       hideDelay: 5000,
       action: "OK",
       locals: { message: message, explanation: explanation },
-      position: "bottom right"
+      position: "bottom left"
     }).then(function() {
       // noop
     });

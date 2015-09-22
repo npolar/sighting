@@ -6,9 +6,11 @@ var angular = require('angular');
  * @ngInject
  */
 var User = function(base64, npolarApiConfig) {
+  
+  let storage = localStorage;
 
   this.getUser = function() {
-    var user = sessionStorage.getItem(this.getStorageKey());
+    var user = storage.getItem(this.getStorageKey());
     if (angular.isString(user)) {
       return JSON.parse(base64.decode(user));
     } else {
@@ -18,11 +20,11 @@ var User = function(base64, npolarApiConfig) {
 
   this.setUser = function(user) {
   var key = this.getStorageKey(user);
-    sessionStorage.setItem(key, base64.encode(JSON.stringify(user)));
+    storage.setItem(key, base64.encode(JSON.stringify(user)));
   };
 
   this.removeUser = function() {
-    sessionStorage.removeItem(this.getStorageKey());
+    storage.removeItem(this.getStorageKey());
   };
 
   this.getStorageKey = function() {

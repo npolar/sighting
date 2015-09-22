@@ -4,7 +4,6 @@
 
 <div ng-if="security.isAuthenticated()">
 
-hei
 <form ng-controller="UploadObservationsCtrl">
     <input type="file" onchange="angular.element(this).scope().filesChanged(this)" multiple />
     <button ng-click="upload()">Upload</button>

@@ -8,5 +8,6 @@ npdcGulp.loadAppTasks(gulp, {
     		'node_modules/leaflet/dist/leaflet.css',
     		'node_modules/purecss/build/grids-responsive-min.css',
     		'node_modules/leaflet-draw/dist/**/*',
-    		'node_modules/formula/dist/**/*']
+    		'node_modules/formula/dist/**/*',
+    		'node_modules/xlsx/*']
   }});

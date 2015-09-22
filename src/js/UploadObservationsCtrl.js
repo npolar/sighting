@@ -3,15 +3,21 @@
 
 //Controller for Excel file upload
 // @ngInject
-var UploadObservationsCtrl = function($scope, $http) {
+var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
+    $scope.security = NpolarApiSecurity;
 
 
      $scope.filesChanged = function(elm){
         $scope.files=elm.files;
         $scope.$apply();
-       // console.log($scope.files);
      };
+
      $scope.upload = function() {
+
+        var XLSX = require('xlsx');
+          var workbook = XLSX.readFile('test.xlsx');
+        //console.log(__dirname);
+
         //var fd = new FormData();
 
       /*  angular.forEach($scope.files, function(file){
