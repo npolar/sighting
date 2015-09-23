@@ -1,0 +1,111 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'npdc-gulp' ]
+2 info using npm@2.11.3
+3 info using node@v0.12.7
+4 verbose install initial load of /home/siri/projects/sighting/package.json
+5 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/angular/package.json
+6 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/angular-leaflet-directive/package.json
+7 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/angular-npolar/package.json
+8 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/angular-resource/package.json
+9 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/angular-route/package.json
+10 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/angularjs-datepicker/package.json
+11 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/babelify/package.json
+12 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/browserify/package.json
+13 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/browserify-ngannotate/package.json
+14 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/elasticsearch/package.json
+15 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/formula/package.json
+16 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/gulp/package.json
+17 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/jszip/package.json
+18 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/leaflet/package.json
+19 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/leaflet-draw/package.json
+20 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/lodash/package.json
+21 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/npdc-common/package.json
+22 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/npdc-gulp/package.json
+23 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/partialify/package.json
+24 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/path/package.json
+25 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/purecss/package.json
+26 verbose installManyTop reading scoped package data from /home/siri/projects/sighting/node_modules/xlsx/package.json
+27 info package.json jszip@2.5.0 license should be a valid SPDX license expression
+28 info package.json leaflet@0.7.5 No license field.
+29 info package.json leaflet-draw@0.2.3 license should be a valid SPDX license expression
+30 info package.json path@0.12.7 path is also the name of a node core module.
+31 info package.json purecss@0.6.0 license should be a valid SPDX license expression
+32 verbose readDependencies loading dependencies from /home/siri/projects/sighting/package.json
+33 silly cache add args [ 'npdc-gulp', null ]
+34 verbose cache add spec npdc-gulp
+35 silly cache add parsed spec { raw: 'npdc-gulp',
+35 silly cache add   scope: null,
+35 silly cache add   name: 'npdc-gulp',
+35 silly cache add   rawSpec: '',
+35 silly cache add   spec: '*',
+35 silly cache add   type: 'range' }
+36 silly addNamed npdc-gulp@*
+37 verbose addNamed "*" is a valid semver range for npdc-gulp
+38 silly addNameRange { name: 'npdc-gulp', range: '*', hasData: false }
+39 silly mapToRegistry name npdc-gulp
+40 silly mapToRegistry using default registry
+41 silly mapToRegistry registry https://registry.npmjs.org/
+42 silly mapToRegistry uri https://registry.npmjs.org/npdc-gulp
+43 verbose addNameRange registry:https://registry.npmjs.org/npdc-gulp not in flight; fetching
+44 verbose request uri https://registry.npmjs.org/npdc-gulp
+45 verbose request no auth needed
+46 info attempt registry request try #1 at 15:13:12
+47 verbose request id 823afedd345eb756
+48 http request GET https://registry.npmjs.org/npdc-gulp
+49 http 404 https://registry.npmjs.org/npdc-gulp
+50 verbose headers { 'content-type': 'application/json',
+50 verbose headers   'cache-control': 'max-age=0',
+50 verbose headers   'content-length': '2',
+50 verbose headers   'accept-ranges': 'bytes',
+50 verbose headers   date: 'Wed, 23 Sep 2015 13:13:18 GMT',
+50 verbose headers   via: '1.1 varnish',
+50 verbose headers   age: '0',
+50 verbose headers   connection: 'keep-alive',
+50 verbose headers   'x-served-by': 'cache-ams4139-AMS',
+50 verbose headers   'x-cache': 'MISS',
+50 verbose headers   'x-cache-hits': '0',
+50 verbose headers   'x-timer': 'S1443013997.847214,VS0,VE167' }
+51 silly get cb [ 404,
+51 silly get   { 'content-type': 'application/json',
+51 silly get     'cache-control': 'max-age=0',
+51 silly get     'content-length': '2',
+51 silly get     'accept-ranges': 'bytes',
+51 silly get     date: 'Wed, 23 Sep 2015 13:13:18 GMT',
+51 silly get     via: '1.1 varnish',
+51 silly get     age: '0',
+51 silly get     connection: 'keep-alive',
+51 silly get     'x-served-by': 'cache-ams4139-AMS',
+51 silly get     'x-cache': 'MISS',
+51 silly get     'x-cache-hits': '0',
+51 silly get     'x-timer': 'S1443013997.847214,VS0,VE167' } ]
+52 verbose stack Error: Registry returned 404 for GET on https://registry.npmjs.org/npdc-gulp
+52 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:239:14)
+52 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:170:14)
+52 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:354:22)
+52 verbose stack     at Request.emit (events.js:110:17)
+52 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1207:14)
+52 verbose stack     at Request.emit (events.js:129:20)
+52 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1153:12)
+52 verbose stack     at IncomingMessage.emit (events.js:129:20)
+52 verbose stack     at _stream_readable.js:908:16
+52 verbose stack     at process._tickCallback (node.js:355:11)
+53 verbose statusCode 404
+54 verbose pkgid npdc-gulp
+55 verbose cwd /home/siri/projects/sighting
+56 error Linux 3.13.0-24-generic
+57 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install" "npdc-gulp"
+58 error node v0.12.7
+59 error npm  v2.11.3
+60 error code E404
+61 error 404 Registry returned 404 for GET on https://registry.npmjs.org/npdc-gulp
+61 error 404
+61 error 404 'npdc-gulp' is not in the npm registry.
+61 error 404 You should bug the author to publish it (or use the name yourself!)
+61 error 404 It was specified as a dependency of 'npdc-sighting'
+61 error 404
+61 error 404 Note that you can also install from a
+61 error 404 tarball, folder, http url, or git url.
+62 verbose exit [ 1, true ]
