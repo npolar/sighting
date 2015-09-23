@@ -36,12 +36,11 @@
 <nav id="nav_id">
 <a href="#" id="menu-icon"></a>
 <ul ng-controller="PanelCtrl as panel">
-  <ul>
 <li><a href ng-click="panel.choosePath('login')" class="current">Login</a></li>
 <li><a href ng-click="panel.choosePath('observe')" class="menu">Become observer</a></li>
 <li><a href ng-click="panel.choosePath('species')" class="menu">Species</a></li>
 <li ng-show="security.isAuthenticated()"><a href ng-click="panel.choosePath('observers')" class="menu">Observers</a></li>
-<li ng-show="security.isAuthenticated()"><a href ng-click="panel.choosePath(my_observations)" class="menu">My observations</a></li>
+<li ng-show="security.isAuthenticated()"><a href ng-click="panel.choosePath('my_observations')" class="menu">My observations</a></li>
 <li ng-if="security.isAuthenticated()"><a href ng-click="panel.choosePath('admin')" class="menu">Administrators</a></li>
 </ul>
 </nav>

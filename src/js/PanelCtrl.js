@@ -14,7 +14,6 @@ var PanelCtrl = function ($location, $scope, NpolarApiSecurity) {
    };
 
    this.choosePath = function(chooseTab) {
-    console.log(chooseTab);
      /* select the right path */
      if (chooseTab === 'observe') {
         $location.path("/observe");
@@ -22,7 +21,7 @@ var PanelCtrl = function ($location, $scope, NpolarApiSecurity) {
         $location.path("/learn");
      } else if (chooseTab === 'observers'){
         $location.path("/observers");
-     } else if (chooseTab === 'my_observations"'){
+     } else if (chooseTab === 'my_observations'){
         $location.path("/observations");
      } else if (chooseTab === 'admin'){
         $location.path("/all");
