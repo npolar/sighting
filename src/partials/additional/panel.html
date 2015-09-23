@@ -3,30 +3,18 @@
 <div  ng-controller="PanelCtrl as panel">
 <nav>
 <ul>
-   <li ng-class="{ active: panel.isSelected(1) }">
-      <a href ng-click="panel.choosePath(1)">Login</a>
+   <li ng-class="{ active: panel.isSelected('login') }">
+      <a href ng-click="panel.choosePath('login')">Login</a>
    </li>
-   <li ng-class="{ active: panel.isSelected(2) }">
-      <a href ng-click="panel.choosePath(2)">Become observer</a>
+   <li ng-class="{ active: panel.isSelected('observer') }">
+      <a href ng-click="panel.choosePath('observer')">Become observer</a>
    </li>
-   <li ng-class="{ active: panel.isSelected(3) }">
-      <a href ng-click="panel.choosePath(3)">Species</a>
+   <li ng-class="{ active: panel.isSelected('species') }">
+      <a href ng-click="panel.choosePath('species')">Species</a>
    </li>
-   <li ng-class="{ active: panel.isSelected(4) }">
-       <a href ng-click="panel.choosePath(4)">Participants</a>
+   <li ng-class="{ active: panel.isSelected('observers') }">
+       <a href ng-click="panel.choosePath('observers')">Observers</a>
    </li>
- <!--  <li ng-class="{ active: panel.isSelected(5) }">
-       <a href ng-click="panel.choosePath(5)">Photos</a>
-   </li>
-   <li ng-class="{ active: panel.isSelected(6) }">
-       <a href ng-click="panel.choosePath(6)">Statistics</a>
-   </li>  -->
-<!--   <li ng-class="{ active: panel.isSelected(7) }">
-       <a href ng-click="panel.choosePath(7)">Documents</a>
-   </li>
-    <li ng-class="{ active: panel.isSelected(13) }">
-       <a href ng-click="panel.choosePath(13)">Maps</a>
-   </li>  -->
     <li id="second" ng-class="{ active: panel.isSelected(8) }">
        <a href ng-click="panel.choosePath(8)">My observations</a>
        <ul class="second-level-menu">

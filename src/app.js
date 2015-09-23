@@ -35,6 +35,7 @@ appSighting.controller('PanelCtrl', require('./js/PanelCtrl'));
 appSighting.controller('SightingCtrl', require('./js/SightingCtrl'));
 appSighting.controller('AdminObservationsCtrl', require('./js/AdminObservationsCtrl'));
 appSighting.controller('QualityCtrl', require('./js/QualityCtrl'));
+appSighting.controller('ObserversCtrl', require('./js/ObserversCtrl'));
 appSighting.controller('CSVCtrl', require('./js/CSVCtrl'));
 appSighting.controller('MyObservationsCtrl', require('./js/MyObservationsCtrl'));
 appSighting.controller('ViewObservationCtrl', require('./js/ViewObservationCtrl'));

@@ -19,8 +19,8 @@ var router = function($routeProvider, $locationProvider) {
         controller: 'SightingCtrl'
       }).
       when('/observers', {
-        templateUrl: 'partials/open/observers.html',
-        controller: 'SightingCtrl'
+        templateUrl: 'partials/user/observers.html',
+        controller: 'ObserversCtrl'
       }).
       when('/observations', {
         templateUrl: 'partials/user/my_observations.html',
@@ -30,10 +30,6 @@ var router = function($routeProvider, $locationProvider) {
         templateUrl: 'partials/user/new_observation.html',
         controller: 'NewObservationCtrl'
       }).
-    /*  when('/new_observation', {
-        templateUrl: './src/partials/user/new_observation.html',
-        controller: 'NewObservationCtrl'
-      }).*/
       when('/observations/:id', {
         templateUrl: 'partials/user/view_observation.html',
         controller: 'ViewObservationCtrl'

@@ -5,7 +5,9 @@
 <div ng-if="security.isAuthenticated()">
 
 <form ng-controller="UploadObservationsCtrl">
-    <input type="file" onchange="angular.element(this).scope().filesChanged(this)" multiple />
+
+
+    <input type="file" onchange="angular.element(this).scope().filesChanged(this)" multiple accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
     <button ng-click="upload()">Upload</button>
     <li ng-repeat="file in files">{{file.name}}</li>
 </form>

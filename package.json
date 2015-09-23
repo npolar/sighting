@@ -6,11 +6,11 @@
   "repository": "https://github.com/npolar/sighting",
   "license": "MIT",
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "npdc-gulp": "npolar/npdc-gulp",
     "babelify": "*",
     "browserify": "*",
     "browserify-ngannotate": "*",
+    "gulp": "^3.9.0",
+    "npdc-gulp": "npolar/npdc-gulp",
     "partialify": "*"
   },
   "scripts": {
@@ -30,6 +30,7 @@
     "leaflet-draw": "^0.2.3",
     "lodash": "^3.10.1",
     "npdc-common": "npolar/npdc-common",
+    "path": "^0.12.7",
     "purecss": "^0.6.0",
     "xlsx": "^0.8.0"
   },

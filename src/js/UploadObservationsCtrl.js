@@ -9,18 +9,15 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
 
      $scope.filesChanged = function(elm){
         $scope.files=elm.files;
+        console.log($scope.files);
         $scope.$apply();
      };
 
-     $scope.upload = function() {
+     $scope.upload = function(elm) {
+        console.log($scope.files);
 
-        var XLSX = require('xlsx');
-          var workbook = XLSX.readFile('test.xlsx');
-        //console.log(__dirname);
-
-        //var fd = new FormData();
-
-      /*  angular.forEach($scope.files, function(file){
+        var fd = new FormData();
+        elm.forEach($scope.files, function(file){
           fd.append('file',file);
         });
 
@@ -28,7 +25,7 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
 
         $http.post('https://apptest.data.npolar.no:4444/upload_excel', fd,
         {
-          transformrequest:angular.identity,
+          transformrequest:elm.identity,
           headers:{'Content-Type':'multipart/form-data'}
         } )
         .success(function(data, status, headers, config) {
@@ -37,7 +34,7 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
         })
         .error(function(data, status, headers, config) {
          console.log('error' + data);
-        }); */
+        });
    };
 };
 

@@ -7,38 +7,25 @@ var PanelCtrl = function ($location, $scope, NpolarApiSecurity) {
 
    $scope.security = NpolarApiSecurity;
 
-   this.tab = 1;
+   this.tab = 'login';
 
    this.selectTab = function(setTab) {
      this.tab = setTab;
    };
 
    this.choosePath = function(chooseTab) {
+    console.log(chooseTab);
      /* select the right path */
-     if (chooseTab === 2) {
+     if (chooseTab === 'observe') {
         $location.path("/observe");
-     } else if (chooseTab === 3){
+     } else if (chooseTab === 'species'){
         $location.path("/learn");
-     } else if (chooseTab === 4){
+     } else if (chooseTab === 'observers'){
         $location.path("/observers");
-     } else if (chooseTab === 5){
-        $location.path("/photos");
-     } else if (chooseTab === 6){
-        $location.path("/stats");
-     } else if (chooseTab === 7){
-        $location.path("/docs");
-     } else if (chooseTab === 8){
+     } else if (chooseTab === 'my_observations"'){
         $location.path("/observations");
-     } else if (chooseTab === 9){
+     } else if (chooseTab === 'admin'){
         $location.path("/all");
-     } else if (chooseTab === 10){
-        $location.path("/observation");
-     } else if (chooseTab === 11){
-        $location.path("/upload");
-     } else if (chooseTab === 12){
-        $location.path("/profile");
-     } else if (chooseTab === 13){
-        $location.path("/maps");
      } else {
         $location.path("/");
      }

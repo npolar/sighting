@@ -1,0 +1,32 @@
+<h1><b>Observers<b></h1>
+<p></p>
+<p></p>
+
+<div ng-if="security.isAuthenticated()">
+
+<p></p>
+<p>
+    	Our observers are valuable to us! We wish to thank:
+    </p>
+
+
+
+    <p ng-repeat="observer in feed.entries">
+     <b>{{ observer.recorded_by }}&nbsp;</b>
+    </p>
+
+
+</div>
+<div ng-show="!security.isAuthenticated()">
+  <p>Please <a href="#/">log in</a> in order to view all observers.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
