@@ -14,28 +14,36 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
      };
 
      $scope.upload = function(elm) {
-        console.log($scope.files);
+        var XLSX = require('js-xlsx');
 
-        var fd = new FormData();
-        elm.forEach($scope.files, function(file){
-          fd.append('file',file);
-        });
+        var files = $scope.files;
+        var i,f;
 
-        console.log(fd);
 
-        $http.post('https://apptest.data.npolar.no:4444/upload_excel', fd,
-        {
-          transformrequest:elm.identity,
-          headers:{'Content-Type':'multipart/form-data'}
-        } )
-        .success(function(data, status, headers, config) {
-         console.log('success: ' + data);
+        for (i = 0, f = files[i]; i !== files.length; ++i) {
+          var reader = new FileReader();
+          //  var name = f.name;
+            reader.onload = (function(theFile){
+              var fileName = theFile.name;
+              return function(e){
+                 var data = e.target.result;
+                 var workbook = XLSX.read(data, {type: 'binary'});
+                  //Read first workbook
+                 var sheet_name_list = workbook.SheetNames;
+                 sheet_name_list.forEach(function(y) { // iterate through sheets
+                    var worksheet = workbook.Sheets[y];
+                    for (var z in worksheet) {
+                    // all keys that do not begin with "!" correspond to cell addresses
+                        if(z[0] === '!') continue;
+                        console.log(y + "!" + z + "=" + JSON.stringify(worksheet[z].v));
+                    }
+}               );
+              };
+            })(f);
+          reader.readAsBinaryString(f);
 
-        })
-        .error(function(data, status, headers, config) {
-         console.log('error' + data);
-        });
-   };
+   }
+};
 };
 
 
