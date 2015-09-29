@@ -37,81 +37,77 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
 
                  sheet_name_list.forEach(function(y) { // iterate through sheets
                     var worksheet = workbook.Sheets[y];
-                    var entry = {}, ident, exped = {};
+                    var entry = {}, exped = {};
 
-                    for (var z in worksheet) {
+                    for (var q in worksheet) {
                     // all keys that do not begin with "!" correspond to cell addresses
                     //y is heading text, z is cellno, worksheet[z].v is cell content
-                    if (z[0] !== '!') {
+
                            //Expedition
-                           if (z ==="K2") { exped['other_info'] = worksheet[z].v;}
-                           if (z ==="K3") { exped["contact_info"] = worksheet[z].v;}
-                           if (z ==="K4") { exped["organisation"] = worksheet[z].v;}
-                           if (z ==="K5") { var start_date = getJsDateFromExcel(worksheet[z].v);}
-                           if (z ==="K6") { var end_date = getJsDateFromExcel(worksheet[z].v);}
-                           if (z ==="K7") { exped["platform"] = worksheet[z].v;}
+                           if (q ==="K2") { exped.other_info = worksheet[q].v;}
+                           if (q ==="K3") { exped.contact_info = worksheet[q].v;}
+                           if (q ==="K4") { exped.organisation = worksheet[q].v;}
+                           if (q ==="K5") { var start_d = getJsDateFromExcel(worksheet[q].v); exped.start_date = start_d;}
+                           if (q ==="K6") { var end_d = getJsDateFromExcel(worksheet[q].v); exped.end_date = end_d;}
+                           if (q ==="K7") { exped.platform = worksheet[q].v;}
+                    }
 
-                           //For z bigger than 7
-                           if (z ==="A20") { var event_date = getJsDateFromExcel(worksheet[z].v)}
-                           if (z ==="B20") { entry["latitude"] = worksheet[z].v;}
-                           if (z ==="C20") { entry["longitude"] = worksheet[z].v;}
-                           if (z ==="D20") { entry["locality"] = worksheet[z].v;}
-                           if (z ==="E20") { entry["species"] = worksheet[z].v;}
-                           if (z ==="F20") { entry["adult_f"] = worksheet[z].v;}
-                           if (z ==="G20") { entry["adult_m"]= worksheet[z].v;}
-                           if (z ==="H20") { entry["adult"]= worksheet[z].v;}
-                           if (z ==="I20") { entry["sub_adult"]= worksheet[z].v;}
-                           if (z ==="J20") { entry["polar_bear_condition"]= worksheet[z].v;}
-                           if (z ==="K20") { entry["cub_calf_pup"]= worksheet[z].v;}
-                           if (z ==="L20") { entry["bear_cubs"]= worksheet[z].v;}
-                           if (z ==="M20") { entry["unidentified"]= worksheet[z].v;}
-                           if (z ==="N20") { entry["dead_alive"]= worksheet[z].v;}
-                           if (z ==="O20") { entry["total"]= worksheet[z].v;}
-                           if (z ==="P20") { entry["habitat"]= worksheet[z].v;}
-                           if (z ==="Q20") { entry["occurrence_remarks"]= worksheet[z].v;}
+                     //A few more values applied to each entry
+                    entry.recorded_by = (NpolarApiSecurity.getUser()).name;
+                    entry.created_by = (NpolarApiSecurity.getUser()).name;
+                     var date = new Date();
+                    entry.created = date.toISOString().substring(0,10) + 'T00:00:00Z';
 
-
-                           if (z ==="A20") {
-                            console.log(getJsDateFromExcel(worksheet[z].v));
-                           }
-
-                         //Recorded_by
-                         entry['recorded_by'] = (NpolarApiSecurity.getUser()).name;
-
-
-                     //  console.log(y + "!" + z + "=" + JSON.stringify(worksheet[z].v));
-
-
-
-                      }
-                  } //For -worksheet
-                    //Convert dates to ISO8601
-                    exped['start_date'] = start_date;
-                    exped['end_date'] = end_date;
-                    entry['event_date'] = event_date;
-
-                    //A few more values applied to each entry
-                    entry['created'] = + 'T00:00:00Z';
-                    entry['updated'] = + 'T00:00:00Z';
-                    entry['created_by'] = (NpolarApiSecurity.getUser()).name;
 
                     //Excel file
-                    var excel = {}
-                    excel['filename'] = f.name;
+                    var excel = {};
+                    excel.filename = f.name;
                     excel['content-type'] =  f.type;
                     excel['content-size'] = f.size;
-                    //Need to add a timestamp to filename to ensure uniqueness
-                    //which is local time now in iso8601
-                    var date = new Date();
-                    excel['timestamp'] =  date.toISOString();
-                    console.log(excel['timestamp']);
 
-                    //Add subobjects to main object entry
-                    entry['excelfile'] =  excel;
-                    entry['expedition'] =  exped;
 
-                    //Save entry
-                    console.log(JSON.stringify(entry));
+                    for (var z in worksheet) {
+                           var num = z.substring(1);
+                          // console.log(num, z, worksheet["A"+num]);
+                          //Excel lines start at 20 so check bigger than 19
+                           if ((num > 19) && (worksheet["A"+num] !== undefined) && (typeof worksheet["A"+num].v === "number" )) {
+
+                              if (z === ("A"+num)) { var event_d = getJsDateFromExcel(worksheet[z].v); exped.event_date = event_d;}
+                              if (z === ("B"+num)) { entry.latitude = worksheet[z].v;}
+                              if (z === ("C"+num)) { entry.longitude = worksheet[z].v;}
+                              if (z === ("D"+num)) { worksheet[z].v === "(select or write placename)" ? (entry.locality = "") : (entry.locality = worksheet[z].v)}
+                              if (z === ("E"+num)) { worksheet[z].v === "(select species)" ? (entry.species = "") : (entry.species = worksheet[z].v)}
+                              if (z === ("F"+num)) { entry.adult_m = worksheet[z].v;}
+                              if (z === ("G"+num)) { entry.adult_f = worksheet[z].v;}
+                              if (z === ("H"+num)) { entry.adult = worksheet[z].v;}
+                              if (z === ("I"+num)) { entry.sub_adult = worksheet[z].v;}
+                              if (z === ("J"+num)) {  worksheet[z].v === "(select condition)" ? (entry.polar_bear_condition = "") : (entry.polar_bear_condition = worksheet[z].v)}
+                              if (z === ("K"+num)) { entry.cub_calf_pup = worksheet[z].v;}
+                              if (z === ("L"+num)) { worksheet[z].v === "(select years)" ? (entry.bear_cubs = "") : (entry.bear_cubs = worksheet[z].v)}
+                              if (z === ("M"+num)) { entry.unidentified = worksheet[z].v;}
+                              if (z === ("N"+num)) { entry.dead_alive = worksheet[z].v;}
+                              if (z === ("O"+num)) { entry.total = worksheet[z].v;}
+                              if (z === ("P"+num)) { worksheet[z].v === "(select habitat)" ? (entry.habitat = "") : (entry.habitat = worksheet[z].v)}
+                              if (z === ("Q"+num)) { entry.occurrence_remarks= worksheet[z].v;}
+
+                              //Need to add a timestamp to filename to ensure uniqueness
+                              //which is local time now in iso8601
+                              var date = new Date();
+                               excel.timestamp =  date.toISOString().replace(/\.[0-9]{3}/g,"");
+                                //console.log(excel.timestamp);
+
+                                //Add subobjects to main object entry
+                                entry.excelfile =  excel;
+                                entry.expedition =  exped;
+
+
+                                //Save entry, P is last letter
+                                if (z.substring(0,1) === "P") {
+                                   console.log(z, JSON.stringify(entry));
+                                }
+
+                       } //typeof
+                  } //For -worksheet
 
                   });
               };
@@ -145,18 +141,18 @@ function getJsDateFromExcel(excelDate) {
     }
 
     Date.prototype.toISOString = function() {
-      return this.getUTCFullYear()
-       + '-' + pad( this.getUTCMonth() + 1 )
-       + '-' + pad( this.getUTCDate() )
-       + 'T' + pad( this.getUTCHours() )
-       + ':' + pad( this.getUTCMinutes() )
-       + ':' + pad( this.getUTCSeconds() )
-       + 'Z';
+      return this.getUTCFullYear() +
+         '-' + pad( this.getUTCMonth() + 1 ) +
+         '-' + pad( this.getUTCDate() ) +
+         'T' + pad( this.getUTCHours() ) +
+         ':' + pad( this.getUTCMinutes() ) +
+         ':' + pad( this.getUTCSeconds() ) +
+         'Z';
     };
 
   }() ); }
  else {//Get rid of date extension
-  return date.toISOString().replace(".000","");
+  return date.toISOString().replace(/\.[0-9]{3}/g,"");
 }
 }
 
