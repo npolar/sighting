@@ -4,3 +4,4 @@ excel_upload/**
 image_upload/*
 bundle.js
 dist
+coverage

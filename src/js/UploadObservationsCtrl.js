@@ -13,7 +13,6 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
      };
 
      $scope.upload = function(elm) {
-        var XLSX = require('js-xlsx');
 
         var files = $scope.files;
         var i,f;
@@ -72,7 +71,8 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
                           //Excel lines start at 20 so check bigger than 19
                            if ((num > 19) && (worksheet["A"+num] !== undefined) && (typeof worksheet["A"+num].v === "number" )) {
 
-                              if (z === ("A"+num)) { var event_d = getJsDateFromExcel(worksheet[z].v); exped.event_date = event_d;}
+                              if (z === ("A"+num)) { var event_d = getJsDateFromExcel(worksheet[z].v);
+                               exped.event_date = event_d;}
                               if (z === ("B"+num)) { entry.latitude = worksheet[z].v;}
                               if (z === ("C"+num)) { entry.longitude = worksheet[z].v;}
                               if (z === ("D"+num)) { worksheet[z].v === "(select or write placename)" ? (entry.locality = "") : (entry.locality = worksheet[z].v)}
@@ -125,8 +125,9 @@ function getJsDateFromExcel(excelDate) {
 
   // 1. Subtract number of days between Jan 1, 1900 and Jan 1, 1970, plus 1 (Google "excel leap year bug")
   // 2. Convert to milliseconds.
+  //Next leap year 2016
 
-  var date = new Date((excelDate - (25567 + 1))*86400*1000);
+  var date = new Date((excelDate - (25567+2))*86400*1000);
 
   //Browser that does not have toISOString
   if ( !Date.prototype.toISOString ) {
