@@ -40,36 +40,15 @@ var LoginController = function ($scope, $http, $route, $location, $rootScope, $t
     var now = Date.now();
 
     $scope.user = { name: token.name || $scope.user.username,
-      email: $scope.user.username,
-      username: $scope.user.username,
+      email: token.email || $scope.user.username,
       jwt: data.token,
-      uri: token.uri,
-      exp: token.exp,
+      uri: token.uri || '',
       expires: expires,
-      systems: token.systems
+      systems: token.systems || []
     };
 
     NpolarApiUser.setUser($scope.user);
-
-    // Merge user name, email, and uuid from the Person API
-    // FIXME
-    if (/^http/.test(token.uri)) {
-
-      $http.get(token.uri).success(function(person) {
-
-        $scope.user.name = person.first_name+" "+person.last_name;
-        $scope.user.email = person.email;
-        $scope.user.uuid = person.uuid;
-
-        NpolarApiUser.setUser($scope.user);
-
-        message.emit("npolar-login", $scope.user);
-
-
-      });
-    } else {
-      message.emit("npolar-login", $scope.user);
-    }
+    message.emit("npolar-login", $scope.user);
     $route.reload();
 
   };

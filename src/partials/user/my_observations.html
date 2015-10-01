@@ -7,7 +7,7 @@
 <div ng-if="security.isAuthenticated()">
 
 <a href="upload">Upload Excelsheet</a>
- <a href="observation/new">New</a>
+ <a href="observations/__new/edit">New</a>
 
 
 <p></p>
@@ -25,8 +25,8 @@
         <td>{{ entry.longitude }}&nbsp;</td>
         <td>{{ entry.editor_assessment }}</td>
         <td><a href="observations/{{entry.id}}">View</a></td>
-        <td><a href="observations/edit/{{entry.id}}">Edit</a></td>
-        <td><a href="observations/copy/{{entry.id}}">New copy</a></td>
+        <td><a href="observations/{{entry.id}}/edit">Edit</a></td>
+       <!-- <td><a href="observations/copy/{{entry.id}}">New copy</a></td> -->
     <!--    <td><a href="#/observation/delete/{{entry.id}}">Delete</a></td> -->
    </tr>
    </tbody>

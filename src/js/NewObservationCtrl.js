@@ -1,17 +1,33 @@
 'use strict';
 //New entry created here
 // @ngInject
-var NewObservationCtrl = function($scope, $http, $routeParams, Sighting) {
+var NewObservationCtrl = function($scope, $controller, $http, $routeParams, Sighting) {
 
-     $scope.formulaData = {
+  $controller('NpolarEditController', { $scope: $scope });
+
+  // Dataset -> npolarApiResource -> ngResource
+  $scope.resource = Sighting;
+
+  // Formula ($scope.formula set by parent)
+  $scope.formula.schema = 'https://api.npolar.no/schema/sighting';
+  $scope.formula.form = './partials/user/formula.json';
+  $scope.formula.validateHidden = false;
+  $scope.formula.saveHidden = false;
+
+  // edit (or new) action
+  $scope.edit();
+
+
+    /* $scope.formulaData = {
       schema: "https://api.npolar.no/schema/sighting.json",
       form: "./partials/user/formula.json",
       language: "./partials/user/translation.json",
       model: {},
       onsave: function(doc) {
         alert("test");
+
     }
-    };
+    }; */
   };
 
 

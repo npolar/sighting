@@ -32,10 +32,10 @@ var EditController = function ($scope, $location, $route, $routeParams, $window,
   // Create action, ie. save document and redirect to new URI
   $scope.create = function() {
     $scope.resource.save($scope.document, function(document) {
-      let uri = $location.path().replace(/\/__new(\/edit)?$/, '/'+data.id+'/edit');
+      let uri = $location.path().replace(/\/__new(\/edit)?$/, '/'+document.id+'/edit');
       $scope.document = document;
       $scope.formula.model = document;
-      $location.path(uri);
+      $location.path(uri);      
     });
   };
 

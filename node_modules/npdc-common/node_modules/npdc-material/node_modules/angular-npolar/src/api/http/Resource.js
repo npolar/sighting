@@ -10,7 +10,8 @@ var Resource = function($resource, $location, $log, npolarApiConfig, NpolarApiSe
   // @return Array of path segments "under" the current request URI
   let pathSegments = function() {
     // Split request URI into parts and remove hostname & appname from array [via the slice(2)]
-    return $location.absUrl().split("//")[1].split("?")[0].split("/").filter(s => { return s !== "";}).slice(2);
+    let segments = $location.absUrl().split("//")[1].split("?")[0].split("/").filter(s => { return s !== "";});
+    return segments.slice(2);
   };
   
   // Get href for id [warn:] relative to current application /path/
@@ -32,35 +33,24 @@ var Resource = function($resource, $location, $log, npolarApiConfig, NpolarApiSe
     }
   };
   
-  this.editHref = function() {
+  this.editHref = function(id) {
+    // @todo test that provided id is last segment before edit
+    // @warn now only works if id is in current request URI
     return pathSegments().join('/')+'/edit';
   };
-  
+    
+  // Path to new, relative to /base/ defined in index.html
   this.newHref = function() {
-    return pathSegments().join('/')+'/__new/edit';
+
+    let base = pathSegments().join('/');
+    if ('' === base) {
+      base = '.';
+    }
+    return base +'/__new/edit';
   };
   
   this.base = function(service) {
     return (angular.isString(service.base)) ? service.base : npolarApiConfig.base;
-  };
-
-  /**
-   * Generic error handler
-   *
-   *  MyResource.feed(angular.extend({ limit: 10 }, $location.search()), function(response) {
-   *    $scope.feed = response.feed;
-   *  }, function(error) {
-   *    $scope.error = NpolarApiResource.error(error);
-   *  });
-   */
-  this.error = function(error) {
-  // response: {data: null, status: 0, headers: function, config: Object, statusText: ''}
-  if (error.status >= 400) {
-    return error;
-  } else {
-    var status = (error.status === undefined) ? 500 : error.status ;
-    return { status: status, statusText: 'Npolar API error, failed accessing '+npolarApiConfig.base, data: 'Please inform data@npolar.no if this problem persists' };
-  }
   };
 
   // NpolarApiResource factory
@@ -73,6 +63,10 @@ var Resource = function($resource, $location, $log, npolarApiConfig, NpolarApiSe
   this.resource = function(service) {
 
     var base = this.base(service);
+    var cache = false;
+    if (service.cache && (true === service.cache)) {
+      cache = true;
+    }
 
     // Default parameters
     var params = { id:null, limit: 100, format: 'json', q: '', variant: 'atom' };
@@ -84,10 +78,10 @@ var Resource = function($resource, $location, $log, npolarApiConfig, NpolarApiSe
     var params_query = angular.extend({}, params, { variant: 'array', limit: 1000, fields: fields_query });
 
     var resource = $resource(base+service.path+'/:id', {  }, {
-      feed: { method: 'GET', params: params, headers: { Accept:'application/json, application/vnd.geo+json' }, cache: true },
-      query: { method: 'GET', params: params_query, isArray: true, cache: true},
-      array: { method: 'GET', params: params_query, isArray: true, cache: true },
-      fetch: { method: 'GET', params: { }, headers: { Accept:'application/json' }, cache: true },
+      feed: { method: 'GET', params: params, headers: { Accept:'application/json, application/vnd.geo+json' }, cache },
+      query: { method: 'GET', params: params_query, isArray: true, cache },
+      array: { method: 'GET', params: params_query, isArray: true, cache },
+      fetch: { method: 'GET', params: { }, headers: { Accept:'application/json' }, cache },
       //delete: { method:'DELETE', params: {  }, headers: { Accept:'application/json', Authorization: NpolarApiSecurity.authorization() } },
       update: { method:'PUT', params: { id: '@id' }, headers: { Accept:'application/json' } }
     });
