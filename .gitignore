@@ -5,3 +5,4 @@ image_upload/*
 bundle.js
 dist
 coverage
+node_modules
