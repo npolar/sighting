@@ -16,10 +16,11 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
 
         var files = $scope.files;
         var i,f;
+        var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
+
 
         for (i = 0, f = files[i]; i !== files.length; ++i) {
           var reader = new FileReader();
-
 
             reader.onload = (function(f){
               //var fileName = theFile.name;
@@ -63,7 +64,6 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
                     excel.filename = f.name;
                     excel['content-type'] =  f.type;
                     excel['content-size'] = f.size;
-
 
                     for (var z in worksheet) {
                            var num = z.substring(1);
@@ -112,7 +112,8 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
                   });
               };
             })(f);
-          reader.readAsBinaryString(f);
+            if (rABS) { reader.readAsBinaryString(f); }
+            else {reader.readAsArrayBuffer(f);}
 
    }
 };
