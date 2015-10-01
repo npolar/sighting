@@ -21,7 +21,7 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
           var reader = new FileReader();
 
 
-            reader.onload = (function(theFile){
+            reader.onload = (function(f){
               //var fileName = theFile.name;
               return function(e){
                  var data = e.target.result;
@@ -54,8 +54,8 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
                      //A few more values applied to each entry
                     entry.recorded_by = (NpolarApiSecurity.getUser()).name;
                     entry.created_by = (NpolarApiSecurity.getUser()).name;
-                     var date = new Date();
-                    entry.created = date.toISOString().substring(0,10) + 'T00:00:00Z';
+                     var date2 = new Date();
+                    entry.created = date2.toISOString().substring(0,10) + 'T00:00:00Z';
 
 
                     //Excel file
@@ -75,19 +75,19 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
                                exped.event_date = event_d;}
                               if (z === ("B"+num)) { entry.latitude = worksheet[z].v;}
                               if (z === ("C"+num)) { entry.longitude = worksheet[z].v;}
-                              if (z === ("D"+num)) { worksheet[z].v === "(select or write placename)" ? (entry.locality = "") : (entry.locality = worksheet[z].v)}
-                              if (z === ("E"+num)) { worksheet[z].v === "(select species)" ? (entry.species = "") : (entry.species = worksheet[z].v)}
+                              if (z === ("D"+num)) { worksheet[z].v === "(select or write placename)" ? (entry.locality = "") : (entry.locality = worksheet[z].v);}
+                              if (z === ("E"+num)) { worksheet[z].v === "(select species)" ? (entry.species = "") : (entry.species = worksheet[z].v);}
                               if (z === ("F"+num)) { entry.adult_m = worksheet[z].v;}
                               if (z === ("G"+num)) { entry.adult_f = worksheet[z].v;}
                               if (z === ("H"+num)) { entry.adult = worksheet[z].v;}
                               if (z === ("I"+num)) { entry.sub_adult = worksheet[z].v;}
-                              if (z === ("J"+num)) {  worksheet[z].v === "(select condition)" ? (entry.polar_bear_condition = "") : (entry.polar_bear_condition = worksheet[z].v)}
+                              if (z === ("J"+num)) {  worksheet[z].v === "(select condition)" ? (entry.polar_bear_condition = "") : (entry.polar_bear_condition = worksheet[z].v);}
                               if (z === ("K"+num)) { entry.cub_calf_pup = worksheet[z].v;}
-                              if (z === ("L"+num)) { worksheet[z].v === "(select years)" ? (entry.bear_cubs = "") : (entry.bear_cubs = worksheet[z].v)}
+                              if (z === ("L"+num)) { worksheet[z].v === "(select years)" ? (entry.bear_cubs = "") : (entry.bear_cubs = worksheet[z].v);}
                               if (z === ("M"+num)) { entry.unidentified = worksheet[z].v;}
                               if (z === ("N"+num)) { entry.dead_alive = worksheet[z].v;}
                               if (z === ("O"+num)) { entry.total = worksheet[z].v;}
-                              if (z === ("P"+num)) { worksheet[z].v === "(select habitat)" ? (entry.habitat = "") : (entry.habitat = worksheet[z].v)}
+                              if (z === ("P"+num)) { worksheet[z].v === "(select habitat)" ? (entry.habitat = "") : (entry.habitat = worksheet[z].v);}
                               if (z === ("Q"+num)) { entry.occurrence_remarks= worksheet[z].v;}
 
                               //Need to add a timestamp to filename to ensure uniqueness
@@ -168,7 +168,5 @@ function removeVal(arr) {
     }
     return arr;
 }
-
-
 
 module.exports = UploadObservationsCtrl;
