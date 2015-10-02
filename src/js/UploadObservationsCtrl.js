@@ -3,7 +3,7 @@
 
 //Controller for Excel file upload
 // @ngInject
-var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
+var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting) {
     $scope.security = NpolarApiSecurity;
 
 
@@ -105,6 +105,12 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity) {
                                 if (z.substring(0,1) === "P") {
                                    console.log(z, JSON.stringify(entry));
                                 }
+
+
+                                //Sighting.feed({ fields: "*"}, response => {
+                                 //       $scope.feed = response.feed;
+
+                                //});
 
                        } //typeof
                   } //For -worksheet

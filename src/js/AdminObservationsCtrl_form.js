@@ -8,13 +8,12 @@ var AdminObservationsCtrl = function($scope, $http, SPECIES, CSVService, NpolarA
 
   $scope.security = NpolarApiSecurity;
   $scope.items = SPECIES;
-  //Define markers
-   var markers = [];
 
-  var L = require('leaflet');
+   var L = require('leaflet');
   L.Icon.Default.imagePath = 'node_modules/leaflet/dist/images/';
   require('leaflet-draw');
   require('elasticsearch');
+  var markers = [];
 
    var url = 'http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png',
       attrib = '&copy; <a href="http://openstreetmap.org/copyright">Norwegian Polar Institute</a>',
@@ -38,7 +37,6 @@ var AdminObservationsCtrl = function($scope, $http, SPECIES, CSVService, NpolarA
       });
       map.addControl(drawControl);
 
-
       //When finishing the drawing catch event
       map.on('draw:created', function (e) {
         var type = e.layerType,
@@ -48,16 +46,21 @@ var AdminObservationsCtrl = function($scope, $http, SPECIES, CSVService, NpolarA
         if (type === 'rectangle') {
           var res = (layer.toGeoJSON()).geometry.coordinates;
 
-          //Fetch zero and second coordinate pair to get a rectangle
+          /*fetch zero and second coordinate pair to get a rectangle */
+         // document.getElementById('lat1').value = res[0][0][0];
+
+
              $scope.lat1= res[0][0][0];
              $scope.lng1= res[0][0][1];
              $scope.lat2= res[0][2][0];
              $scope.lng2 = res[0][2][1];
+             $scope.$apply();
+
+          console.log($scope.lat1);
         }
-         map.addLayer(layer);
+          drawnItems.addLayer(layer);
       });
 
-      //When edited, upcate coord
       map.on('draw:edited', function (e) {
 
            var layers = e.layers;
@@ -65,18 +68,14 @@ var AdminObservationsCtrl = function($scope, $http, SPECIES, CSVService, NpolarA
              //update lng/lat from search
              var res = (layer.toGeoJSON()).geometry.coordinates;
 
-
-
                 //fetch zero and second coordinate pair to get a rectangle
                 $scope.lat1= res[0][0][0];
                 $scope.lng1= res[0][0][1];
                 $scope.lat2= res[0][2][0];
                 $scope.lng2= res[0][2][1];
-                $scope.apply;
            });
         });
 
-        //when deleted, remove layer (done by leaflet-draw) and markers
         map.on('draw:deleted', function (e) {
 
          //Remove lat/lng from search inputs
@@ -84,13 +83,12 @@ var AdminObservationsCtrl = function($scope, $http, SPECIES, CSVService, NpolarA
 
          //Remove markers and squares
          $scope.markers = [];
-         $scope.apply;
         });
 
 
 // Execute this function when search button is pressed
       $scope.submit = function() {
-
+         var markers = [];
 
           console.log($scope.lat1);
           console.log($scope.lng1);
@@ -161,10 +159,10 @@ var AdminObservationsCtrl = function($scope, $http, SPECIES, CSVService, NpolarA
 
         console.log(data);
 
-        var redIcon = L.icon({
+        var redIcon = {
            iconUrl: 'img/icons/reddot.png',
            iconSize:   [8, 8] // size of the icon
-        });
+        };
 
     /* Fetch the lat/lon entries. Have to switch lat/lon for display */
     for (var i=0; i< data.feed.entries.length; i++) {
@@ -178,17 +176,14 @@ var AdminObservationsCtrl = function($scope, $http, SPECIES, CSVService, NpolarA
        });
     }
 
-
     //Display markers on map
-    var markerLayer = [];
-     for (var j=0; j< markers.length; j++) {
-     markerLayer[j] = L.marker([markers[j].lat,markers[j].lng] , {icon: redIcon}).addTo(map).bindPopup(markers[j].message).openPopup();
-     };
+    $scope.markers = markers;
+    console.log($scope.markers);
 
 
 
-
-
+    //Reset for next search
+   // markers = [];
 
     //Display data for all entries
     $scope.entries = data.feed.entries;
