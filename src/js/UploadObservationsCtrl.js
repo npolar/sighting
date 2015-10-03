@@ -7,17 +7,17 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
     $scope.security = NpolarApiSecurity;
 
 
-     $scope.filesChanged = function(elm){
-        $scope.files=elm.files;
+     $scope.filesChanged = function(e){
+        $scope.files=e.files;
         $scope.$apply();
      };
 
-     $scope.upload = function(elm) {
+     $scope.upload = function(e) {
 
         var files = $scope.files;
+        console.log(files);
         var i,f;
         var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
-
 
         for (i = 0, f = files[i]; i !== files.length; ++i) {
           var reader = new FileReader();
@@ -42,6 +42,7 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                     for (var q in worksheet) {
                     // all keys that do not begin with "!" correspond to cell addresses
                     //y is heading text, z is cellno, worksheet[z].v is cell content
+                           console.log(q);
 
                            //Expedition
                            if (q ==="K2") { exped.other_info = worksheet[q].v;}
