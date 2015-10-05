@@ -32,7 +32,7 @@
     "npdc-common": "npolar/npdc-common",
     "path": "^0.12.7",
     "purecss": "^0.6.0",
-    "xlsx": "^0.8.0"
+    "xlsx": "sheetjs/js-xlsx"
   },
   "browserify": {
     "transform": [
