@@ -14,7 +14,7 @@ AngularJS, npm, browserify
 
 to get the code. To start:
 
-<pre><code>npm start</code></pre>
+<pre><code>gulp</code></pre>
 
 ##Content
 - Login
