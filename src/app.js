@@ -20,7 +20,7 @@ var appSighting = angular.module('sighting',[
   'npolarApi', /*NP logon*/
   'npolarUi',
 /*  'sightingServices', */   /*Edit service*/
- // 'leaflet-directive',
+   'leaflet-directive',
 /*  '720kb.datepicker', */    /*Calendar*/
   'ngResource',
   'templates'
@@ -46,6 +46,7 @@ appSighting.controller('UploadObservationsCtrl', require('./js/UploadObservation
 appSighting.controller('ngLoginLogout', require('./js/ngLoginlogout'));
 appSighting.service('SightingDBUpdate', require('./js/SightingDBUpdate'));
 appSighting.service('SightingDBGet', require('./js/SightingDBGet'));
+appSighting.service('SightingDBGetAdmin', require('./js/SightingDBGetAdmin'));
 appSighting.service('CSVService', require('./js/CSVService'));
 appSighting.directive('fileInput', require('./js/fileInput'));
 appSighting.directive('npolarLoginLogout2', require('./js/ngloginLogout2'));

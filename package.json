@@ -6,10 +6,12 @@
   "repository": "https://github.com/npolar/sighting",
   "license": "MIT",
   "devDependencies": {
+    "angular-simple-logger": "^0.1.4",
     "babelify": "*",
     "browserify": "*",
     "browserify-ngannotate": "*",
     "gulp": "^3.9.0",
+    "karma": "^0.13.10",
     "npdc-gulp": "npolar/npdc-gulp",
     "partialify": "*"
   },
