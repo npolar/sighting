@@ -10,7 +10,7 @@
 
 <!-- View map -->
 <div id="map"></div>
-<leaflet></leaflet>
+<!--<leaflet></leaflet> -->
 
 
   <p >Select an area on the map by dragging/dropping</p>
@@ -80,7 +80,11 @@
 </table>
 
 </div> <!-- authorized -->
-<div ng-show="!isAdmin()">
+
+
+
+<!--<div ng-show="!isAdmin()"> -->
+<div ng-if="!isAdmin()">
       <p>Please <a href="/sighting">log in</a> with your admin account in order to view this page.</p>
 </div>
 

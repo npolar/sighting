@@ -34,7 +34,7 @@
     "npdc-common": "npolar/npdc-common",
     "path": "^0.12.7",
     "purecss": "^0.6.0",
-    "xlsx": "sheetjs/js-xlsx"
+    "xlsx": "https://github.com/sheetjs/js-xlsx.git"
   },
   "browserify": {
     "transform": [

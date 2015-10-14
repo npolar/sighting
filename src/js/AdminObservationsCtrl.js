@@ -5,18 +5,15 @@
 /* First respond to squares drawn */
 // @ngInject
 //var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin) {
-var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin) {
-
+var AdminObservationsCtrl = function($scope, $http, SPECIES,npolarApiConfig,  CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin) {
 
 
 $scope.isAdmin = function() {
-  let user = NpolarApiSecurity.getUser();
-  return user.systems.includes(system => { system.uri === 'https://api.npolar.no/sighting/admin';}
-    );
+  return NpolarApiSecurity.hasSystem('https://api.npolar.no/sighting/admin');
 };
 
 // Setting up the map
-    angular.extend($scope, {
+ /*   angular.extend($scope, {
       center: {
                     lat: 78.000,
                     lng: 16.000,
@@ -36,7 +33,7 @@ $scope.isAdmin = function() {
         circle : false,
         marker: false }
       }
-  });
+  });*/
 
 
 };

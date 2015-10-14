@@ -11,6 +11,7 @@ npdcGulp.loadAppTasks(gulp, {
     		'node_modules/formula/dist/**/*',
     		'node_modules/js-xlsx/*',
     		'node_modules/leaflet/dist/*',
+                'node_modules/angular-simple-logger/dist/*',
     		'node_modules/angular-leaflet-directive/dist/*',
     		'node_modules/leaflet-draw/dist/*']
   }});

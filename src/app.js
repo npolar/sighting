@@ -20,7 +20,7 @@ var appSighting = angular.module('sighting',[
   'npolarApi', /*NP logon*/
   'npolarUi',
 /*  'sightingServices', */   /*Edit service*/
-   'leaflet-directive',
+  /* 'leaflet-directive', */
 /*  '720kb.datepicker', */    /*Calendar*/
   'ngResource',
   'templates'
