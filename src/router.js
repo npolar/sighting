@@ -23,13 +23,9 @@ var router = function($routeProvider, $locationProvider) {
         controller: 'ObserversCtrl'
       }).
       when('/observations', {
-        templateUrl: 'partials/user/my_observations.html',
+        templateUrl: '/partials/user/my_observations.html',
         controller: 'MyObservationsCtrl'
       }).
-     /*  when('/observation/new', {
-        templateUrl: 'partials/user/new_observation.html',
-        controller: 'NewObservationCtrl'
-      }).*/
       when('/observations/:id', {
         templateUrl: 'partials/user/view_observation.html',
         controller: 'ViewObservationCtrl'
@@ -38,11 +34,6 @@ var router = function($routeProvider, $locationProvider) {
         templateUrl: 'partials/user/edit_observation.html',
         controller: 'EditObservationCtrl'
       }).
-      /*This entry is for copying old info onto new entries */
-    /*  when('/observations/copy/:id', {
-        templateUrl: 'partials/user/edit_observation.html',
-        controller: 'EditObservationCtrl'
-      }).*/
       when('/observation/delete/:id', {
         templateUrl: 'partials/user/delete_observation.html',
         controller: 'DeleteObservationCtrl'
@@ -64,7 +55,9 @@ var router = function($routeProvider, $locationProvider) {
         controller: 'QualityCtrl'
       }).
       otherwise({
-        redirectTo: '/'
+       // redirectTo: '/'
+        templateUrl: 'partials/open/login.html',
+        controller: 'SightingCtrl'
       });
   };
 

@@ -4,24 +4,27 @@
 var angular = require('angular');
 require('angular-route');
 require('angular-resource');
+
 /*require('angular-leaflet-directive');*/
 /*require('angularjs-datepicker');*/
 require('formula');
+require('angular-simple-logger');
 require('angular-npolar');
 
-//var environment = require('../environment');
 var npdcCommon = require('npdc-common');
 var AutoConfig = npdcCommon.AutoConfig;
+
 
 
 var appSighting = angular.module('sighting',[
   'ngRoute',
   'formula',
-  'npolarApi', /*NP logon*/
+  'npolarApi', //NP logon
   'npolarUi',
-/*  'sightingServices', */   /*Edit service*/
-  /* 'leaflet-directive', */
-/*  '720kb.datepicker', */    /*Calendar*/
+  'nemLogging',
+//  'sightingServices',   //Edit service
+//  'leaflet-directive',
+//  '720kb.datepicker',  //Calendar
   'ngResource',
   'templates'
 ]);
