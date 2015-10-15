@@ -1,7 +1,7 @@
 /*jslint node: true */
 'use strict';
 
-var angular = require('angular');
+require('angular');
 require('angular-route');
 require('angular-resource');
 
@@ -13,7 +13,6 @@ require('angular-npolar');
 
 var npdcCommon = require('npdc-common');
 var AutoConfig = npdcCommon.AutoConfig;
-
 
 
 var appSighting = angular.module('sighting',[
@@ -89,3 +88,7 @@ appSighting.run(npolarApiConfig => {
   angular.extend(npolarApiConfig, autoconfig, { resources });
   //console.log("npolarApiConfig", npolarApiConfig);
 });
+
+
+
+module.exports = appSighting;

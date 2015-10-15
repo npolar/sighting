@@ -23,7 +23,7 @@ var router = function($routeProvider, $locationProvider) {
         controller: 'ObserversCtrl'
       }).
       when('/observations', {
-        templateUrl: '/partials/user/my_observations.html',
+        templateUrl: 'partials/user/my_observations.html',
         controller: 'MyObservationsCtrl'
       }).
       when('/observations/:id', {

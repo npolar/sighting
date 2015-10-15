@@ -1,7 +1,7 @@
 <div class="login-logout">
   <div ng-show="security.isAuthenticated()">
 
-    <button ng-click="logout()">Logout</button> <b>{{ user.name }}</b> (<a title="View profile for user {{user.username}}" ng-href="/user/{{user.username}}">{{ user.username }} </a>)
+    <button ng-click="logout()">Logout</button> <b>{{ user.name }}</b> (<a title="View profile for user {{user.username}}" ng-href="/user/{{user.username}}">{{ user.email }} </a>)
 
    <!-- <p>Login session expires {{ 1000*user.exp | date:'HH:mm' }}</p>  -->
 
