@@ -12,7 +12,10 @@ $scope.isAdmin = function() {
   return NpolarApiSecurity.hasSystem('https://api.npolar.no/sighting/admin');
 };
 
+ //$scope.species = SPECIES;
  var markers = [];
+  $scope.items = SPECIES;
+
 
     // Setting up the map
     angular.extend($scope, {
@@ -37,6 +40,9 @@ $scope.isAdmin = function() {
       }
   });
 
+    console.log($scope);
+    console.log("---------------------");
+
   //Draw a rectangle on the map to get coordinates from
   leafletData.getMap().then(function(map) {
 
@@ -53,6 +59,9 @@ $scope.isAdmin = function() {
                 $scope.lng1= res[0][0][1];
                 $scope.lat2= res[0][2][0];
                 $scope.lng2= res[0][2][1];
+
+                console.log($scope);
+                console.log("2");
         });
 
         map.on('draw:edited', function (e) {
