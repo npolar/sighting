@@ -54,6 +54,10 @@ var router = function($routeProvider, $locationProvider) {
         templateUrl: 'partials/admin/quality_check.html',
         controller: 'QualityCtrl'
       }).
+      when('/quality_edit/:id/edit', {
+        templateUrl: 'partials/admin/quality_edit.html',
+        controller: 'QualityEditCtrl'
+      }).
       otherwise({
        // redirectTo: '/'
         templateUrl: 'partials/open/login.html',

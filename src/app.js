@@ -1,7 +1,7 @@
 /*jslint node: true */
 'use strict';
 
-require('angular');
+var angular = require('angular');
 require('angular-route');
 require('angular-resource');
 
@@ -22,7 +22,7 @@ var appSighting = angular.module('sighting',[
   'npolarUi',
   'nemLogging',
 //  'sightingServices',   //Edit service
-//  'leaflet-directive',
+  'leaflet-directive',
 //  '720kb.datepicker',  //Calendar
   'ngResource',
   'templates'
@@ -45,7 +45,9 @@ appSighting.controller('NewObservationCtrl', require('./js/NewObservationCtrl'))
 appSighting.controller('EditObservationCtrl', require('./js/EditObservationCtrl'));
 appSighting.controller('DeleteObservationCtrl', require('./js/DeleteObservationCtrl'));
 appSighting.controller('UploadObservationsCtrl', require('./js/UploadObservationsCtrl'));
+appSighting.controller('QualityEditCtrl', require('./js/QualityEditCtrl'));
 appSighting.controller('ngLoginLogout', require('./js/ngLoginlogout'));
+
 appSighting.service('SightingDBUpdate', require('./js/SightingDBUpdate'));
 appSighting.service('SightingDBGet', require('./js/SightingDBGet'));
 appSighting.service('SightingDBGetAdmin', require('./js/SightingDBGetAdmin'));

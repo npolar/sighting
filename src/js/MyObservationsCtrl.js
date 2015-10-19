@@ -20,4 +20,3 @@ Sighting.feed({ fields: "*"}, response => {
 
 
 module.exports = MyObservationsCtrl;
-
