@@ -5,7 +5,7 @@
 // First respond to squares drawn
 // @ngInject
 //var AdminObservationsCtrl = function($scope, $http, nemSimpleLogger, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin) {
-var AdminObservationsCtrl = function($scope, $http, nemSimpleLogger, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin) {
+var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin) {
 
 
 $scope.isAdmin = function() {

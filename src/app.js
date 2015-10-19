@@ -5,10 +5,8 @@ var angular = require('angular');
 require('angular-route');
 require('angular-resource');
 
-/*require('angular-leaflet-directive');*/
 /*require('angularjs-datepicker');*/
 require('formula');
-require('angular-simple-logger');
 require('angular-npolar');
 
 var npdcCommon = require('npdc-common');
@@ -20,7 +18,7 @@ var appSighting = angular.module('sighting',[
   'formula',
   'npolarApi', //NP logon
   'npolarUi',
-  'nemLogging',
+ // 'nemLogging',
 //  'sightingServices',   //Edit service
   'leaflet-directive',
 //  '720kb.datepicker',  //Calendar
