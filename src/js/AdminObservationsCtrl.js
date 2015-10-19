@@ -40,12 +40,8 @@ $scope.isAdmin = function() {
   //Draw a rectangle on the map to get coordinates from
   leafletData.getMap().then(function(map) {
 
-        var drawnItems = new L.featureGroup().addTo(map);
-        map.addControl(new L.Control.Draw({
-          edit: {featureGroup: drawnItems }
-        }));
+       var drawnItems = new L.featureGroup().addTo(map);
 
-        //var drawnItems = $scope.controls.edit.featureGroup;
 
        map.on('draw:created', function (e) {
                  var layer = e.layer;
@@ -95,56 +91,56 @@ $scope.isAdmin = function() {
 
 
     // If event_date exists
-    if (typeof $scope.event_date1 != "undefined" && $scope.event_date1 != "") {
+    if (typeof $scope.event_date1 !== "undefined" && $scope.event_date1 !== "") {
            //Remember to transform into the correct format
            edate = '&filter-event_date=' + convertDate($scope.event_date1) + '..';
 
-           if (typeof $scope.event_date2 != "undefined" && $scope.event_date2 != "") {
+           if (typeof $scope.event_date2 !== "undefined" && $scope.event_date2 !== "") {
                //Transform edate to correct format
                edate = edate + convertDate($scope.event_date2);
 
            }
     //Else if lat2 exists
-    } else if (typeof $scope.event_date2 != "undefined" && $scope.event_date2 != "") {
+    } else if (typeof $scope.event_date2 !== "undefined" && $scope.event_date2 !== "") {
                //Transform edate to correct format
                edate = '&filter-event_date=..' + convertDate($scope.event_date2);
     }
 
 
     // If lat1 exists
-    if (typeof $scope.lat1 != "undefined" && $scope.lat1 != "") {
+    if (typeof $scope.lat1 !== "undefined" && $scope.lat1 !== "") {
            lat = '&filter-latitude=' + $scope.lat1 + '..';
 
 
-           if (typeof $scope.lat2 != "undefined" && $scope.lat2 != "") {
+           if (typeof $scope.lat2 !== "undefined" && $scope.lat2 !== "") {
                lat = lat + $scope.lat2;
            }
     // Else if lat2 exists
-    } else if (typeof $scope.lat2 != "undefined" && $scope.lat2 != "") {
+    } else if (typeof $scope.lat2 !== "undefined" && $scope.lat2 !== "") {
                lat = '&filter-latitude=..' + $scope.lat2;
     }
 
 
     // If lng1 exists
-    if (typeof $scope.lng1 != "undefined" && $scope.lng1 != "") {
+    if (typeof $scope.lng1 !== "undefined" && $scope.lng1 !== "") {
            lng = '&filter-longitude=' + $scope.lng1 + '..';
 
            //If both exists
-           if (typeof $scope.lng2 != "undefined" && $scope.lng2 != "") {
+           if (typeof $scope.lng2 !== "undefined" && $scope.lng2 !== "") {
                lng = lng + $scope.lng2;
 
            }
     //Else if lng2 exists
-    } else if (typeof $scope.lng2 != "undefined" && $scope.lng2 != "") {
+    } else if (typeof $scope.lng2 !== "undefined" && $scope.lng2 !== "") {
                lng = '&filter-longitude=..' + $scope.lng2;
 
     }
 
     //Include species search if it exists
-    if ((typeof $scope.species != "undefined") && ($scope.species != null) && ($scope.species != '' )) {
+    if ((typeof $scope.species !== "undefined") && ($scope.species !== null) && ($scope.species !== '' )) {
            sok = sok + '&filter-species=' + ($scope.species.family).toLowerCase();
            sok = sok.replace(/ /g,"+");
-    };
+    }
 
     //Sum up the query
     if ($scope.search) {
@@ -164,7 +160,7 @@ $scope.isAdmin = function() {
     var redIcon = {
     iconUrl: 'img/icons/reddot.png',
     iconSize:     [8, 8] // size of the icon
-    }
+    };
 
     // Fetch the lat/lon entries. Have to switch lat/lon for display
     for (var i=0; i< $scope.full.feed.entries.length; i++) {
@@ -176,7 +172,7 @@ $scope.isAdmin = function() {
                 message: $scope.full.feed.entries[i].locality,
                 icon: redIcon
        });
-    };
+    }
 
     //Display markers on map
     $scope.markers = markers;
