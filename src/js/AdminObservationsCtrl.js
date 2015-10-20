@@ -163,7 +163,7 @@ $scope.isAdmin = function() {
     console.log("4");
 
 
-    $http.jsonp('https://api.npolar.no/sighting/?q='+ sok +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
+    $http.jsonp('https:' + npolarApiConfig.base + '/sighting/?q='+ sok +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
     $scope.full = data;
 
 

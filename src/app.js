@@ -55,7 +55,6 @@ appSighting.directive('npolarLoginLogout2', require('./js/ngloginLogout2'));
 appSighting.constant('SPECIES', require('./js/SpeciesGallery'));
 
 
-
 // Bootstrap ngResource models using NpolarApiResource
 var resources = [
   {'path': '/user', 'resource': 'User'},
@@ -86,7 +85,7 @@ appSighting.run(npolarApiConfig => {
   //var environment; // 'test', 'development'
   var autoconfig = new AutoConfig('production');
   angular.extend(npolarApiConfig, autoconfig, { resources });
-  //console.log("npolarApiConfig", npolarApiConfig);
+  console.log("npolarApiConfig", npolarApiConfig);
 });
 
 
