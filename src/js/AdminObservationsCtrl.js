@@ -8,14 +8,16 @@
 var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin) {
 
 
+//Access to page or not?
 $scope.isAdmin = function() {
   return NpolarApiSecurity.hasSystem('https://api.npolar.no/sighting/admin');
 };
 
- //$scope.species = SPECIES;
- var markers = [];
-  $scope.items = SPECIES;
 
+ var markers = [];
+ //select -get species
+ $scope.items = SPECIES;
+ angular.extend($scope, {species:""});
 
     // Setting up the map
     angular.extend($scope, {
@@ -40,8 +42,6 @@ $scope.isAdmin = function() {
       }
   });
 
-    console.log($scope);
-    console.log("---------------------");
 
   //Draw a rectangle on the map to get coordinates from
   leafletData.getMap().then(function(map) {
@@ -98,7 +98,6 @@ $scope.isAdmin = function() {
     // First find out which paramaters are not empty
     var sok = ''; var lat = ''; var lng = ''; var edate = '';
 
-
     // If event_date exists
     if (typeof $scope.event_date1 !== "undefined" && $scope.event_date1 !== "") {
            //Remember to transform into the correct format
@@ -145,6 +144,7 @@ $scope.isAdmin = function() {
 
     }
 
+
     //Include species search if it exists
     if ((typeof $scope.species !== "undefined") && ($scope.species !== null) && ($scope.species !== '' )) {
            sok = sok + '&filter-species=' + ($scope.species.family).toLowerCase();
@@ -160,11 +160,12 @@ $scope.isAdmin = function() {
 
 
     console.log(sok);
+    console.log("4");
 
 
     $http.jsonp('https://api.npolar.no/sighting/?q='+ sok +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
     $scope.full = data;
-    console.log(data);
+
 
     var redIcon = {
     iconUrl: 'img/icons/reddot.png',

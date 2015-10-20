@@ -35,7 +35,7 @@
         <input type="password" id="password" ng-model="user.password" placeholder="Password">
       </div>
       <p></p>
-      <button id="login2" type="submit" ng-click="login()">Login</button>
+      <button id="login2" type="submit" ng-click="login(user.username, user.password)">Login</button>
       </section>
       <a ng-href="/user/reset?username={{user.username}}">Forgot password?</a>&nbsp;
       <a href="/user/register">Sign up</a></section>
