@@ -47,7 +47,8 @@ $scope.isAdmin = function() {
   leafletData.getMap().then(function(map) {
 
        var drawnItems = new L.featureGroup().addTo(map);
-
+       console.log($scope);
+       console.log("1");
 
        map.on('draw:created', function (e) {
                  var layer = e.layer;
@@ -97,6 +98,8 @@ $scope.isAdmin = function() {
 
     // First find out which paramaters are not empty
     var sok = ''; var lat = ''; var lng = ''; var edate = '';
+
+    console.log($scope);
 
     // If event_date exists
     if (typeof $scope.event_date1 !== "undefined" && $scope.event_date1 !== "") {
