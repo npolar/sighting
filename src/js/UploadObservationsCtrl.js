@@ -4,7 +4,10 @@
 //Controller for Excel file upload
 // @ngInject
 var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting) {
-    $scope.security = NpolarApiSecurity;
+     $scope.security = NpolarApiSecurity;
+
+     // Dataset -> npolarApiResource -> ngResource
+     $scope.resource = Sighting;
 
 
      $scope.filesChanged = function(e){
@@ -73,7 +76,7 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                            if ((num > 19) && (worksheet["A"+num] !== undefined) && (typeof worksheet["A"+num].v === "number" )) {
 
                               if (z === ("A"+num)) { var event_d = getJsDateFromExcel(worksheet[z].v);
-                               exped.event_date = event_d;}
+                               entry.event_date = event_d;}
                               if (z === ("B"+num)) { entry.latitude = worksheet[z].v;}
                               if (z === ("C"+num)) { entry.longitude = worksheet[z].v;}
                               if (z === ("D"+num)) { worksheet[z].v === "(select or write placename)" ? (entry.locality = "") : (entry.locality = worksheet[z].v);}
@@ -100,18 +103,25 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                                 //Add subobjects to main object entry
                                 entry.excelfile =  excel;
                                 entry.expedition =  exped;
+                                console.log(entry);
 
 
                                 //Save entry, P is last letter
                                 if (z.substring(0,1) === "P") {
-                                   console.log(z, JSON.stringify(entry));
+                                   entry.schema = "https://api.npolar.no/no/schema/sighting.json";
+                                   entry.collection = "sighting";
+                                   entry.base = "http://api.npolar.no";
+
+                                   console.log(JSON.stringify(entry));
+                                   console.log("test");
+
+                                /*    $scope.resource.save(JSON.stringify(entry), function(document) {
+                                    $scope.document = document;
+                                    console.log($scope.document);
+                                    $scope.formula.model = document;
+                                    //$location.path(`observations/${document.id}/edit`);
+                                  }); */
                                 }
-
-
-                                //Sighting.feed({ fields: "*"}, response => {
-                                 //       $scope.feed = response.feed;
-
-                                //});
 
                        } //typeof
                   } //For -worksheet

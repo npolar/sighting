@@ -10,6 +10,8 @@ var EditObservationCtrl =  function($scope,$location, $controller, Sighting) {
 
   $scope.duplicate = function() {
 
+      console.log($scope.document);
+      //Duplicating the object to a new instance
       let duplicate = Object.assign($scope.document);
       delete duplicate._rev;
       delete duplicate._id;

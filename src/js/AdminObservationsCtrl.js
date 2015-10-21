@@ -13,11 +13,12 @@ $scope.isAdmin = function() {
   return NpolarApiSecurity.hasSystem('https://api.npolar.no/sighting/admin');
 };
 
+console.log($scope);
 
  var markers = [];
  //select -get species
  $scope.items = SPECIES;
- angular.extend($scope, {species:""});
+// angular.extend($scope, {species:""});
 
     // Setting up the map
     angular.extend($scope, {
@@ -96,10 +97,12 @@ $scope.isAdmin = function() {
   // Execute this function when advanced search button is pressed
  $scope.submit = function() {
 
+    console.log($scope);
+
     // First find out which paramaters are not empty
     var sok = ''; var lat = ''; var lng = ''; var edate = '';
 
-    console.log($scope);
+
 
     // If event_date exists
     if (typeof $scope.event_date1 !== "undefined" && $scope.event_date1 !== "") {
