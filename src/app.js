@@ -82,10 +82,10 @@ appSighting.config(function ($httpProvider) {
 
 // Inject npolarApiConfig and run
 appSighting.run(npolarApiConfig => {
-  //var environment; // 'test', 'development'
-  var autoconfig = new AutoConfig('production');
+  //var environment; // 'test', 'development', 'production'
+  var autoconfig = new AutoConfig('test');
   angular.extend(npolarApiConfig, autoconfig, { resources });
-  console.log("npolarApiConfig", npolarApiConfig);
+  //console.log("npolarApiConfig", npolarApiConfig);
 });
 
 

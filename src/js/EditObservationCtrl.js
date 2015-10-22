@@ -2,7 +2,7 @@
 /* user module */
 //Update entry from Svalbard MMS couch database here
 // @ngInject
-var EditObservationCtrl =  function($scope,$location, $controller, Sighting) {
+var EditObservationCtrl =  function($scope,$location, $controller, Sighting, npolarApiConfig) {
     //var speciesgallery = require('./SpeciesGallery');
 
      // EditController -> NpolarEditController
@@ -31,10 +31,13 @@ var EditObservationCtrl =  function($scope,$location, $controller, Sighting) {
   $scope.resource = Sighting;
 
   // Formula ($scope.formula set by parent)
-  $scope.formula.schema = 'https://api.npolar.no/schema/sighting';
+
+  $scope.formula.schema = 'https:'+ npolarApiConfig.base + '/schema/sighting';
   $scope.formula.form = './partials/user/formula.json';
+  console.log("hit2");
   $scope.formula.validateHidden = false;
   $scope.formula.saveHidden = false;
+  console.log("hit3");
 
   // edit (or new) action
   $scope.edit();
