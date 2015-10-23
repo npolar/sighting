@@ -34,6 +34,10 @@ var router = function($routeProvider, $locationProvider) {
         templateUrl: 'partials/user/edit_observation.html',
         controller: 'EditObservationCtrl'
       }).
+      when('/observations/images/:id', {
+        templateUrl: 'partials/user/images.html',
+        controller: 'UploadImagesCtrl'
+      }).
       when('/observation/delete/:id', {
         templateUrl: 'partials/user/delete_observation.html',
         controller: 'DeleteObservationCtrl'

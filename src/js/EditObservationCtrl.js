@@ -34,10 +34,8 @@ var EditObservationCtrl =  function($scope,$location, $controller, Sighting, npo
 
   $scope.formula.schema = 'https:'+ npolarApiConfig.base + '/schema/sighting';
   $scope.formula.form = './partials/user/formula.json';
-  console.log("hit2");
   $scope.formula.validateHidden = false;
   $scope.formula.saveHidden = false;
-  console.log("hit3");
 
   // edit (or new) action
   $scope.edit();

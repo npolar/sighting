@@ -1,0 +1,23 @@
+
+
+<h1><b>Upload Images. <b></h1>
+
+<!-- <div ng-if="security.isAuthenticated()">  -->
+
+<form ng-controller="UploadImagesCtrl">
+
+
+    <input type="file"  onchange="angular.element(this).scope().filesChanged(this)" multiple accept=".image/*"/>
+    <button ng-click="upload()">Upload</button>
+    <li ng-repeat="file in files">{{file.name}}</li>
+</form>
+
+
+<!-- </div> -->
+<!-- <div ng-show="!security.isAuthenticated()">
+  <p>Please <a href="#/">log in</a> in order to upload excel files.</p>
+</div> -->
+
+
+
+

@@ -43,6 +43,7 @@ appSighting.controller('NewObservationCtrl', require('./js/NewObservationCtrl'))
 appSighting.controller('EditObservationCtrl', require('./js/EditObservationCtrl'));
 appSighting.controller('DeleteObservationCtrl', require('./js/DeleteObservationCtrl'));
 appSighting.controller('UploadObservationsCtrl', require('./js/UploadObservationsCtrl'));
+appSighting.controller('UploadImagesCtrl', require('./js/UploadImagesCtrl'));
 appSighting.controller('QualityEditCtrl', require('./js/QualityEditCtrl'));
 appSighting.controller('ngLoginLogout', require('./js/ngLoginlogout'));
 
