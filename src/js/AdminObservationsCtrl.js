@@ -5,15 +5,17 @@
 // First respond to squares drawn
 // @ngInject
 //var AdminObservationsCtrl = function($scope, $http, nemSimpleLogger, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin) {
-var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin) {
-
+var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin, npolarApiConfig) {
 
 //Access to page or not?
 $scope.isAdmin = function() {
   return NpolarApiSecurity.hasSystem('https://api.npolar.no/sighting/admin');
 };
 
+window.MY_SCOPE = $scope;
+
 console.log($scope);
+
 
  var markers = [];
  //select -get species
@@ -98,6 +100,7 @@ console.log($scope);
  $scope.submit = function() {
 
     console.log($scope);
+    console.log("child");
 
     // First find out which paramaters are not empty
     var sok = ''; var lat = ''; var lng = ''; var edate = '';

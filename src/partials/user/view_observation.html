@@ -3,30 +3,28 @@
 -->
 <h3>{{document.title}}</h3>
 <a ng-if="document.id && isAuthenticated()" ng-href="{{document.id}}/edit"><button class="btn btn-danger">edit</button></a>
-<button ng-click="locationBase()" class="btn btn-default">back</button></a>
+<!-- <button ng-click="locationBase()" class="btn btn-default">back</button></a> -->
+<button class="btn btn-default"><a href="./observations">Back</a></button>
+<!-- <div ng-repeat="(k,v) in document">  -->
 <div ng-repeat="(k,v) in document">
-  <h4>{{k}}</h4>
-  <p>{{v|json}}</p>
+
+ <b>{{k }}</b>: {{v}}<br />
+
+ <!--  <p>{{v|json}}</p>  -->
 </div>
 
 <section ng-repeat="link in document.links">
-  <a ng-href="{{link.href}}">{{link.title}}</a>
+  ppp<a ng-href="{{link.href}}">{{link.title}}</a>
 </section>
 
 
 
 
-
-<!--<div ng-controller="ViewObservationCtrl as entry">
-
-<div ng-include="view.html"></div>
-<br /> -->
-
 <table>
 <tr><td><b>Images</b></td></tr>
 
-<tr ng-repeat="picture in entry.pictures">
-<td><b><a href="http://{{hostname}}/image_upload/{{entry.id}}/{{picture.filename}}">{{picture.filename}}&nbsp;</a></b></td>
+<tr ng-repeat="picture in document.pictures">
+<td><b><a href="http://{{hostname}}/stored_images/{{entry.id}}/{{picture.filename}}">{{picture.filename}}&nbsp;</a></b></td>
 <td><b>Size:&nbsp; {{picture.content_size}} &nbsp;</b></td>
 <td><b>Photographer:&nbsp;{{picture.photographer}}&nbsp;</b></td>
 </tr>
@@ -34,16 +32,3 @@
 </table>
 
 </div>
-
-
-<h3>{{document.title}}</h3>
-<a ng-if="document.id && isAuthenticated()" ng-href="{{document.id}}/edit"><button class="btn btn-danger">edit</button></a>
-<button ng-click="locationBase()" class="btn btn-default">back</button></a>
-<div ng-repeat="(k,v) in document">
-  <h4>{{k}}</h4>
-  <p>{{v|json}}</p>
-</div>
-
-<section ng-repeat="link in document.links">
-  <a ng-href="{{link.href}}">{{link.title}}</a>
-</section>

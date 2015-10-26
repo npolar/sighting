@@ -54,6 +54,7 @@ appSighting.service('CSVService', require('./js/CSVService'));
 appSighting.directive('fileInput', require('./js/fileInput'));
 appSighting.directive('npolarLoginLogout2', require('./js/ngloginLogout2'));
 appSighting.constant('SPECIES', require('./js/SpeciesGallery'));
+appSighting.filter('viewFilter', require('./js/viewFilter'));
 
 
 // Bootstrap ngResource models using NpolarApiResource
