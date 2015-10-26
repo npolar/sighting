@@ -53,8 +53,6 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
                 $scope.lat2= res[0][2][0];
                 $scope.lng2= res[0][2][1];
 
-                console.log($scope);
-                console.log("2");
         });
 
         map.on('draw:edited', function (e) {
@@ -69,7 +67,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
                 $scope.lng1= res[0][0][1];
                 $scope.lat2= res[0][2][0];
                 $scope.lng2= res[0][2][1];
-                console.log($scope);
+               // console.log($scope);
            });
         });
 
@@ -87,9 +85,6 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
   // Execute this function when advanced search button is pressed
  $scope.submit = function() {
-
-    console.log("submit");
-    console.log($scope);
 
     // First find out which paramaters are not empty
     var sok = ''; var lat = ''; var lng = ''; var edate = '';
@@ -140,29 +135,22 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
     }
 
-    console.log(sok);
-    console.log("2");
-    console.log($scope.species);
 
     //Include species search if it exists
     if ((typeof $scope.species !== "undefined") && ($scope.species !== null) && ($scope.species !== '' )) {
            sok = sok + '&filter-species=' + ($scope.species.family).toLowerCase();
+            //Add + instead of space
            sok = sok.replace(/ /g,"+");
     }
-
-    console.log(sok);
-    console.log("3");
 
     //Sum up the query
     if ($scope.search) {
        sok = $scope.search;
+       //Add + instead of space
+       sok = sok.replace(/ /g,"+");
     }else {
        sok = sok+lat+lng+edate;
     }
-
-
-    console.log(sok);
-    console.log("4");
 
 
     $http.jsonp('https:' + npolarApiConfig.base + '/sighting/?q='+ sok +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
@@ -217,10 +205,10 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
 /*Convert to the search date format */
 function convertDate(idate) {
-          console.log(idate);
+          //console.log(idate);
            var temp_date = idate.substring(0,4) + '-' + idate.substring(5,7) + '-' +idate.substring(8,10);
            temp_date += 'T00:00:00.000';
-           console.log(temp_date);
+           //console.log(temp_date);
            return temp_date;
 }
 
