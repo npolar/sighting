@@ -7,11 +7,6 @@
 //var AdminObservationsCtrl = function($scope, $http, nemSimpleLogger, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin) {
 var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin, npolarApiConfig) {
 
-//Access to page or not?
-$scope.isAdmin = function() {
-  return NpolarApiSecurity.hasSystem('https://api.npolar.no/sighting/admin');
-};
-
 
  var markers = [];
  //select -get species
@@ -207,9 +202,16 @@ $scope.isAdmin = function() {
     $scope.hostname = location.host;
    // console.log($scope.hostname);
 
+
+
   });
 
 }; //submit
+
+//Access to page or not?
+   $scope.isAdmin = function() {
+     return NpolarApiSecurity.hasSystem('https://api.npolar.no/sighting/admin');
+   };
 
 };  //AdminObservationsCtrl
 
