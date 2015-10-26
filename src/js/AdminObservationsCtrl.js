@@ -12,10 +12,6 @@ $scope.isAdmin = function() {
   return NpolarApiSecurity.hasSystem('https://api.npolar.no/sighting/admin');
 };
 
-window.MY_SCOPE = $scope;
-
-console.log($scope);
-
 
  var markers = [];
  //select -get species
@@ -50,8 +46,6 @@ console.log($scope);
   leafletData.getMap().then(function(map) {
 
        var drawnItems = new L.featureGroup().addTo(map);
-       console.log($scope);
-       console.log("1");
 
        map.on('draw:created', function (e) {
                  var layer = e.layer;
@@ -99,13 +93,11 @@ console.log($scope);
   // Execute this function when advanced search button is pressed
  $scope.submit = function() {
 
+    console.log("submit");
     console.log($scope);
-    console.log("child");
 
     // First find out which paramaters are not empty
     var sok = ''; var lat = ''; var lng = ''; var edate = '';
-
-
 
     // If event_date exists
     if (typeof $scope.event_date1 !== "undefined" && $scope.event_date1 !== "") {
@@ -153,12 +145,18 @@ console.log($scope);
 
     }
 
+    console.log(sok);
+    console.log("2");
+    console.log($scope.species);
 
     //Include species search if it exists
     if ((typeof $scope.species !== "undefined") && ($scope.species !== null) && ($scope.species !== '' )) {
            sok = sok + '&filter-species=' + ($scope.species.family).toLowerCase();
            sok = sok.replace(/ /g,"+");
     }
+
+    console.log(sok);
+    console.log("3");
 
     //Sum up the query
     if ($scope.search) {
