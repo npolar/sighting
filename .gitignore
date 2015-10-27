@@ -6,3 +6,4 @@ bundle.js
 dist
 coverage
 node_modules
+src/stored_images/*

@@ -14,19 +14,20 @@
 </div>
 
 <section ng-repeat="link in document.links">
-  ppp<a ng-href="{{link.href}}">{{link.title}}</a>
+  <a ng-href="{{link.href}}">{{link.title}}</a>
 </section>
 
 
 
-
+<p></p>
 <table>
-<tr><td><b>Images</b></td></tr>
+<tr><td><b>images</b></td></tr>
 
-<tr ng-repeat="picture in document.pictures">
-<td><b><a href="http://{{hostname}}/stored_images/{{entry.id}}/{{picture.filename}}">{{picture.filename}}&nbsp;</a></b></td>
-<td><b>Size:&nbsp; {{picture.content_size}} &nbsp;</b></td>
-<td><b>Photographer:&nbsp;{{picture.photographer}}&nbsp;</b></td>
+<tr ng-repeat="picture in pic">
+<td><b><a href="https://{{hostname}}/stored_images/{{entry.id}}/{{picture.filename}}">{{picture.filename}}&nbsp;</a></b></td>
+<td><b>Size:&nbsp;</b> {{picture.content_size}} &nbsp;</td>
+<td><b>Photographer:&nbsp;</b>{{picture.photographer}}&nbsp;</td>
+<td><b>Comment:&nbsp;</b>{{picture.comments}}&nbsp;</td>
 </tr>
 
 </table>
