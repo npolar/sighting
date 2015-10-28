@@ -2,11 +2,12 @@
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, tfoot, tr,th, td,
 abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, table, legend, caption, strike,
 strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol,
-ul, li, fieldset, form, label, tbody { margin:0; padding:0; border:0; outline:0; font-size:100%;
+ul, li, fieldset, form, label, tbody { margin:0; padding:0; border:0; outline:0;font-size:100%;
   vertical-align:baseline; background:transparent }
 body {line-height: 1;}ol, ul{list-style:none;} blockquote, q{quotes:none;} blockquote:before, blockquote:after,
 q:before, q:after{content:'';content:none;} :focus{outline:0;} ins{text-decoration:none;}
 del{text-decoration:line-through;} table{border-collapse:collapse; border-spacing:0;}
+
 
 /*MAIN*/
 body {
@@ -79,17 +80,12 @@ span.background-font {
   color: white;
 }
 
-
-
 /* For header menu*/
 img {
-
   width: 100%;
-
 }
 
 header {
-
   background: #fff;
   width: 100%;
   height: 76px;
@@ -98,11 +94,9 @@ header {
   left: 0;
   border-bottom: 4px solid #4C9CF1;
   z-index: 100;
-
 }
 
 #logo{
-
   margin: 20px;
   float: left;
   width: 40px;
@@ -113,41 +107,34 @@ header {
 }
 
 nav#nav_id {
-
   float: right;
   padding: 20px;
 
 }
 
 #menu-icon {
-
   display: hidden;
   width: 100px;
   height: 40px;
   background: #4C8FEC url(./img/icons/menu_403.png) center;
   border-bottom: none;
-
 }
 
 a:hover#menu-icon {
-
   background-color: #444;
   border-radius: 4px 4px 0 0;
-
 }
 
 ul {
-
   list-style: none;
-
 }
 
-li {
-
+li.menu {
   display: inline-block;
   float: left;
   padding: 10px;
 }
+
 
 .current {
 
@@ -187,26 +174,18 @@ section {
   text-align: left;
 }
 
-
-
-
 /*MEDIA QUERY*/
 @media only screen and (max-width : 800px) {
 
   header {
-
     position: absolute;
-
   }
 
   #menu-icon {
-
     display:inline-block;
-
   }
 
   nav#nav_id ul, nav#nav_id:active ul {
-
     display: none;
     position: absolute;
     padding: 20px;
@@ -216,35 +195,30 @@ section {
     top: 60px;
     width: 50%;
     border-radius: 4px 0 4px 4px;
-
   }
 
 
   nav#nav_id li {
-
     text-align: center;
     width: 100%;
     padding: 10px 0;
     margin: 0;
-
   }
 
 
   nav#nav_id:hover ul {
-
     display: block;
-
   }
 
-/*Remove image*/
+  /*Remove image*/
   #left_elem {
    width: 100%;
    float: left;
-}
+  }
 
-#right_elem {
+  #right_elem {
    display:none;
-}
+  }
 
 
   /* Force table to not be like tables anymore */
@@ -285,18 +259,17 @@ section {
 @media
 only screen and (max-width: 1024px){
    /*Remove image*/
-  #left_elem {
+   #left_elem {
    width: 50%;
    float: left;
 }
 
 #right_elem {
    width: 50%;
-    float: right;
+   float: right;
    background-image: url('./img/frontpage480.jpg');
    background-repeat: no-repeat;
    background-size:contain;
-
    height:360px;width:360px;
 }
 

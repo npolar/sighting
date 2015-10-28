@@ -2,11 +2,12 @@
 /**
  * @ngInject
  */
-var ViewObservationCtrl = function ($scope, $routeParams, $controller, Sighting, NpolarApiSecurity) {
+var ViewObservationCtrl = function ($scope, $routeParams, $controller, Sighting, NpolarApiSecurity, SPECIES) {
   $controller('NpolarBaseController', {$scope: $scope});
   $scope.resource = Sighting;
+  $scope.items = SPECIES;
 
-  let expedition = (sighting) => {
+  /*let expedition = (sighting) => {
   	  var str = 'Name: ' + sighting.expedition.name
   	  + ' Contact information: ' + sighting.expedition.contact_info
   	  + ' Platform: ' + sighting.expedition.platform
@@ -15,13 +16,36 @@ var ViewObservationCtrl = function ($scope, $routeParams, $controller, Sighting,
   	  + ' End date: ' + sighting.expedition.end_date
   	  + ' Other infomation: ' + sighting.expedition.other_info;
   	  return str;
+  }; */
+
+ /* let date_identified = (sighting) => {
+  	 console.log(sighting.date_identified);
+      return sighting.date_identified.substr(0,10);
   };
+
+  let event_date = (sighting) => {
+      return event_date.substr(0,10);
+  };
+
+  let created = (sighting) => {
+      return created;
+  };
+
+  let updated = (sighting) => {
+      return updated;
+  }; */
 
   //Call show, get promise
   let show = function() {
   Sighting.fetch($routeParams, (sighting) => {
     $scope.document = sighting;
-    $scope.document.expedition = expedition(sighting);
+   // $scope.document.expedition = expedition(sighting);
+  /*  $scope.document.date_identified = date_identified(sighting);
+    $scope.document.created = created(sighting);
+    $scope.document.updated = updated(sighting);
+    $scope.document.event_date = event_date(sighting);*/
+
+
     //Delete field that should not be visible
     delete $scope.document._rev;
     delete $scope.document._id;
@@ -46,10 +70,10 @@ var ViewObservationCtrl = function ($scope, $routeParams, $controller, Sighting,
         delete $scope.document.updated_by;
     };
 
-    var str2="blue_ter_test";
+  /*  var str2="blue_ter_test";
     var res = str2.replace(/_/g, " ");
     console.log("str ", res);
-    console.log($scope.document);
+    console.log($scope.document); */
 
   });
 };

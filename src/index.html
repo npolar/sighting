@@ -14,10 +14,6 @@
 <!--[if gt IE 8]><!-->
 <!--  <link rel="stylesheet" href="/assets/leaflet.css">  -->
  <!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css"> -->
-  <link rel="stylesheet" href="/assets/leaflet.css" />
-  <link rel="stylesheet" href="/assets/leaflet.draw.css">
-  <link rel="stylesheet" href="/assets/grids-responsive-min.css">
-  <link rel="stylesheet" href="/assets/formula.min.css">
   <!--<![endif]-->
 
 </head>
@@ -35,12 +31,12 @@
 <nav id="nav_id">
 <a href="#" id="menu-icon"></a>
 <ul ng-controller="PanelCtrl as panel">
-<li><a href ng-click="panel.choosePath('login')" class="current">Login</a></li>
-<li><a href ng-click="panel.choosePath('observe')" class="menu">Become observer</a></li>
-<li><a href ng-click="panel.choosePath('species')" class="menu">Species</a></li>
-<li ng-show="security.isAuthenticated()"><a href ng-click="panel.choosePath('observers')" class="menu">Observers</a></li>
-<li ng-show="security.isAuthenticated()"><a href ng-click="panel.choosePath('my_observations')" class="menu">My observations</a></li>
-<li ng-show="security.isAuthenticated()"><a href ng-click="panel.choosePath('admin')" class="menu">Administrators</a></li>
+<li class="menu"><a href ng-click="panel.choosePath('login')" class="current">Login</a></li>
+<li class="menu"><a href ng-click="panel.choosePath('observe')" class="menu">Become observer</a></li>
+<li class="menu"><a href ng-click="panel.choosePath('species')" class="menu">Species</a></li>
+<li class="menu" ng-show="security.isAuthenticated()"><a href ng-click="panel.choosePath('observers')" class="menu">Observers</a></li>
+<li class="menu" ng-show="security.isAuthenticated()"><a href ng-click="panel.choosePath('my_observations')" class="menu">My observations</a></li>
+<li class="menu" ng-show="security.isAuthenticated()"><a href ng-click="panel.choosePath('admin')" class="menu">Administrators</a></li>
 </ul>
 </nav>
 

@@ -5,13 +5,76 @@
 <a ng-if="document.id && isAuthenticated()" ng-href="{{document.id}}/edit"><button class="btn btn-danger">edit</button></a>
 <!-- <button ng-click="locationBase()" class="btn btn-default">back</button></a> -->
 <button class="btn btn-default"><a href="./observations">Back</a></button>
-<!-- <div ng-repeat="(k,v) in document">  -->
-<div ng-repeat="(k,v) in document">
-
+<!-- <div ng-repeat="(k,v) in document">
  <b>{{k }}</b>: {{v}}<br />
+</div> -->
 
- <!--  <p>{{v|json}}</p>  -->
-</div>
+       <section>
+        <b>ID:&nbsp;</b>{{document.id }}<br />
+        </section>
+
+
+        <article>
+	    <h3>Expedition</h3>
+	    <b>Name:</b>&nbsp;{{document.expedition.name }}<br />
+	    <b>Start date:</b>&nbsp;{{document.expedition.start_date }}<br />
+	    <b>End date:</b>&nbsp;{{document.expedition.end_date }}<br />
+        <b>Platform:</b>&nbsp;{{document.expedition.platform }}<br />
+        <b>Platform comment:</b>{{document.expedition.platform_comment }}<br />
+        <b>Contact information:</b>&nbsp;
+        	{{document.expedition.contact_information }}<br />
+        <b>Other information:</b>&nbsp;{{document.expedition.other_info }}
+        </article>
+
+
+<article>
+	   <h3>Time and place</h3>
+        <p><b>Event date:</b>&nbsp;{{document.event_date }}<br />
+        <b>Locality:</b>&nbsp;{{document.locality }}<br />
+        <b>Latitude:</b>&nbsp;{{document.latitude }}<br />
+        <b>Longitude:</b>&nbsp;{{document.longitude }}</p>
+</section>
+
+<section>
+	    <h3>Observation</h3>
+	    <p><b>Species:</b>&nbsp;{{document.species}}<br />
+        <b>Habitat:</b>&nbsp;{{document.habitat }}<br />
+        <b>Alive or dead:</b>&nbsp;{{document.dead_alive }}<br />
+        <b>Polar bear condition:</b>&nbsp;{{document.polar_bear_condition }}<br />
+        <b>Polar bear den:</b>&nbsp;{{document.polar_bear_den}}<br />
+        <b>Occurrence remarks:</b>&nbsp;{{document.occurrence_remarks}}<br />
+        <b>Info comments:</b>&nbsp;{{document.info_comment }}</p>
+</section>
+
+
+	    <h3>Observation count</h3>
+        <p><b>Adult males:</b>&nbsp;{{document.adult_m }}<br />
+        <b>Adult females:</b>&nbsp;{{document.adult_f }}<br />
+        <b>Adults:</b>&nbsp;{{document.adult }}<br />
+        <b>Sub adults:</b>&nbsp;{{document.sub_adult }}<br />
+        <b>Cub, calf, pup:</b>&nbsp;{{document.sub_calf_pup }}<br />
+        <b>Bear cubs:</b>&nbsp;{{document.bear_cubs }}<br />
+        <b>Unidentified:</b>&nbsp;{{document.unidentified }}<br />
+        <b>Total:</b>&nbsp;{{document.total }}</p>
+
+
+
+<section>
+	    <h3>Editors</h3>
+	    <p><b>Identified by:</b>&nbsp;{{document.identified_by }}<br />
+        <b>Editor assessment:</b>&nbsp;{{document.editor_assessment }}<br />
+        <b>Editor comment:</b>&nbsp;{{document.editor_comment }}</p>
+</section>
+
+<section>
+	    <h3>Metadata information</h3>
+	    <b>Language:</b>&nbsp;{{document.language}}<br />
+        <b>Created:</b>&nbsp;{{document.created }}<br />
+        <b>Updated:</b>&nbsp;{{document.updated}}<br />
+        <b>Created by:</b>&nbsp;{{document.created_by }}<br />
+        <b>Updated by:</b>&nbsp;{{document.updated_by }}
+</section>
+
 
 <section ng-repeat="link in document.links">
   <a ng-href="{{link.href}}">{{link.title}}</a>
