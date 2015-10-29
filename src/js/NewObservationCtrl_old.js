@@ -1,7 +1,7 @@
 'use strict';
 //New entry created here
 // @ngInject
-var NewObservationCtrl = function($scope, $controller, $http, $routeParams, Sighting) {
+var NewObservationCtrl = function($scope, $controller, $http, $routeParams, Sighting, npolarApiConfig) {
 
   $controller('NpolarEditController', { $scope: $scope });
 
@@ -9,7 +9,7 @@ var NewObservationCtrl = function($scope, $controller, $http, $routeParams, Sigh
   $scope.resource = Sighting;
 
   // Formula ($scope.formula set by parent)
-  $scope.formula.schema = 'https://api.npolar.no/schema/sighting';
+  $scope.formula.schema = 'https://' + npolarApiConfig.base + '/schema/sighting';
   $scope.formula.form = './partials/user/formula.json';
   $scope.formula.validateHidden = false;
   $scope.formula.saveHidden = false;

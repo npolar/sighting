@@ -39,7 +39,7 @@ appSighting.controller('ObserversCtrl', require('./js/ObserversCtrl'));
 appSighting.controller('CSVCtrl', require('./js/CSVCtrl'));
 appSighting.controller('MyObservationsCtrl', require('./js/MyObservationsCtrl'));
 appSighting.controller('ViewObservationCtrl', require('./js/ViewObservationCtrl'));
-appSighting.controller('NewObservationCtrl', require('./js/NewObservationCtrl'));
+//appSighting.controller('NewObservationCtrl', require('./js/NewObservationCtrl'));
 appSighting.controller('EditObservationCtrl', require('./js/EditObservationCtrl'));
 appSighting.controller('DeleteObservationCtrl', require('./js/DeleteObservationCtrl'));
 appSighting.controller('UploadObservationsCtrl', require('./js/UploadObservationsCtrl'));
