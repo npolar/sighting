@@ -22,7 +22,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
       },
       layers: {
         tileLayer: "http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png",
-  			attribution: '&copy; <a href="http://www.npolar.no">Norwegian Polar Institute</a>',
+        tileLayerOptions: { attribution: '&copy; <a href="http://www.npolar.no">Norwegian Polar Institute</a>'},
         maxZoom: 14,
 				minZoom: 2
       },
@@ -42,6 +42,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
        var drawnItems = new L.featureGroup().addTo(map);
 
+       console.log($scope);
        map.on('draw:created', function (e) {
                  var layer = e.layer;
                 drawnItems.addLayer(layer);
