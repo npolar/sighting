@@ -10,13 +10,20 @@ var ObserversCtrl = function ($scope, $http, NpolarApiSecurity, Sighting) {
 
   Sighting.feed({ fields: "*"}, response => {
     //$scope.filters = response._filters();
-    //$scope.feed = response.feed;
-    $scope.feed = response.feed;
+    var feed = response.feed;
+    var size = 0,  arr =[];
 
-    console.log($scope.feed);
+    //Push all unique entries onto arr
+    for (var key in feed.entries){
+   	   if (!arr.includes(feed.entries[size].recorded_by_name)) {
+    	   arr.push(feed.entries[size].recorded_by_name);
+       };
+       if ((feed.entries).hasOwnProperty(key)) size++;
+    }
+
+    $scope.arr = arr;
+
    });
-
-
 
 };
 
