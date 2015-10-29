@@ -9,12 +9,10 @@
  <b>{{k }}</b>: {{v}}<br />
 </div> -->
 
-       <section>
-        <b>ID:&nbsp;</b>{{document.id }}<br />
-        </section>
+        <br /><br />
+        <h1>Observation &nbsp;{{document.id }}</h1><br />
 
 
-        <article>
 	    <h3>Expedition</h3>
 	    <b>Name:</b>&nbsp;{{document.expedition.name }}<br />
 	    <b>Start date:</b>&nbsp;{{document.expedition.start_date }}<br />
@@ -22,77 +20,63 @@
         <b>Platform:</b>&nbsp;{{document.expedition.platform }}<br />
         <b>Platform comment:</b>{{document.expedition.platform_comment }}<br />
         <b>Contact information:</b>&nbsp;
-        	{{document.expedition.contact_information }}<br />
-        <b>Other information:</b>&nbsp;{{document.expedition.other_info }}
-        </article>
+        	{{document.expedition.contact_info }}<br />
+        <b>Other information:</b>&nbsp;{{document.expedition.other_info }}<br />
+        <b>Expedition link:</b>&nbsp;{{document.expedition_db.href }}<br /><br />
 
-
-<article>
-	   <h3>Time and place</h3>
-        <p><b>Event date:</b>&nbsp;{{document.event_date }}<br />
+	    <h3>Time and location</h3>
+        <b>Event date:</b>&nbsp;{{document.event_date }}<br />
         <b>Locality:</b>&nbsp;{{document.locality }}<br />
         <b>Latitude:</b>&nbsp;{{document.latitude }}<br />
-        <b>Longitude:</b>&nbsp;{{document.longitude }}</p>
-</section>
+        <b>Longitude:</b>&nbsp;{{document.longitude }}<br />
+        <b>Location comment:</b>&nbsp;{{document.location_comment }}<br /><br />
 
-<section>
 	    <h3>Observation</h3>
-	    <p><b>Species:</b>&nbsp;{{document.species}}<br />
+	    <b>Species:</b>&nbsp;{{document.species}}<br />
         <b>Habitat:</b>&nbsp;{{document.habitat }}<br />
         <b>Alive or dead:</b>&nbsp;{{document.dead_alive }}<br />
         <b>Polar bear condition:</b>&nbsp;{{document.polar_bear_condition }}<br />
         <b>Polar bear den:</b>&nbsp;{{document.polar_bear_den}}<br />
-        <b>Occurrence remarks:</b>&nbsp;{{document.occurrence_remarks}}<br />
-        <b>Info comments:</b>&nbsp;{{document.info_comment }}</p>
-</section>
-
+        <b>Occurrence remark:</b>&nbsp;{{document.occurrence_remarks}}<br />
+        <b>Info comment:</b>&nbsp;{{document.info_comment }}<br /><br />
 
 	    <h3>Observation count</h3>
-        <p><b>Adult males:</b>&nbsp;{{document.adult_m }}<br />
+        <b>Adult males:</b>&nbsp;{{document.adult_m }}<br />
         <b>Adult females:</b>&nbsp;{{document.adult_f }}<br />
         <b>Adults:</b>&nbsp;{{document.adult }}<br />
-        <b>Sub adults:</b>&nbsp;{{document.sub_adult }}<br />
+        <b>Young adults:</b>&nbsp;{{document.sub_adult }}<br />
         <b>Cub, calf, pup:</b>&nbsp;{{document.sub_calf_pup }}<br />
         <b>Bear cubs:</b>&nbsp;{{document.bear_cubs }}<br />
         <b>Unidentified:</b>&nbsp;{{document.unidentified }}<br />
-        <b>Total:</b>&nbsp;{{document.total }}</p>
+        <b>Total:</b>&nbsp;{{document.total }}<br /><br />
 
+        <h3>Excelfile</h3>
+        <b>Filename:</b>&nbsp;{{document.filename }}<br />
+        <b>Content type:</b>&nbsp;{{document.content_type }}<br />
+        <b>Content size:</b>&nbsp;{{document.content_size }}<br />
+        <b>Timestamp:</b>&nbsp;{{document.timestamp }}<br /><br />
 
-
-<section>
 	    <h3>Editors</h3>
-	    <p><b>Identified by:</b>&nbsp;{{document.identified_by }}<br />
+	    <b>Identified by:</b>&nbsp;{{document.identified_by }}<br />
+        <b>Date identified:</b>&nbsp;{{document.date_identified }}<br />
         <b>Editor assessment:</b>&nbsp;{{document.editor_assessment }}<br />
-        <b>Editor comment:</b>&nbsp;{{document.editor_comment }}</p>
-</section>
+        <b>Editor comment:</b>&nbsp;{{document.editor_comment }}<br /><br />
 
-<section>
 	    <h3>Metadata information</h3>
-	    <b>Language:</b>&nbsp;{{document.language}}<br />
+        <b>Recorded by:</b>&nbsp;{{document.recorded_by}}<br />
+        <b>Recorded by name:</b>&nbsp;{{document.recorded_by_name}}<br />
         <b>Created:</b>&nbsp;{{document.created }}<br />
         <b>Updated:</b>&nbsp;{{document.updated}}<br />
         <b>Created by:</b>&nbsp;{{document.created_by }}<br />
         <b>Updated by:</b>&nbsp;{{document.updated_by }}
-</section>
+        <br /><br />
 
 
-<section ng-repeat="link in document.links">
-  <a ng-href="{{link.href}}">{{link.title}}</a>
-</section>
-
-
-
-<p></p>
-<table>
-<tr><td><b>images</b></td></tr>
-
-<tr ng-repeat="picture in pic">
-<td><b><a href="https://{{hostname}}/stored_images/{{entry.id}}/{{picture.filename}}">{{picture.filename}}&nbsp;</a></b></td>
-<td><b>Size:&nbsp;</b> {{picture.content_size}} &nbsp;</td>
-<td><b>Photographer:&nbsp;</b>{{picture.photographer}}&nbsp;</td>
-<td><b>Comment:&nbsp;</b>{{picture.comments}}&nbsp;</td>
-</tr>
-
-</table>
-
+       <h3>Images</h3>
+<div ng-repeat="picture in pic">
+<b><a href="https://{{hostname}}/stored_images/{{entry.id}}/{{picture.filename}}">{{picture.filename}}&nbsp;</a></b><br />
+<b>Size:</b> &nbsp;{{picture.content_size}} <br />
+<b>Photographer:</b>&nbsp;{{picture.photographer}}<br />
+<b>Comment:</b>&nbsp;{{picture.comments}}<br /><br />
 </div>
+

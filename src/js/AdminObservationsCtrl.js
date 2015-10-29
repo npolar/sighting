@@ -22,7 +22,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
       },
       layers: {
         tileLayer: "http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png",
-				attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap2</a> contributors',
+  			attribution: '&copy; <a href="http://www.npolar.no">Norwegian Polar Institute</a>',
         maxZoom: 14,
 				minZoom: 2
       },
