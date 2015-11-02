@@ -15,10 +15,11 @@ var ObserversCtrl = function ($scope, $http, NpolarApiSecurity, Sighting) {
 
     //Push all unique entries onto arr
     for (var key in feed.entries){
+      if ((feed.entries).hasOwnProperty(key)) {
    	   if (!arr.includes(feed.entries[size].recorded_by_name)) {
     	   arr.push(feed.entries[size].recorded_by_name);
-       };
-       if ((feed.entries).hasOwnProperty(key)) size++;
+       }
+       size++; }
     }
 
     $scope.arr = arr;

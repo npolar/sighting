@@ -1,11 +1,11 @@
-  'use strict';
+'use strict';
 //Admin module
 
 // Respond to search to get relevant entries
 // First respond to squares drawn
 // @ngInject
 //var AdminObservationsCtrl = function($scope, $http, nemSimpleLogger, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin) {
-var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin, npolarApiConfig) {
+var AdminObservationsCtrl = function($scope, angular, L, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin, npolarApiConfig) {
 
 
  var markers = [];

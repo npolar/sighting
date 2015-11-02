@@ -3,7 +3,7 @@
 
 //Controller for Excel file upload
 // @ngInject
-var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting) {
+var UploadObservationsCtrl = function($scope, $http, XLSX, NpolarApiSecurity, Sighting) {
      $scope.security = NpolarApiSecurity;
 
      // Dataset -> npolarApiResource -> ngResource
@@ -43,9 +43,10 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                     var entry = {}, exped = {};
 
                     for (var q in worksheet) {
+                      if (worksheet.hasOwnProperty(q)) {
                     // all keys that do not begin with "!" correspond to cell addresses
                     //y is heading text, z is cellno, worksheet[z].v is cell content
-                           console.log(q);
+                           //console.log(q);
 
                            //Expedition
                            if (q ==="K2") { exped.other_info = worksheet[q].v;}
@@ -54,7 +55,8 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                            if (q ==="K5") { var start_d = getJsDateFromExcel(worksheet[q].v); exped.start_date = start_d;}
                            if (q ==="K6") { var end_d = getJsDateFromExcel(worksheet[q].v); exped.end_date = end_d;}
                            if (q ==="K7") { exped.platform = worksheet[q].v;}
-                    }
+                    } //if
+                  } //for
 
                      //A few more values applied to each entry
                     entry.recorded_by = (NpolarApiSecurity.getUser()).name;
@@ -70,6 +72,7 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                     excel['content-size'] = f.size;
 
                     for (var z in worksheet) {
+                      if (worksheet.hasOwnproperty(z)) {
                            var num = z.substring(1);
                           // console.log(num, z, worksheet["A"+num]);
                           //Excel lines start at 20 so check bigger than 19
@@ -103,7 +106,7 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                                 //Add subobjects to main object entry
                                 entry.excelfile =  excel;
                                 entry.expedition =  exped;
-                                console.log(entry);
+                                //console.log(entry);
 
 
                                 //Save entry, P is last letter
@@ -112,8 +115,8 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                                    entry.collection = "sighting";
                                    entry.base = "http://api.npolar.no";
 
-                                   console.log(JSON.stringify(entry));
-                                   console.log("test");
+                                   //console.log(JSON.stringify(entry));
+                                   //console.log("test");
 
                                 /*    $scope.resource.save(JSON.stringify(entry), function(document) {
                                     $scope.document = document;
@@ -124,11 +127,12 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                                 }
 
                        } //typeof
+                      } //if
                   } //For -worksheet
 
-                  });
+                  });  //sheet_name_list
               };
-            })(f);
+            })(f);   //reader.onload
             if (rABS) { reader.readAsBinaryString(f); }
             else {reader.readAsArrayBuffer(f);}
 
@@ -159,15 +163,18 @@ function getJsDateFromExcel(excelDate) {
       return r;
     }
 
-    Date.prototype.toISOString = function() {
-      return this.getUTCFullYear() +
+   // Date.prototype.toISOString = function() {
+    Object.defineProperty(String.prototype, "toISOString", {
+        value: function () {
+         return this.getUTCFullYear() +
          '-' + pad( this.getUTCMonth() + 1 ) +
          '-' + pad( this.getUTCDate() ) +
          'T' + pad( this.getUTCHours() ) +
          ':' + pad( this.getUTCMinutes() ) +
          ':' + pad( this.getUTCSeconds() ) +
          'Z';
-    };
+        }
+    });
 
   }() ); }
  else {//Get rid of date extension

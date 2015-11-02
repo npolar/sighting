@@ -10,8 +10,8 @@ var ViewObservationCtrl = function ($scope, $routeParams, $controller, Sighting,
   //Convert latin species' names to english/norwegian
   let species = (sighting) => {
       for (var i = 0; i < SPECIES.length; i++) {
-             if (((SPECIES[i].family).toLowerCase()) === $scope.document.species) {
-                return (SPECIES[i].eng).toLowerCase() + ' (' + (SPECIES[i].name).toLowerCase() + ')';
+             if ((SPECIES[i].family).toLowerCase() === $scope.document.species) {
+               return (SPECIES[i].eng).toLowerCase() + '&nbsp;(' + (SPECIES[i].name).toLowerCase() + ')';
              } else {
                 return  "undefined";
              }
