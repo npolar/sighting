@@ -5,7 +5,7 @@
 // First respond to squares drawn
 // @ngInject
 //var AdminObservationsCtrl = function($scope, $http, nemSimpleLogger, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin) {
-var AdminObservationsCtrl = function($scope, angular, L, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin, npolarApiConfig) {
+var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin, npolarApiConfig) {
 
 
  var markers = [];
@@ -199,7 +199,7 @@ var AdminObservationsCtrl = function($scope, angular, L, $http, leafletData, SPE
 
 //Access to page or not?
    $scope.isAdmin = function() {
-     return NpolarApiSecurity.hasSystem('https://api.npolar.no/sighting/admin');
+     return NpolarApiSecurity.hasSystem('https:' + npolarApiConfig.base + '/sighting/admin');
    };
 
 };  //AdminObservationsCtrl

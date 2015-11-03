@@ -97,7 +97,7 @@
                 "habitat",
                 {
                     "id": "latitude",
-                    "description":"Perferably in descimal degrees"
+                    "description":"Perferably in decimal degrees"
                 },
                 {
                     "id": "longitude",
@@ -115,6 +115,10 @@
                 }
          ]
         },
+         {
+      "title": "Picture upload",
+      "fields": []
+      },
       {
       "title": "Picture info",
       "fields": [

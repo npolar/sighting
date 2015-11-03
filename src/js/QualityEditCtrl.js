@@ -2,7 +2,7 @@
 /* user module */
 //Update entry from Svalbard MMS couch database here
 // @ngInject
-var QualityEditCtrl =  function($scope,$location, $controller, Sighting) {
+var QualityEditCtrl =  function($scope,$location, $controller, Sighting, ) {
     //var speciesgallery = require('./SpeciesGallery');
 
      // EditController -> NpolarEditController
