@@ -1,0 +1,18 @@
+
+
+
+<form novalidate name="entryForm" class="css-form" ng-controller="DeleteAdminObservationCtrl as entry">
+<h1><b> Delete observation {{ entry.id }} <b></h1>
+
+
+Are you sure you want to delete observation {{ entry.id }}?
+
+<br/><br />
+<input type="submit" ng-click="submit(entry.id)" value="Delete" />
+<input TYPE="button" value="Cancel" onClick="parent.location='quality_check/'">
+</form>
+
+
+
+
+

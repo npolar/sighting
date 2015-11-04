@@ -4,8 +4,7 @@
 // Respond to search to get relevant entries
 // First respond to squares drawn
 // @ngInject
-//var AdminObservationsCtrl = function($scope, $http, nemSimpleLogger, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin) {
-var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBGetAdmin, npolarApiConfig) {
+var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBSearch, npolarApiConfig) {
 
 
  var markers = [];
@@ -154,8 +153,13 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
     }
 
 
-    $http.jsonp('https:' + npolarApiConfig.base + '/sighting/?q='+ sok +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
-    $scope.full = data;
+   // $http.jsonp('https:' + npolarApiConfig.base + '/sighting/?q='+ sok +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
+   // $scope.full = data;
+
+    //editor_assessment=unknown means new entries
+  $scope.full = SightingDBSearch.get({search:sok}, function(){
+   //});
+
 
 
     var redIcon = {

@@ -34,22 +34,23 @@ var appSighting = angular.module('sighting',[
 appSighting.controller('PanelCtrl', require('./js/PanelCtrl'));
 appSighting.controller('SightingCtrl', require('./js/SightingCtrl'));
 appSighting.controller('AdminObservationsCtrl', require('./js/AdminObservationsCtrl'));
-appSighting.controller('QualityCtrl', require('./js/QualityCtrl'));
 appSighting.controller('ObserversCtrl', require('./js/ObserversCtrl'));
 appSighting.controller('CSVCtrl', require('./js/CSVCtrl'));
 appSighting.controller('MyObservationsCtrl', require('./js/MyObservationsCtrl'));
 appSighting.controller('ViewObservationCtrl', require('./js/ViewObservationCtrl'));
-//appSighting.controller('NewObservationCtrl', require('./js/NewObservationCtrl'));
+
 appSighting.controller('EditObservationCtrl', require('./js/EditObservationCtrl'));
-appSighting.controller('DeleteObservationCtrl', require('./js/DeleteObservationCtrl'));
 appSighting.controller('UploadObservationsCtrl', require('./js/UploadObservationsCtrl'));
 appSighting.controller('UploadImagesCtrl', require('./js/UploadImagesCtrl'));
-appSighting.controller('QualityEditCtrl', require('./js/QualityEditCtrl'));
+
 appSighting.controller('ngLoginLogout', require('./js/ngLoginlogout'));
 
-appSighting.service('SightingDBUpdate', require('./js/SightingDBUpdate'));
+appSighting.controller('EditAdminObservationCtrl', require('./js/EditAdminObservationCtrl'));
+appSighting.controller('DeleteAdminObservationCtrl', require('./js/DeleteAdminObservationCtrl'));
+appSighting.controller('QualityCtrl', require('./js/QualityCtrl'));
+
+appSighting.service('SightingDBSearch', require('./js/SightingDBSearch'));
 appSighting.service('SightingDBGet', require('./js/SightingDBGet'));
-appSighting.service('SightingDBGetAdmin', require('./js/SightingDBGetAdmin'));
 appSighting.service('CSVService', require('./js/CSVService'));
 appSighting.directive('fileInput', require('./js/fileInput'));
 appSighting.directive('npolarLoginLogout2', require('./js/ngloginLogout2'));

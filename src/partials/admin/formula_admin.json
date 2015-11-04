@@ -19,7 +19,7 @@
               "id": "platform_comment",
               "title": "platform comment"
           },
-          {
+           {
               "id": "start_date",
               "title": "start date"
           },
@@ -29,7 +29,7 @@
           },
           {
               "id": "expedition_db",
-              "title":"Link to expedition",
+              "title":"Link to expedition database (Norwegian Polar Institute employees mostly)",
               "fields": [
             {
                 "id": "href",
@@ -87,10 +87,9 @@
         "title": "occurrence remarks"}
             ]
         },
-        {
-            "title": "Time/location",
-            "fields": [
-                {
+{"title": "Time/location",
+      "fields": [
+            {
                     "id": "event_date",
                     "title": "observation date",
                     "description": "Date of observation"
@@ -98,7 +97,7 @@
                 "habitat",
                 {
                     "id": "latitude",
-                    "description":"Perferably in descimal degrees"
+                    "description":"Perferably in decimal degrees"
                 },
                 {
                     "id": "longitude",
@@ -113,34 +112,32 @@
                     "id": "location_comment",
                     "title": "location comment",
                     "description":""
-                },
-                {"id": "language",
-                "description": "Language used in this observation description -usually English "
-              }
-            ]
-          },
-          {
-            "title": "Admin",
-            "fields": [
-                {
-                    "id": "editor_assessment",
-                    "title": "Editor's assessment",
-                    "description": "Green is likely, yellow is unusual, red is unlikely"
-                },
-                 {
-                    "id": "editor_comment",
-                    "title": "Editor's comments"
                 }
-            ]
-          },
-    {
+         ]
+        },
+         {
+      "title": "Picture upload",
+      "fields": []
+      },
+      {
       "title": "Picture info",
       "fields": [
         {
           "id": "pictures",
            "title":"Information about uploaded pictures",
           "fields":[
-            "filename",
+          {
+              "id": "filename",
+              "disabled": true
+            },
+            {
+              "id": "content_type",
+              "hidden": true
+            },
+            {
+              "id": "content_size",
+              "hidden": true
+            },
             "photographer",
             {"id": "other_info",
             "title": "additional information",

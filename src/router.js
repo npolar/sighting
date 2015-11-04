@@ -38,10 +38,6 @@ var router = function($routeProvider, $locationProvider) {
         templateUrl: 'partials/user/images.html',
         controller: 'UploadImagesCtrl'
       }).
-      when('/observation/delete/:id', {
-        templateUrl: 'partials/user/delete_observation.html',
-        controller: 'DeleteObservationCtrl'
-      }).
       when('/upload', {
         templateUrl: 'partials/user/upload.html',
         controller: 'UploadObservationsCtrl'
@@ -58,9 +54,13 @@ var router = function($routeProvider, $locationProvider) {
         templateUrl: 'partials/admin/quality_check.html',
         controller: 'QualityCtrl'
       }).
-      when('/quality_edit/:id/edit', {
-        templateUrl: 'partials/admin/quality_edit.html',
-        controller: 'QualityEditCtrl'
+       when('/observations/:id/editadmin', {
+        templateUrl: 'partials/admin/edit_observation.html',
+        controller: 'EditAdminObservationCtrl'
+      }).
+      when('/observations/:id/deleteadmin', {
+        templateUrl: 'partials/admin/delete_observation.html',
+        controller: 'DeleteAdminObservationCtrl'
       }).
       otherwise({
        // redirectTo: '/'

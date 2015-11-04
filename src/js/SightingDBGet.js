@@ -2,10 +2,9 @@
 /*service */
 
 // @ngInject
-var SightingDBGet = function($resource){
-    return $resource( 'https://api.npolar.no/sighting/:id' , { id:'@id'}, {
+var SightingDBGet = function($resource,  npolarApiConfig){
+	return $resource( 'https:' + npolarApiConfig.base + '/sighting/:id' , { id:'@id'}, {
     	query: {method: 'GET'}
-    	//update: {method: 'PUT'}
     });
 };
 
