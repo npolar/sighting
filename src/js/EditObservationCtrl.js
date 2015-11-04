@@ -10,17 +10,19 @@ var EditObservationCtrl =  function($scope,$location, $controller, Sighting, npo
 
   $scope.duplicate = function() {
 
-      console.log($scope.document);
+      //console.log($scope.document);
       //Duplicating the object to a new instance
       let duplicate = Object.assign($scope.document);
       delete duplicate._rev;
       delete duplicate._id;
       delete duplicate.id;
-      console.log(duplicate);
+      //console.log(duplicate);
       $scope.resource.save(duplicate, function(document) {
       $scope.document = document;
+      console.log($scope.document);
+      console.log("------------");
       $scope.formula.model = document;
-      $location.path(`observations/${document.id}/edit`);
+      $location.path('observations/${document.id}/edit');
 
     });
 
