@@ -2,7 +2,7 @@
 /* user module */
 //Update entry from Svalbard MMS couch database here
 // @ngInject
-var EditObservationCtrl =  function($scope,$location, $controller, Sighting, npolarApiConfig) {
+var EditObservationCtrl =  function($scope,$location, $controller, Sighting, npolarApiConfig, NpolarApiSecurity) {
     //var speciesgallery = require('./SpeciesGallery');
 
      // EditController -> NpolarEditController
@@ -19,8 +19,6 @@ var EditObservationCtrl =  function($scope,$location, $controller, Sighting, npo
       //console.log(duplicate);
       $scope.resource.save(duplicate, function(document) {
       $scope.document = document;
-      console.log($scope.document);
-      console.log("------------");
       $scope.formula.model = document;
       $location.path('observations/${document.id}/edit');
 
@@ -31,10 +29,25 @@ var EditObservationCtrl =  function($scope,$location, $controller, Sighting, npo
 
   // Dataset -> npolarApiResource -> ngResource
   $scope.resource = Sighting;
+  console.log("----");
 
+  var user = NpolarApiSecurity.getUser();
+
+  let date_identified = (sighting) => {
+     return short_date($scope.formula.date_identified);
+  };
+
+  console.log($scope.document);
   // Formula ($scope.formula set by parent)
-
-  $scope.formula.schema = 'https:'+ npolarApiConfig.base + '/schema/sighting';
+  /*$scope.formula.collection = 'sighting';
+  $scope.formula.base = 'http://api.npolar.no';
+  $scope.formula.rights = 'No licence announced on the web site';
+  $scope.formula.rights_holder = "Norwegian Polar Institute";
+  $scope.formula.basis_of_record = "HumanObservation";
+  $scope.formula.language = 'en';
+  $scope.formula.recorded_by = user.email;
+  $scope.formula.recorded_by_name = user.name;*/
+  $scope.formula.schema = 'https://api.npolar.no/schema/sighting';
   $scope.formula.form = './partials/user/formula.json';
   $scope.formula.validateHidden = false;
   $scope.formula.saveHidden = false;

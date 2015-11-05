@@ -10,14 +10,11 @@ var MyObservationsCtrl = function($scope, $http, Sighting, NpolarApiSecurity, np
    //Do a search for the logged in person.
    var user = NpolarApiSecurity.getUser();
    console.log(npolarApiConfig.base);
+
    //editor_assessment=unknown means new entries
    $scope.feed2 = SightingDBSearch.get({search:'q=&filter-recorded_by='+ user.email}, function(){
    });
 
-   //$http.jsonp('https:'+ npolarApiConfig.base +'/sighting/?q=&filter-recorded_by='+ user.email + '&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
-   //  $scope.feed2 = data;
-   //  console.log(data);
-   //});
 
 /*Sighting.feed({ fields: "*"}, response => {
     //$scope.filters = response._filters();
