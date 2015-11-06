@@ -3,7 +3,7 @@
 
 //Controller for Excel file upload
 // @ngInject
-var UploadImagesCtrl = function($scope, angular, $http, NpolarApiSecurity, Sighting, npolarApiConfig) {
+var UploadImagesCtrl = function($scope, $http, NpolarApiSecurity, Sighting, npolarApiConfig) {
      $scope.security = NpolarApiSecurity;
 
      // Dataset -> npolarApiResource -> ngResource

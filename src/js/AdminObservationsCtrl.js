@@ -20,7 +20,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
                     zoom: 4
       },
       layers: {
-        tileLayer: "http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png",
+        tileLayer: "https://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png",
         tileLayerOptions: { attribution: '&copy; <a href="http://www.npolar.no">Norwegian Polar Institute</a>'},
         maxZoom: 14,
 				minZoom: 2

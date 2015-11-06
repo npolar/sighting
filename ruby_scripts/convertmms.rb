@@ -8,7 +8,7 @@
 require './server'
 require './config'
 require 'net/http'
-require  'net/ssh'
+require 'net/ssh'
 require 'net/scp'
 require 'mdb'
 require 'time'
@@ -42,8 +42,8 @@ module Couch
               'Phoca vitulina' => 'phoca vitulina',
               'Phoca groenlandica' => 'phoca groenlandica',
               'Cystophora cristata' => 'cystophora cristata',
-              'Cetacea'=> '',
-              'Dolphin Undetermined' => '',
+              'Cetacea'=> 'unknown',
+              'Dolphin Undetermined' => 'unknown',
               'Balaena mysticetus' => 'balaena mysticetus',
               'Delphinapterus leucas' => 'delphinapterus leucas',
               'Monodon monoceros' => 'monodon monoceros',
@@ -57,10 +57,10 @@ module Couch
               'Orcinus orca' => 'orcinus orca',
               'Globicephala melas' => 'globicephala melas',
               'Lagenorhynchus albirostris' => 'lagenorhynchus albirostris',
-              'Lagenorhynchus acutus' => '',
-              'Lagenorhynchus spp.' => '',
-              'Phocoena phocoena' => '',
-              'Pinnipedia' => '',
+              'Lagenorhynchus acutus' => 'unknown',
+              'Lagenorhynchus spp.' => 'unknown',
+              'Phocoena phocoena' => 'unknown',
+              'Pinnipedia' => 'unknown',
               'Other species' =>'unknown'}
 
     #Get Oracle server connection
@@ -72,7 +72,7 @@ module Couch
 
 
     #Fetch observation info
-    oci.exec('select * from mms.observations where id>155 and id<160') do |obs|
+    oci.exec('select * from mms.observations where id>155 and id<170') do |obs|
     # oci.exec('select * from mms.observations') do |obs|
 
 
@@ -398,8 +398,10 @@ module Couch
 
     #Post coursetype
     doc = @entry.to_json
+    puts "XXXXXXX"
+    puts @entry
 
-    res = server.post("/"+ Couch::Config::COUCH_DB_NAME + "/", doc, Couch::Config::USER, Couch::Config::PASSWORD)
+   # res = server.post("/"+ Couch::Config::COUCH_DB_NAME + "/", doc, Couch::Config::USER, Couch::Config::PASSWORD)
 
 
      #Load only the x first entries

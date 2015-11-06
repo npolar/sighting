@@ -54,6 +54,7 @@ appSighting.service('SightingDBGet', require('./js/SightingDBGet'));
 appSighting.service('CSVService', require('./js/CSVService'));
 appSighting.directive('fileInput', require('./js/fileInput'));
 appSighting.directive('npolarLoginLogout2', require('./js/ngloginLogout2'));
+appSighting.directive('picture', require('./js/picture'));
 appSighting.constant('SPECIES', require('./js/SpeciesGallery'));
 appSighting.filter('viewFilter', require('./js/viewFilter'));
 
