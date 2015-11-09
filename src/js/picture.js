@@ -5,9 +5,18 @@
  */
 var picture = function () {
    return {
-      restrict: 'A',
-      transclude: false,
-      templateUrl: '/src/js/picture-upload.html'
+      restrict: 'AE',
+      require: '?ngModel',
+     // templateUrl: './src/js/picture-upload.html',
+      link: function(scope, element, attrs, ngModel) {
+         console.log("ngModel", ngModel);
+      	 console.log(attrs.tester);
+      	 console.log("scope", scope);
+      	 console.log("scope color", scope.color);
+      	 console.log("element", element);
+
+
+      }
   };
 };
 
