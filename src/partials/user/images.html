@@ -12,13 +12,14 @@
     <li ng-repeat="file in files">{{file.name}}</li>
 </form> -->
 
-<!--<form ng-submit="submit()">
-   <input type="text" id="filename" name="filename"><br>
-   <button type="submit">Submit</button>
-</form> -->
+<form id="submit" ng-submit="submit()">
+     <div picture pictures="pictures" show="show"></div>
+      <input type="submit" id="submit" value="Submit" />
+</form>
 
 
-<div picture pictures="pictures" show="show"></div>
+
+
 
 
 

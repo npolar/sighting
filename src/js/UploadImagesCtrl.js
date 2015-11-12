@@ -6,9 +6,8 @@
 var UploadImagesCtrl = function($scope, $http, NpolarApiSecurity, Sighting) {
      $scope.security = NpolarApiSecurity;
      console.log("controller");
-   //  $scope.pictures = [{filename:'bird2.jpg', content_type:'jpg', content_size:'6534', photographer:'hans olsen',
-   //  comments:'best img ever!', other_info:'not great!'}];
-   //  console.log($scope.pictures);
+    // $scope.pictures = [{filename:'bird2.jpg', content_type:'jpg', content_size:'6534', photographer:'hans olsen',
+    // comments:'best img ever!', other_info:'not great!'}];
      if ($scope.pictures && $scope.pictures !== "null" &&  $scope.pictures !== "undefined") {
          $scope.show = "true";
      } else {

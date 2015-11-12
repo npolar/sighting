@@ -15,8 +15,6 @@ var picture = function () {
       link: function(scope, elem, attrs, ctrl) {
         console.log("SCOPE", scope);
         console.log("ELEM", elem);
-        console.log("THIS", angular.element(this));
-      //  scope.form = {submitted: false, data: {}};
 
 
       scope.filesChanged = function(e){
@@ -27,23 +25,30 @@ var picture = function () {
         if (!scope.pictures || scope.pictures === "null" ||  scope.pictures === "undefined") {
            console.log("create pictures obj");
            scope.pictures = [];
-        };
+        }
 
-         //Transfer uploaded pictures to
+        //Transfer uploaded pictures to
+        var fileReader = new FileReader();
         for (var i = 0; i < scope.files.length; i++) {
+          console.log("files", scope.files[i]);
            var obj = new Object();
            obj.filename = scope.files[i].name;
            obj.content_type = scope.files[i].type;
            obj.content_size = scope.files[i].size;
+           obj.the_file = scope.files[i];
            (scope.pictures).push(obj);
         }
-        scope.show = "true";
-        console.log(scope);
-       // scope.apply();
+
+         //Update directive page
+         scope.$apply(function () {
+            scope.show = "true";
+            console.log(scope);
+        });
+
       };
 
       }
-  }
+  };
 };
 
 
