@@ -1,24 +1,17 @@
 
 <p>Upload an images file:</p>
- <!-- <form id="submit" ng-submit="submit(filename)" > -->
-  <!--	<form name="fileUpload" novalidate> -->
 
     <input type="file"  onchange="angular.element(this).scope().filesChanged(this)" multiple accept=".jpg, .tif, .bmp"/>
 
-  <!--  <button type="submit" id="submit_button" ng-click="submit('fileUpload')">Submit</button>
-  </form> -->
 
-
- <div ng-show={{show}}>
  <div ng-repeat="item in pictures">
- 	<br />
- 	    <label>Filename:<input type="text" name="item.filename" id="item.filename" value={{item.filename}} ></label><br/>
- 	    <label>Content size:<input type="text" name="item.content_size" id="item.content_size" value={{item.content_size}} ></label><br/>
- 	    <label>Content type:<input type="text" name="item.content_type" id="item.content_type" value={{item.content_type}} ></label><br/>
- 	    <label>Photographer:<input type="text" name="item.photographer" id="item.photographer" value={{item.photographer}} ></label><br/>
- 	    <label>Comments:<input type="text" name="item.comments" id="item.comments" value={{item.comments}} ></label><br/>
- 	<br />
-</div>
+ 	    <br />
+ 	    <label>Filename:<input type="text" name="item.filename" id="item.filename" value={{item.filename}} readonly></label><br/>
+ 	    <label>Content size:<input type="text" name="item.content_size" id="item.content_size" value={{item.content_size}} readonly></label><br/>
+ 	    <label>Content type:<input type="text" name="item.content_type" id="item.content_type" value={{item.content_type}} readonly></label><br/>
+ 	    <label>Photographer:<input type="text" name="item.photographer" id="item.photographer" ng-model="item.photographer" value={{item.photographer}} ></label><br/>
+ 	    <label>Comments:<input type="text" name="item.comments" id="item.comments" ng-model="item.comments" value={{item.comments}} ></label>
+ 	    <br/>
 </div>
 
 

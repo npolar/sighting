@@ -6,31 +6,23 @@
 var picture = function () {
     return {
       restrict: 'A',
-      //require: '?ngModel',
       templateUrl: 'partials/user/picture-upload.html',
       scope: {
-          pictures: "=",
-          show:"="
+          pictures: "="
       },
-      link: function(scope, elem, attrs, ctrl) {
-        console.log("SCOPE", scope);
-        console.log("ELEM", elem);
-
+      link: function(scope, elem, attrs) {
 
       scope.filesChanged = function(e){
         scope.files=e.files;
-        console.log(scope.show);
 
-        //If scope.pictures does not exists
+        //If scope.pictures does not exists, create object
         if (!scope.pictures || scope.pictures === "null" ||  scope.pictures === "undefined") {
-           console.log("create pictures obj");
            scope.pictures = [];
         }
 
         //Transfer uploaded pictures to
         var fileReader = new FileReader();
         for (var i = 0; i < scope.files.length; i++) {
-          console.log("files", scope.files[i]);
            var obj = new Object();
            obj.filename = scope.files[i].name;
            obj.content_type = scope.files[i].type;
@@ -41,8 +33,8 @@ var picture = function () {
 
          //Update directive page
          scope.$apply(function () {
-            scope.show = "true";
-            console.log(scope);
+            //nothing to do, just handle errors via angular
+            //console.log("apply", scope);
         });
 
       };
