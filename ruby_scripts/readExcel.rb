@@ -104,7 +104,7 @@ module Couch
               'other species' =>'unknown'}
 
     # do work on files ending in .xls in the desired directory
-    Dir.glob('./excel_download2/*.xls*') do |excel_file|
+    Dir.glob('./excel_download2/done/*.xls*') do |excel_file|
 
      puts excel_file
 
@@ -137,6 +137,7 @@ module Couch
 
               #Read the row here
               #Get ready to put into database
+              #Set server database here
               server = Couch::Server.new(Couch::Config::HOST1, Couch::Config::PORT1)
 
               #Get uuid
@@ -172,13 +173,14 @@ module Couch
                 :cub_calf_pup => ((s.cell(line,11)).to_i).to_s,
                 :bear_cubs => (s.cell(line,12)) == "(select years)"? "": ((s.cell(line,12)).to_i).to_s,
                 :unidentified => (s.cell(line,13).to_i).to_s,
-                :dead_alive => (s.cell(line,14)),
+                :dead_alive => (s.cell(line,14)) == "NA"? "unknown": (s.cell(line,14)),
                 :total => total,
                 :habitat => (s.cell(line,16)) == "(select habitat)"? "": (s.cell(line,16)),
                 :occurrence_remarks => s.cell(line,17) == nil ? "": s.cell(line,17),
+                :occurrence_remarks => s.cell(line,17) == nil ? "": s.cell(line,17),
                 :recorded_by => s.cell(3,11),
                 :recorded_by_name => s.cell(2,11),
-                :editor_assessment => 'NA',
+                :editor_assessment => 'green',
                 :excelfile => Object.new,
                 :expedition => Object.new,
                 :created => timestamp,
@@ -192,21 +194,19 @@ module Couch
             #first check if species exist at all
             if ((s.cell(line,5))) != nil && ((s.cell(line,5))) != ''
                 elem = (s.cell(line,5)).downcase
-                puts elem + "----"
-                puts @entry[:occurrence_remarks]
               if alt.include?(elem)
                @entry[:occurrence_remarks] += (s.cell(line,5))
               end
             end
 
-            #Extract expedition info
+             #Extract expedition info
             @expedition = Object.new
             @expedition = {
                 :name => s.cell(2,11),
                 :contact_info => s.cell(3,11),
                 :organisation => s.cell(4,11),
                 :platform_comment => s.cell(7,11),
-                :platform => '',
+                #:platform => '',
                 :start_date => (if s.cell(5,11) then iso8601time(s.cell(5,11)) end),
                 :end_date => (if s.cell(6,11) then iso8601time(s.cell(6,11)) end)
                 }  #end exped object
@@ -216,8 +216,8 @@ module Couch
             @excelfile = {
                   :filename => filename,
                   :content_type => "application/vnd.ms-excel", #last digits
-                  :content_size => (File.size(excel_file)).to_s, #size
-                  :timestamp =>  ""      #timestamp
+                  :content_size => (File.size(excel_file)).to_s #, #size
+                 # :timestamp =>  ""      #timestamp
             } #Excelfile
 
 
@@ -225,7 +225,19 @@ module Couch
             defined?(@expedition[:name]).nil? ? @entry[:expedition] = nil : @entry[:expedition] = @expedition
             defined?(@excelfile[:filename]).nil? ?  @entry[:excelfile] = nil : @entry[:excelfile] = @excelfile
 
+
+
+            #Traverse @entry and remove all empty entries
+            @entry.each do | key, val |
+              if  val == "" || val == ""
+                puts key
+                @entry.delete(key)
+              end
+            end
+
+
             puts @entry
+
 
             #save entry in database
             doc = @entry.to_json
@@ -239,8 +251,12 @@ module Couch
           line += 1
      end #while line
 
+     puts 'filename' + filename
+     #File contains a subdir as well, need to remove this first
+     filename2 = filename.split("/");
+
      #Move Excel file to 'done'
-     File.rename excel_file, (excel_file[0..17]+'done/' + filename)
+     File.rename excel_file, (excel_file[0..17]+'done2/' + filename2[1])
   end #file
 
   end

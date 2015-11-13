@@ -11,7 +11,7 @@ require 'net/http'
 
 
 module Couchdb
-  
+
   class DeleteEntries
 
     host = "dbtest.data.npolar.no"
@@ -24,9 +24,12 @@ module Couchdb
 
     #Fetch a UUIDs from courchdb
     res = server.get("/"+ database +"/_all_docs")
-    
+    puts  res
+
     #Get the UUIDS
     str = (res.body).tr('"','')
+    puts str
+
 
     #Need id
     id = str.split('id:')
@@ -36,13 +39,15 @@ module Couchdb
 
     #Delete all entries
     (id).each_with_index { |r, i|
+        #NB! Sometimes it's 36 chars, sometimes it's 32..
+        puts r[0,32] + '  ' + (rev[i])[0,34]
         puts r[0,36] + '  ' + (rev[i])[0,34]
         if i > 0
-          server.delete(("/" + database + "/" + r[0,36]).to_s + "?rev=" + (rev[i])[0,34])
+          server.delete(("/" + database + "/" + r[0,32]).to_s + "?rev=" + (rev[i])[0,34])
         end
      }
 
 
   end
 end
-    
+
