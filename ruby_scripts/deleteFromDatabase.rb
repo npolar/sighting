@@ -22,9 +22,9 @@ module Couchdb
     #Get ready to put into database
     server = Couch::Server.new(host, port)
 
-    #Fetch a UUIDs from courchdb
+    #Fetch a UUIDs from couchdb
     res = server.get("/"+ database +"/_all_docs")
-    puts  res
+
 
     #Get the UUIDS
     str = (res.body).tr('"','')
@@ -43,7 +43,7 @@ module Couchdb
         puts r[0,32] + '  ' + (rev[i])[0,34]
         puts r[0,36] + '  ' + (rev[i])[0,34]
         if i > 0
-          server.delete(("/" + database + "/" + r[0,32]).to_s + "?rev=" + (rev[i])[0,34])
+          server.delete(("/" + database + "/" + r[0,36]).to_s + "?rev=" + (rev[i])[0,34])
         end
      }
 

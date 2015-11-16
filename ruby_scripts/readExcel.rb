@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 # Convert from the incoming mms Excel files to the new sightings database
+# Fetch Excel files from excel_download2/done, reads thems and moves them to excel_download2/done2
 #
 # Author: srldl
 #
@@ -30,7 +31,7 @@ module Couch
     #Get hold of UUID for database storage
     def self.getUUID(server)
 
-      #Fetch a UUID from couchdb
+       #Fetch a UUID from couchdb
        res = server.get("/_uuids")
 
 
@@ -74,6 +75,12 @@ module Couch
        end
              return dt.to_time.utc.iso8601
     end
+
+     #Set server
+       host = Couch::Config::HOST2
+       port = Couch::Config::PORT2
+       user = Couch::Config::USER2
+       password = Couch::Config::PASSWORD2
 
 
     species = {'polar bear' => 'ursus maritimus',
@@ -138,7 +145,7 @@ module Couch
               #Read the row here
               #Get ready to put into database
               #Set server database here
-              server = Couch::Server.new(Couch::Config::HOST1, Couch::Config::PORT1)
+              server = Couch::Server.new(host, port)
 
               #Get uuid
               uuid = getUUID(server)
@@ -185,8 +192,8 @@ module Couch
                 :expedition => Object.new,
                 :created => timestamp,
                 :updated => timestamp,
-                :created_by => Couch::Config::USER,
-                :updated_by => Couch::Config::USER
+                :created_by => user,
+                :updated_by => user
             }
 
             #Add to occurrence remark - seals - whales -uncommon species
@@ -213,10 +220,12 @@ module Couch
 
             #Extract excelfile info
             @excelfile = Object.new
+            filename2 = filename.split("/");
             @excelfile = {
-                  :filename => filename,
-                  :content_type => "application/vnd.ms-excel", #last digits
-                  :content_size => (File.size(excel_file)).to_s #, #size
+                 :item => {
+                  :filename => filename2[1],
+                  :mimetype => "application/vnd.ms-excel", #last digits
+                  :filesize => (File.size(excel_file)).to_s } #, #size
                  # :timestamp =>  ""      #timestamp
             } #Excelfile
 
@@ -241,7 +250,7 @@ module Couch
 
             #save entry in database
             doc = @entry.to_json
-            res = server.post("/"+ Couch::Config::COUCH_DB_NAME + "/", doc, Couch::Config::USER, Couch::Config::PASSWORD)
+            res = server.post("/"+ Couch::Config::COUCH_DB_NAME + "/", doc, user, password)
 
 
 
@@ -253,7 +262,7 @@ module Couch
 
      puts 'filename' + filename
      #File contains a subdir as well, need to remove this first
-     filename2 = filename.split("/");
+
 
      #Move Excel file to 'done'
      File.rename excel_file, (excel_file[0..17]+'done2/' + filename2[1])

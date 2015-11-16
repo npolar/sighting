@@ -8,7 +8,7 @@
 require './server'
 require './config'
 require 'net/http'
-require 'net/ssh'
+require  'net/ssh'
 require 'net/scp'
 require 'mdb'
 require 'time'
@@ -24,6 +24,13 @@ module Couch
 
   class Convertmms
 
+    #Set server
+    host = Couch::Config::HOST2
+    port = Couch::Config::PORT2
+    password = Couch::Config::PASSWORD2
+    user = Couch::Config::USER2
+
+
     #Convert to iso8601
     def self.iso8601time(inputdate)
        a = (inputdate).to_s
@@ -34,6 +41,7 @@ module Couch
     end
 
 
+
     species = {'Ursus maritimus' => 'ursus maritimus',
               'Polar bear den' => 'ursus maritimus',
               'Odobenus rosmarus' => 'odobenus rosmarus',
@@ -42,8 +50,8 @@ module Couch
               'Phoca vitulina' => 'phoca vitulina',
               'Phoca groenlandica' => 'phoca groenlandica',
               'Cystophora cristata' => 'cystophora cristata',
-              'Cetacea'=> 'unknown',
-              'Dolphin Undetermined' => 'unknown',
+              'Cetacea'=> '',
+              'Dolphin Undetermined' => '',
               'Balaena mysticetus' => 'balaena mysticetus',
               'Delphinapterus leucas' => 'delphinapterus leucas',
               'Monodon monoceros' => 'monodon monoceros',
@@ -57,10 +65,10 @@ module Couch
               'Orcinus orca' => 'orcinus orca',
               'Globicephala melas' => 'globicephala melas',
               'Lagenorhynchus albirostris' => 'lagenorhynchus albirostris',
-              'Lagenorhynchus acutus' => 'unknown',
-              'Lagenorhynchus spp.' => 'unknown',
-              'Phocoena phocoena' => 'unknown',
-              'Pinnipedia' => 'unknown',
+              'Lagenorhynchus acutus' => '',
+              'Lagenorhynchus spp.' => '',
+              'Phocoena phocoena' => '',
+              'Pinnipedia' => '',
               'Other species' =>'unknown'}
 
     #Get Oracle server connection
@@ -72,13 +80,13 @@ module Couch
 
 
     #Fetch observation info
-    oci.exec('select * from mms.observations where id>155 and id<170') do |obs|
+    oci.exec('select * from mms.observations where id>147 and id<150') do |obs|
     # oci.exec('select * from mms.observations') do |obs|
 
 
 
        #Get ready to put into database
-       server = Couch::Server.new(Couch::Config::HOST1, Couch::Config::PORT1)
+       server = Couch::Server.new(host, port)
 
        #Fetch a UUID from courchdb
        res = server.get("/_uuids")
@@ -161,8 +169,8 @@ module Couch
             :pictures => Array.new,
             :created => timestamp,
             :updated => timestamp,
-            :created_by => Couch::Config::USER,
-            :updated_by => Couch::Config::USER
+            :created_by => user,
+            :updated_by => user
          }
 
          #Add to occurrence remark - seals - whales -uncommon species
@@ -228,10 +236,10 @@ module Couch
             puts uuid
 
             #Create thumbnail and image on apptest
-            Net::SSH.start(Couch::Config::HOST2,Couch::Config::USER2, :password => Couch::Config::PASSWORD) do |ssh|
-              ssh.exec "mkdir -p /srv/data.npolar.no/sighting/images/" + uuid
-              ssh.exec "mkdir -p /srv/data.npolar.no/sighting/thumbnails/" + uuid
-            end
+          #  Net::SSH.start(host, user, :password => password) do |ssh|
+          #    ssh.exec "mkdir -p /srv/data.npolar.no/sighting/images/" + uuid
+          #    ssh.exec "mkdir -p /srv/data.npolar.no/sighting/thumbnails/" + uuid
+          #  end
 
             y=y+1
           end
@@ -239,9 +247,10 @@ module Couch
           #Avoid cluttering up next info with old image infos from "last round".
           @pictures = Object.new
           @pictures = {
+            :items => {
             :filename => pic[2],
-            :content_type => pic[8],
-            :content_size => pic[9],
+            :mimetype => pic[8],
+            :filesize => pic[9]},
             :photographer => pic[7],
             :comments => pic[4].to_s,
             :other_info => 'Created at: ' + pic[5].to_s + ', updated at: ' + pic[6].to_s
@@ -270,12 +279,13 @@ module Couch
              f.write(thumbnail.to_blob)
           end
 
-          Net::SCP.start(Couch::Config::HOST2, Couch::Config::USER2, :password => Couch::Config::PASSWORD2 ) do |scp|
-           puts "SCP started"
-         scp.upload!("/home/siri/projects/ruby_scripts/images/" + uuid + "/" + pic[2], "/srv/data.npolar.no/sighting/images/" + uuid + "/", :recursive => true)
-         scp.upload!("/home/siri/projects/ruby_scripts/thumbnails/" + uuid + "/" + pic[2], "/srv/data.npolar.no/sighting/thumbnails/" + uuid +"/", :recursive => true)
-       #  scp.upload!("/home/siri/projects/ruby_scripts/excel_download", "/srv/data.npolar.no/sighting/excel_upload", :recursive => true)
-         end
+          #Upload from ruby_scripts to remote server
+   #       Net::SCP.start(host, user, :password => password ) do |scp|
+   #        puts "SCP started"
+   #      scp.upload!("/home/siri/projects/ruby_scripts/images/" + uuid + "/" + pic[2], "/srv/data.npolar.no/sighting/images/" + uuid + "/", :recursive => true)
+   #        puts "scp started2"
+   #      scp.upload!("/home/siri/projects/ruby_scripts/thumbnails/" + uuid + "/" + pic[2], "/srv/data.npolar.no/sighting/thumbnails/" + uuid +"/", :recursive => true)
+   #      end
 
         end  #end oci pictures
 
@@ -306,9 +316,18 @@ module Couch
                          + ', created_by_dn: ' + field[10].to_s  + ', updated_by_dn: ' + field[11].to_s
                 }  #end exped object
 
+                #Traverse @expedition and remove all empty entries
+                @expedition.each do | key, val |
+                    if  val == "" || val == "" || val == nil
+                          puts key
+                          @expedition.delete(key)
+                    end
+                end
+
                  #Add LDAP temp variables
                  temp_expedition_created = field[10].to_s
                  temp_expedition_updated = field[11].to_s
+
             end
 
             #Avoid cluttering up next info with old excel infos
@@ -321,13 +340,13 @@ module Couch
                  oci.exec(sel2) do |ofile|
 
                       @excelfile = {
-                         :filename => ofile[1].to_s,
-                         :content_type => ofile[9].to_s,
-                         :content_size => ofile[10].to_s,
+                        :items => { :filename => ofile[1].to_s,
+                         :mimetype => ofile[9].to_s,
+                         :filesize => ofile[10].to_s },
                          :other_info => 'Status ' + ofile[2].to_s + ', processed_at: ' + ofile[4].to_s + \
                          ', Created at: ' + ofile[5].to_s + ', Updated at: ' + ofile[6].to_s + \
-                         ', created by DN: ' + ofile[3].to_s,
-                         :timestamp =>  ""      #timestamp
+                         ', created by DN: ' + ofile[3].to_s
+                        # :timestamp =>  ""      #timestamp
                       } #Excelfile
 
                       #Add LDAP temp variables
@@ -395,13 +414,21 @@ module Couch
     defined?(@expedition[:other_info]).nil? ? @entry[:expedition] = nil : @entry[:expedition] = @expedition
     defined?(@excelfile[:file_name]).nil? ?  @entry[:excelfile] = nil : @entry[:excelfile] = @excelfile
 
+    #Traverse @entry and remove all empty entries
+    @entry.each do | key, val |
+        if  val == "" || val == "" || val == nil
+                puts key
+                @entry.delete(key)
+        end
+    end
 
     #Post coursetype
     doc = @entry.to_json
-    puts "XXXXXXX"
-    puts @entry
 
-   # res = server.post("/"+ Couch::Config::COUCH_DB_NAME + "/", doc, Couch::Config::USER, Couch::Config::PASSWORD)
+    puts doc
+    puts "doc------------"
+
+    res = server.post("/"+ Couch::Config::COUCH_DB_NAME + "/", doc, user, password)
 
 
      #Load only the x first entries
