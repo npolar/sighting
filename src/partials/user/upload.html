@@ -2,19 +2,23 @@
 
 <h1><b>Upload Excelfile. <b></h1>
 
-<div ng-if="security.isAuthenticated()">
+<!--<div ng-if="security.isAuthenticated()"> -->
 
 <form ng-controller="UploadObservationsCtrl">
     <input type="file"  onchange="angular.element(this).scope().filesChanged(this)" multiple accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
     <button ng-click="upload()">Upload</button>
     <li ng-repeat="file in files">{{file.name}}</li>
+
+    {{results}}
 </form>
 
 
-</div>
+
+
+<!--</div>
 <div ng-show="!security.isAuthenticated()">
   <p>Please <a href="#/">log in</a> in order to upload excel files.</p>
-</div>
+</div> -->
 
 
 

@@ -3,7 +3,7 @@
 
 //Controller for Excel file upload
 // @ngInject
-var UploadObservationsCtrl = function($scope, $http, XLSX, NpolarApiSecurity, Sighting) {
+var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting, SPECIES) {
      $scope.security = NpolarApiSecurity;
 
      // Dataset -> npolarApiResource -> ngResource
@@ -18,8 +18,8 @@ var UploadObservationsCtrl = function($scope, $http, XLSX, NpolarApiSecurity, Si
      $scope.upload = function(e) {
 
         var files = $scope.files;
-        console.log(files);
-        var i,f;
+      //  console.log(files);
+        var i,f, error_feedback, ok_species=false;
         var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
 
         for (i = 0, f = files[i]; i !== files.length; ++i) {
@@ -59,8 +59,8 @@ var UploadObservationsCtrl = function($scope, $http, XLSX, NpolarApiSecurity, Si
                   } //for
 
                      //A few more values applied to each entry
-                    entry.recorded_by = (NpolarApiSecurity.getUser()).name;
-                    entry.created_by = (NpolarApiSecurity.getUser()).name;
+                    entry.recorded_by = (NpolarApiSecurity.getUser()).email;
+                    entry.created_by = (NpolarApiSecurity.getUser()).email;
                      var date2 = new Date();
                     entry.created = date2.toISOString().substring(0,10) + 'T00:00:00Z';
 
@@ -68,11 +68,11 @@ var UploadObservationsCtrl = function($scope, $http, XLSX, NpolarApiSecurity, Si
                     //Excel file
                     var excel = {};
                     excel.filename = f.name;
-                    excel['content-type'] =  f.type;
-                    excel['content-size'] = f.size;
+                    excel.mimetype =  f.type;
+                    excel.filesize = f.size;
 
                     for (var z in worksheet) {
-                      if (worksheet.hasOwnproperty(z)) {
+                      if (worksheet.hasOwnProperty(z)) {
                            var num = z.substring(1);
                           // console.log(num, z, worksheet["A"+num]);
                           //Excel lines start at 20 so check bigger than 19
@@ -84,30 +84,34 @@ var UploadObservationsCtrl = function($scope, $http, XLSX, NpolarApiSecurity, Si
                               if (z === ("C"+num)) { entry.longitude = worksheet[z].v;}
                               if (z === ("D"+num)) { worksheet[z].v === "(select or write placename)" ? (entry.locality = "") : (entry.locality = worksheet[z].v);}
                               if (z === ("E"+num)) { worksheet[z].v === "(select species)" ? (entry.species = "") : (entry.species = worksheet[z].v);}
-                              if (z === ("F"+num)) { entry.adult_m = worksheet[z].v;}
-                              if (z === ("G"+num)) { entry.adult_f = worksheet[z].v;}
-                              if (z === ("H"+num)) { entry.adult = worksheet[z].v;}
-                              if (z === ("I"+num)) { entry.sub_adult = worksheet[z].v;}
+                              if (z === ("F"+num)) { entry.adult_m = (worksheet[z].v).toString();}
+                              if (z === ("G"+num)) { entry.adult_f = (worksheet[z].v).toString();}
+                              if (z === ("H"+num)) { entry.adult = (worksheet[z].v).toString();}
+                              if (z === ("I"+num)) { entry.sub_adult = (worksheet[z].v).toString();}
                               if (z === ("J"+num)) {  worksheet[z].v === "(select condition)" ? (entry.polar_bear_condition = "") : (entry.polar_bear_condition = worksheet[z].v);}
-                              if (z === ("K"+num)) { entry.cub_calf_pup = worksheet[z].v;}
+                              if (z === ("K"+num)) { entry.cub_calf_pup = (worksheet[z].v).toString();}
                               if (z === ("L"+num)) { worksheet[z].v === "(select years)" ? (entry.bear_cubs = "") : (entry.bear_cubs = worksheet[z].v);}
-                              if (z === ("M"+num)) { entry.unidentified = worksheet[z].v;}
-                              if (z === ("N"+num)) { entry.dead_alive = worksheet[z].v;}
-                              if (z === ("O"+num)) { entry.total = worksheet[z].v;}
+                              if (z === ("M"+num)) { entry.unidentified = (worksheet[z].v).toString();}
+                              if (z === ("N"+num)) { worksheet[z].v === 'NA' ? (entry.dead_alive = 'unknown') : (entry.dead_alive = worksheet[z].v) ;}
+                              if (z === ("O"+num)) { entry.total = (worksheet[z].v).toString();}
                               if (z === ("P"+num)) { worksheet[z].v === "(select habitat)" ? (entry.habitat = "") : (entry.habitat = worksheet[z].v);}
                               if (z === ("Q"+num)) { entry.occurrence_remarks= worksheet[z].v;}
 
-                              //Need to add a timestamp to filename to ensure uniqueness
-                              //which is local time now in iso8601
-                              var date = new Date();
-                               excel.timestamp =  date.toISOString().replace(/\.[0-9]{3}/g,"");
+
+
                                 //console.log(excel.timestamp);
 
                                 //Add subobjects to main object entry
-                                entry.excelfile =  excel;
-                                entry.expedition =  exped;
-                                //console.log(entry);
+                                var excelfile = new Object();
+                                excelfile['item'] = excel;
+                                //Need to add a timestamp to filename to ensure uniqueness
+                                //which is local time now in iso8601
+                                var date = new Date();
+                                excelfile.timestamp =  date.toISOString().replace(/\.[0-9]{3}/g,"");
 
+                                entry.excelfile = excelfile;
+                                entry.expedition = exped;
+                                //console.log(entry);
 
                                 //Save entry, P is last letter
                                 if (z.substring(0,1) === "P") {
@@ -115,15 +119,38 @@ var UploadObservationsCtrl = function($scope, $http, XLSX, NpolarApiSecurity, Si
                                    entry.collection = "sighting";
                                    entry.base = "http://api.npolar.no";
 
-                                   //console.log(JSON.stringify(entry));
-                                   //console.log("test");
 
-                                /*    $scope.resource.save(JSON.stringify(entry), function(document) {
-                                    $scope.document = document;
-                                    console.log($scope.document);
-                                    $scope.formula.model = document;
-                                    //$location.path(`observations/${document.id}/edit`);
-                                  }); */
+                                   //Get species latin names
+                                   console.log((entry.species).toLowerCase());
+                                   for (var p = 0; p < SPECIES.length; p++) {
+                                     if (entry.species && ((entry.species).toLowerCase() === (SPECIES[p].eng).toLowerCase())) {
+                                       entry.species = (SPECIES[p].family).toLowerCase();
+                                       ok_species = true;
+                                     }
+                                   }
+
+                                   //  if (ok_species == false)
+                                   console.log(JSON.stringify(entry));
+                                   console.log("result ----------");
+
+                                    $scope.resource.save(JSON.stringify(entry), function(document) {
+                                   // $scope.document = document;
+                                   // console.log(document);
+                                   // console.log("document----");
+                                    }).$promise.then(function(data) {
+                                          console.log("success");
+                                    }, function(error) {
+                                          console.log("error");
+                                    });
+
+                                  /*  console.log(ok_species);
+                                     //User feedback
+                                    if (ok_species) {
+                                        $scope.results = "File entries uploaded successfully";
+                                    } else {
+                                        $scope.results = ok_species;
+                                    };
+                                    $scope.apply(); */
                                 }
 
                        } //typeof
