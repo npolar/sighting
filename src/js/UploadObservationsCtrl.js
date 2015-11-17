@@ -19,7 +19,11 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
 
         var files = $scope.files;
       //  console.log(files);
-        var i,f, error_feedback, ok_species=false;
+        var i,f;
+
+        //Count up each successful row - used for user feedback
+        var log, row_count = 0;
+
         var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
 
         for (i = 0, f = files[i]; i !== files.length; ++i) {
@@ -97,8 +101,6 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                               if (z === ("P"+num)) { worksheet[z].v === "(select habitat)" ? (entry.habitat = "") : (entry.habitat = worksheet[z].v);}
                               if (z === ("Q"+num)) { entry.occurrence_remarks= worksheet[z].v;}
 
-
-
                                 //console.log(excel.timestamp);
 
                                 //Add subobjects to main object entry
@@ -125,7 +127,6 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                                    for (var p = 0; p < SPECIES.length; p++) {
                                      if (entry.species && ((entry.species).toLowerCase() === (SPECIES[p].eng).toLowerCase())) {
                                        entry.species = (SPECIES[p].family).toLowerCase();
-                                       ok_species = true;
                                      }
                                    }
 
@@ -133,24 +134,19 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                                    console.log(JSON.stringify(entry));
                                    console.log("result ----------");
 
-                                    $scope.resource.save(JSON.stringify(entry), function(document) {
+                                   $scope.resource.save(JSON.stringify(entry), function(document) {
                                    // $scope.document = document;
                                    // console.log(document);
                                    // console.log("document----");
                                     }).$promise.then(function(data) {
-                                          console.log("success");
+                                          log.concat("Row no " + row_count + " successfully saved. <br />");
+                                          console.log("Row no " + row_count + " successfully saved.");
                                     }, function(error) {
-                                          console.log("error");
+                                          log.concat("Row no " + row_count + " was not saved. Please submit your form by e-mail (magnus.andersen@npolar.no). <br />");
+                                          console.log("Row no " + row_count + " was not saved. Please submit your form by e-mail (magnus.andersen@npolar.no).");
                                     });
-
-                                  /*  console.log(ok_species);
-                                     //User feedback
-                                    if (ok_species) {
-                                        $scope.results = "File entries uploaded successfully";
-                                    } else {
-                                        $scope.results = ok_species;
-                                    };
-                                    $scope.apply(); */
+                                    //Get next row
+                                    row_count++;
                                 }
 
                        } //typeof
@@ -164,6 +160,7 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
             else {reader.readAsArrayBuffer(f);}
 
    }
+  $scope.apply();
 };
 };
 
@@ -207,7 +204,7 @@ function getJsDateFromExcel(excelDate) {
  else {//Get rid of date extension
   return date.toISOString().replace(/\.[0-9]{3}/g,"");
 }
-}
+}  //function getJsDateFromExcel
 
 //Pops a value by name off the workbook array
 function removeVal(arr) {

@@ -57,7 +57,7 @@
           rights: 'Kit Kovacs / Norwegian Polar Institute'
       },
       { name: 'Hvithval',
-          eng: 'White1 whale',
+          eng: 'White whale',
           family: 'Delphinapterus leucas',
           image:  'img/species/hvithval.jpg',
           link: 'http://www.npolar.no/en/species/white-whale.html',
