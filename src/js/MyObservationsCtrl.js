@@ -13,7 +13,7 @@ var MyObservationsCtrl = function($scope, $http, Sighting, NpolarApiSecurity, np
    console.log(npolarApiConfig.base);
 
    //editor_assessment=unknown means new entries
-   $scope.entry = SightingDBSearch.get({search:'q=&filter-recorded_by='+ user.email}, function(){
+   $scope.entry = SightingDBSearch.get({search:'q=&filter-recorded_by='+ user.email + '&sort=-event_date'}, function(){
    });
 
   // Execute this function when advanced search button is pressed
@@ -29,7 +29,7 @@ var MyObservationsCtrl = function($scope, $http, Sighting, NpolarApiSecurity, np
        search = search.replace(/ /g,"+");
         console.log(search);
 
-       var search2 = 'q=' + search + '&filter-recorded_by='+ user.email;
+       var search2 = 'q=' + search + '&filter-recorded_by='+ user.email + '&sort=-event_date';
        //Do the search
        console.log(search2);
 
