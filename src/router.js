@@ -39,7 +39,7 @@ var router = function($routeProvider, $locationProvider) {
         controller: 'UploadImagesCtrl'
       }).
       when('/upload', {
-        templateUrl: 'partials/user/upload.html',
+        templateUrl: 'partials/admin/upload.html',
         controller: 'UploadObservationsCtrl'
       }).
       when('/all', {

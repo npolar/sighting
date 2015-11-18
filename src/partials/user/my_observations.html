@@ -6,19 +6,36 @@
 
 <div ng-if="security.isAuthenticated()">
 
-<a href="upload">Upload Excelsheet</a>
- <a href="observations/__new/edit">New</a>
+<a href="observations/__new/edit">Report new observations</a><br /><br />
 
 
-<p></p>
- <div>
+ <!--<form id="submit" ng-submit="submit()" class="pure-form pure-form-stacked">
+
+
+<input id="search" type="text" placeholder="Search my observations" ng-model="search" />
+
+
+<input type="submit" id="submit" value="Search" />
+</div> -->
+
+
+<form ng-submit="submit()" ng-controller="MyObservationsCtrl">
+ <!-- <input type="search" ng-model="search" name="search" /> -->
+     <select ng-model="species" ng-options="item as item.eng + ' (' + item.name + ')' for item in items">
+      <option value=""> Undefined </option></select>
+
+
+  <input type="submit" id="submit" value="Submit" />
+
+
+ <p></p>
 <table class="layout1">
     <thead>
         <th>Date</th><th>Species</th><th>Location</th><th>Latitude</th><th>Longitude</th><th>Assessment</th><th></th><th></th>
     </thead>
 
     <tbody>
-    <tr ng-repeat="entry in feed2.feed.entries"> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
+    <tr ng-repeat="entry in entry.feed.entries"> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
         <td>{{ entry.species}}&nbsp;</td>
         <td>{{ entry.locality }}&nbsp;</td>
         <td>{{ entry.latitude }}&nbsp;</td>
@@ -26,13 +43,15 @@
         <td>{{ entry.editor_assessment }}</td>
         <td><a href="observations/{{entry.id}}">View</a></td>
         <td><a href="observations/{{entry.id}}/edit">Edit</a></td>
-       <!-- <td><a href="observations/copy/{{entry.id}}">New copy</a></td> -->
-    <!--    <td><a href="#/observation/delete/{{entry.id}}">Delete</a></td> -->
    </tr>
    </tbody>
 </table>
-</div>
-</div>
+
+
+ </form>
+
+
+
 
 </div>
 <div ng-show="!security.isAuthenticated()">
