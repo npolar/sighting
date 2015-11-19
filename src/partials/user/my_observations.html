@@ -15,13 +15,14 @@
 </div> -->
 
 
-<form ng-submit="submit()" >
+<form name="form.mysearch" ng-submit="submit()" >
  <!-- <input type="search" ng-model="search" name="search" /> -->
-     <select ng-model="species" ng-options="item as item.eng + ' (' + item.name + ')' for item in items">
+     <select ng-model="form.species" ng-options="item as item.eng + ' (' + item.name + ')' for item in items">
       <option value=""> Undefined </option></select>
 
 
-  <input type="submit" id="submit" value="Submit" />
+  <input type="submit" id="submit" value="Search" />
+
 
 
  <p></p>
@@ -31,7 +32,7 @@
     </thead>
 
     <tbody>
-    <tr ng-repeat="entry in entry.feed.entries"> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
+    <tr ng-repeat="entry in arr.feed.entries"> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
         <td>{{ entry.species}}&nbsp;</td>
         <td>{{ entry.locality }}&nbsp;</td>
         <td>{{ entry.latitude }}&nbsp;</td>

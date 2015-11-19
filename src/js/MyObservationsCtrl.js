@@ -4,43 +4,35 @@
 
 //Fetch from svalbard sightings couch database here the owner's observations
 // @ngInject
-var MyObservationsCtrl = function($scope, $http, Sighting, NpolarApiSecurity, npolarApiConfig, SightingDBSearch, SPECIES) {
+var MyObservationsCtrl = function($scope, Sighting, NpolarApiSecurity, npolarApiConfig, SightingDBSearch, SPECIES) {
    $scope.security = NpolarApiSecurity;
    $scope.items = SPECIES;
-   $scope.submit = null;
+
+   //Need to define a form in order to receive results from the form.
+   //Form is not defined first time controller is run.
+   $scope.form = {};
 
    //Do a search for the logged in person.
    var user = NpolarApiSecurity.getUser();
-   console.log(npolarApiConfig.base);
 
    //editor_assessment=unknown means new entries
-   $scope.entry = SightingDBSearch.get({search:'q=&filter-recorded_by='+ user.email + '&sort=-event_date'}, function(){
+   $scope.arr = SightingDBSearch.get({search:'&filter-recorded_by='+ user.email + '&sort=-event_date'}, function(){
    });
-
-  console.log($scope);
 
 
   // Execute this function when advanced search button is pressed
   $scope.submit = function() {
-     console.log("submit");
 
-     console.log($scope);
+     if ($scope.form.species && (!!$scope.form.species)) {
+       var search = $scope.form.species.family;
 
-     if ($scope.species && (!!$scope.species)) {
-       var search = $scope.species.family;
-       console.log(search);
        //Add + instead of space
        search = search.replace(/ /g,"+");
-        console.log(search);
 
-       var search2 = 'q=' + search + '&filter-recorded_by='+ user.email + '&sort=-event_date';
-       //Do the search
-       console.log(search2);
-
-       $scope.entry = SightingDBSearch.get({search:search2}, function(){
+        //Do the search
+       var search2 =  search + '&filter-recorded_by='+ user.email + '&sort=-event_date';
+       $scope.arr = SightingDBSearch.get({search:search2}, function(){
        });
-
-       console.log($scope.entry);
 
     }
   };
