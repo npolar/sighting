@@ -16,7 +16,7 @@ var MyObservationsCtrl = function($scope, Sighting, NpolarApiSecurity, npolarApi
    var user = NpolarApiSecurity.getUser();
 
    //editor_assessment=unknown means new entries
-   $scope.arr = SightingDBSearch.get({search:'&filter-recorded_by='+ user.email + '&sort=-event_date'}, function(){
+   $scope.arr = SightingDBSearch.get({search:'&filter-recorded_by='+ user.email}, function(){
    });
 
 

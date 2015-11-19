@@ -50,10 +50,10 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
                 var res = (layer.toGeoJSON()).geometry.coordinates;
 
                 //fetch zero and second coordinate pair to get a rectangle
-                $scope.lat1= res[0][0][0];
-                $scope.lng1= res[0][0][1];
-                $scope.lat2= res[0][2][0];
-                $scope.lng2= res[0][2][1];
+                $scope.lng1= res[0][0][0];
+                $scope.lat1= res[0][0][1];
+                $scope.lng2= res[0][2][0];
+                $scope.lat2= res[0][2][1];
 
         });
 
@@ -65,10 +65,10 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
              var res = (layer.toGeoJSON()).geometry.coordinates;
 
                 //Fetch zero and second coordinate pair to get a rectangle
-                $scope.lat1= res[0][0][0];
-                $scope.lng1= res[0][0][1];
-                $scope.lat2= res[0][2][0];
-                $scope.lng2= res[0][2][1];
+                $scope.lng1= res[0][0][0];
+                $scope.lat1= res[0][0][1];
+                $scope.lng2= res[0][2][0];
+                $scope.lat2= res[0][2][1];
                // console.log($scope);
            });
         });
@@ -89,6 +89,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
  $scope.submit = function() {
 
      console.log("submit");
+     console.log($scope);
 
     // First find out which paramaters are not empty
     var sok = ''; var lat = ''; var lng = ''; var edate = '';
@@ -156,6 +157,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
        sok = sok+lat+lng+edate;
     }
 
+   console.log(sok);
 
     //editor_assessment=unknown means new entries
   $scope.full = SightingDBSearch.get({search:sok}, function(){
@@ -171,8 +173,8 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
     // Fetch the lat/lon entries. Have to switch lat/lon for display
     for (var i=0; i< $scope.full.feed.entries.length; i++) {
        markers.push({
-                lat: parseFloat($scope.full.feed.entries[i].longitude),
-                lng: parseFloat($scope.full.feed.entries[i].latitude),
+                lng: parseFloat($scope.full.feed.entries[i].longitude),
+                lat: parseFloat($scope.full.feed.entries[i].latitude),
                 focus: true,
                 draggable: false,
                 message: $scope.full.feed.entries[i].locality,
