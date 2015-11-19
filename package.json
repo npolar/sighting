@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "angular": "^1.4.7",
+    "angular-filter": "^0.5.8",
     "angular-leaflet-directive": "^0.7.11",
     "angular-npolar": "npolar/angular-npolar",
     "angular-resource": "^1.4.7",
@@ -32,6 +33,7 @@
     "leaflet-draw": "^0.2.3",
     "lodash": "^3.10.1",
     "npdc-common": "npolar/npdc-common",
+    "pagination": "^0.4.4",
     "path": "^0.12.7",
     "purecss": "^0.6.0",
     "xlsx": "git+https://github.com/SheetJS/js-xlsx.git"

@@ -2,23 +2,24 @@
 <p></p>
 <p></p>
 
-<div ng-if="security.isAuthenticated()">
+<!-- <div ng-if="security.isAuthenticated()"> -->
 
 <p></p>
 <p>
     	Our observers are valuable to us! We wish to thank:
-    </p>
+ </p>
 
 
-    <span ng-repeat="observer in arr">
-     <b>{{ observer }}&nbsp;</b>
+    <span ng-repeat="observer in arr.feed.entries ">
+     <b>{{ observer.recorded_by  }}&nbsp;</b>
     </span>
 
 
-</div>
+
+<!-- </div>
 <div ng-show="!security.isAuthenticated()">
   <p>Please <a href="#/">log in</a> in order to view all observers.</p>
-</div>
+</div> -->
 
 
 

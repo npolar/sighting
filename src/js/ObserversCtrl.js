@@ -3,12 +3,21 @@
 
 //Get species gallery for images, education/links to NPs home pages.
 // @ngInject
-var ObserversCtrl = function ($scope, $http, NpolarApiSecurity, Sighting) {
+var ObserversCtrl = function ($scope, $http, NpolarApiSecurity, SightingDBSearch) {
   $scope.security = NpolarApiSecurity;
 
 
 
-  Sighting.feed({ fields: "*"}, response => {
+  var search = "";
+
+    //editor_assessment=unknown means new entries
+  $scope.arr = SightingDBSearch.get({search:search}, function(){
+   });
+
+
+
+
+  /*Sighting.feed({ fields: "*"}, response => {
     //$scope.filters = response._filters();
     var feed = response.feed;
     var size = 0,  arr =[];
@@ -24,7 +33,7 @@ var ObserversCtrl = function ($scope, $http, NpolarApiSecurity, Sighting) {
 
     $scope.arr = arr;
 
-   });
+   }); */
 
 };
 

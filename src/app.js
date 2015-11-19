@@ -8,6 +8,7 @@ require('angular-resource');
 /*require('angularjs-datepicker');*/
 require('formula');
 require('angular-npolar');
+//var pagination = require('pagination');
 
 var npdcCommon = require('npdc-common');
 var AutoConfig = npdcCommon.AutoConfig;
@@ -40,8 +41,8 @@ appSighting.controller('MyObservationsCtrl', require('./js/MyObservationsCtrl'))
 appSighting.controller('ViewObservationCtrl', require('./js/ViewObservationCtrl'));
 
 appSighting.controller('EditObservationCtrl', require('./js/EditObservationCtrl'));
-appSighting.controller('UploadObservationsCtrl', require('./js/UploadObservationsCtrl'));
-appSighting.controller('UploadImagesCtrl', require('./js/UploadImagesCtrl'));
+//appSighting.controller('UploadObservationsCtrl', require('./js/UploadObservationsCtrl'));
+//appSighting.controller('UploadImagesCtrl', require('./js/UploadImagesCtrl'));
 
 appSighting.controller('ngLoginLogout', require('./js/ngLoginlogout'));
 
@@ -57,6 +58,9 @@ appSighting.directive('npolarLoginLogout2', require('./js/ngloginLogout2'));
 appSighting.directive('picture', require('./js/picture'));
 appSighting.constant('SPECIES', require('./js/SpeciesGallery'));
 appSighting.filter('viewFilter', require('./js/viewFilter'));
+appSighting.filter('uniqueFilter', require('./js/uniqueFilter'));
+
+
 
 
 // Bootstrap ngResource models using NpolarApiResource

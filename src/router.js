@@ -34,14 +34,14 @@ var router = function($routeProvider, $locationProvider) {
         templateUrl: 'partials/user/edit_observation.html',
         controller: 'EditObservationCtrl'
       }).
-      when('/observations/images/:id', {
-        templateUrl: 'partials/user/images.html',
-        controller: 'UploadImagesCtrl'
-      }).
-      when('/upload', {
-        templateUrl: 'partials/admin/upload.html',
-        controller: 'UploadObservationsCtrl'
-      }).
+    //  when('/observations/images/:id', {
+    //    templateUrl: 'partials/user/images.html',
+    //    controller: 'UploadImagesCtrl'
+    //  }).
+   //   when('/upload', {
+   //     templateUrl: 'partials/admin/upload.html',
+   //     controller: 'UploadObservationsCtrl'
+    //  }).
       when('/all', {
         templateUrl: 'partials/admin/all.html',
         controller: 'AdminObservationsCtrl'

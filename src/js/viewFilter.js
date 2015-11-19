@@ -4,7 +4,7 @@
  */
 var viewFilter = function ($scope, filterFilter) {
   return function(input, uppercase) {
-  	console.log(input);
+  	//console.log(input);
   	var out = input;
     return out;
   };

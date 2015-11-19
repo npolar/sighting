@@ -10,16 +10,12 @@
 
 
  <!--<form id="submit" ng-submit="submit()" class="pure-form pure-form-stacked">
-
-
 <input id="search" type="text" placeholder="Search my observations" ng-model="search" />
-
-
 <input type="submit" id="submit" value="Search" />
 </div> -->
 
 
-<form ng-submit="submit()" ng-controller="MyObservationsCtrl">
+<form ng-submit="submit()" >
  <!-- <input type="search" ng-model="search" name="search" /> -->
      <select ng-model="species" ng-options="item as item.eng + ' (' + item.name + ')' for item in items">
       <option value=""> Undefined </option></select>
@@ -46,10 +42,7 @@
    </tr>
    </tbody>
 </table>
-
-
  </form>
-
 
 
 

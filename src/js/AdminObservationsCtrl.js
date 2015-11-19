@@ -20,8 +20,10 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
                     zoom: 4
       },
       layers: {
-        tileLayer: "https://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png",
-        tileLayerOptions: { attribution: '&copy; <a href="http://www.npolar.no">Norwegian Polar Institute</a>'},
+         tileLayer: "http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png",
+         tileLayerOptions: { attribution: '&copy; <a href="http://www.npolar.no">Norwegian Polar Institute</a>'},
+       // tileLayer: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
+       // tileLayerOptions: { attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' },
         maxZoom: 14,
 				minZoom: 2
       },
@@ -85,6 +87,8 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
   // Execute this function when advanced search button is pressed
  $scope.submit = function() {
+
+     console.log("submit");
 
     // First find out which paramaters are not empty
     var sok = ''; var lat = ''; var lng = ''; var edate = '';
@@ -152,9 +156,6 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
        sok = sok+lat+lng+edate;
     }
 
-
-   // $http.jsonp('https:' + npolarApiConfig.base + '/sighting/?q='+ sok +'&format=json&callback=JSON_CALLBACK&locales=utf-8').success(function(data) {
-   // $scope.full = data;
 
     //editor_assessment=unknown means new entries
   $scope.full = SightingDBSearch.get({search:sok}, function(){

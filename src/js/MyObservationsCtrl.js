@@ -7,6 +7,7 @@
 var MyObservationsCtrl = function($scope, $http, Sighting, NpolarApiSecurity, npolarApiConfig, SightingDBSearch, SPECIES) {
    $scope.security = NpolarApiSecurity;
    $scope.items = SPECIES;
+   $scope.submit = null;
 
    //Do a search for the logged in person.
    var user = NpolarApiSecurity.getUser();
@@ -16,13 +17,16 @@ var MyObservationsCtrl = function($scope, $http, Sighting, NpolarApiSecurity, np
    $scope.entry = SightingDBSearch.get({search:'q=&filter-recorded_by='+ user.email + '&sort=-event_date'}, function(){
    });
 
+  console.log($scope);
+
+
   // Execute this function when advanced search button is pressed
   $scope.submit = function() {
      console.log("submit");
 
      console.log($scope);
 
-     if ($scope.species && !($scope.species == 'null')) {
+     if ($scope.species && (!!$scope.species)) {
        var search = $scope.species.family;
        console.log(search);
        //Add + instead of space
