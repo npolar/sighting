@@ -157,13 +157,10 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
        sok = sok+lat+lng+edate;
     }
 
-   console.log(sok);
 
     //editor_assessment=unknown means new entries
   $scope.full = SightingDBSearch.get({search:sok}, function(){
    //});
-
-
 
     var redIcon = {
     iconUrl: 'img/icons/reddot.png',
