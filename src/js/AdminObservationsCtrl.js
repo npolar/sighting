@@ -11,6 +11,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
  //select -get species
  $scope.items = SPECIES;
 // angular.extend($scope, {species:""});
+    var drawnItems = new L.featureGroup();
 
     // Setting up the map
     angular.extend($scope, {
@@ -27,23 +28,28 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
         maxZoom: 14,
 				minZoom: 2
       },
-      controls: {
-        draw: { position : 'topleft',
-        polygon : false,
-        polyline : false,
-        rectangle : true,
-        circle : false,
-        marker: false }
-      }
+     controls: {
+        draw: {
+          position : 'topleft',
+          polygon : false,
+          polyline : false,
+          rectangle : true,
+          circle : false,
+          marker: false
+        },
+        edit: {
+        featureGroup: drawnItems
+        },
+        remove : false
+        }
   });
 
 
   //Draw a rectangle on the map to get coordinates from
-  leafletData.getMap().then(function(map) {
+  $scope.test = leafletData.getMap().then(function(map) {
 
-       var drawnItems = new L.featureGroup().addTo(map);
+       drawnItems.addTo(map);
 
-       console.log($scope);
        map.on('draw:created', function (e) {
                  var layer = e.layer;
                 drawnItems.addLayer(layer);
