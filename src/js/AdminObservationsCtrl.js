@@ -21,10 +21,11 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
                     zoom: 4
       },
       layers: {
-         tileLayer: "http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png",
-         tileLayerOptions: { attribution: '&copy; <a href="http://www.npolar.no">Norwegian Polar Institute</a>'},
-       // tileLayer: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
-       // tileLayerOptions: { attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' },
+       //  tileLayer: "http://tilestream.data.npolar.no/v2/WorldHax/{z}/{x}/{y}.png",
+       //  tileLayerOptions: { attribution: '&copy; <a href="http://www.npolar.no">Norwegian Polar Institute</a>'},
+         //tileLayer: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
+         tileLayer: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        tileLayerOptions: { attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' },
         maxZoom: 14,
 				minZoom: 2
       },

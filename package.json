@@ -24,6 +24,7 @@
     "angular-npolar": "npolar/angular-npolar",
     "angular-resource": "^1.4.7",
     "angular-route": "^1.4.7",
+    "angular-smart-table": "^2.1.5",
     "angularjs-datepicker": "^0.2.6",
     "elasticsearch": "^6.0.0",
     "formula": "npolar/formula",
@@ -32,7 +33,6 @@
     "leaflet-draw": "^0.2.3",
     "lodash": "^3.10.1",
     "npdc-common": "npolar/npdc-common",
-    "pagination": "^0.4.4",
     "path": "^0.12.7",
     "purecss": "^0.6.0",
     "xlsx": "git+https://github.com/SheetJS/js-xlsx.git"

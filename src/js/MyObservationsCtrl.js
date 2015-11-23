@@ -8,6 +8,9 @@ var MyObservationsCtrl = function($scope, Sighting, NpolarApiSecurity, npolarApi
    $scope.security = NpolarApiSecurity;
    $scope.items = SPECIES;
 
+   //pagination
+   $scope.itemsByPage=10;
+
    //Need to define a form in order to receive results from the form.
    //Form is not defined first time controller is run.
    $scope.form = {};
@@ -15,9 +18,15 @@ var MyObservationsCtrl = function($scope, Sighting, NpolarApiSecurity, npolarApi
    //Do a search for the logged in person.
    var user = NpolarApiSecurity.getUser();
 
+   var displayedCollection = [];
+
    //editor_assessment=unknown means new entries
    $scope.arr = SightingDBSearch.get({search:'&filter-recorded_by='+ user.email}, function(){
+     //For pagination - a copy is needed for display aka displayedCollection
+     displayedCollection.push($scope.arr.feed.entries);
+     $scope.displayedCollection = displayedCollection;
    });
+
 
 
   // Execute this function when advanced search button is pressed

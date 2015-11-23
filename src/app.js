@@ -8,7 +8,7 @@ require('angular-resource');
 /*require('angularjs-datepicker');*/
 require('formula');
 require('angular-npolar');
-//var pagination = require('pagination');
+
 
 var npdcCommon = require('npdc-common');
 var AutoConfig = npdcCommon.AutoConfig;
@@ -24,7 +24,8 @@ var appSighting = angular.module('sighting',[
   'leaflet-directive',
 //  '720kb.datepicker',  //Calendar
   'ngResource',
-  'templates'
+  'templates',
+  'smart-table'
 ]);
 
 

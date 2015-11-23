@@ -26,13 +26,15 @@
 
 
  <p></p>
-<table class="layout1">
+<table class="layout1" st-table="displayedCollection" st-safe-src="arr.feed.entries">
     <thead>
         <th>Date</th><th>Species</th><th>Location</th><th>Latitude</th><th>Longitude</th><th>Assessment</th><th></th><th></th>
     </thead>
 
     <tbody>
-    <tr ng-repeat="entry in arr.feed.entries"> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
+
+    <tr ng-repeat="entry in displayedCollection">
+       <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
         <td>{{ entry.species}}&nbsp;</td>
         <td>{{ entry.locality }}&nbsp;</td>
         <td>{{ entry.latitude }}&nbsp;</td>
@@ -42,6 +44,13 @@
         <td><a href="observations/{{entry.id}}/edit">Edit</a></td>
    </tr>
    </tbody>
+   <tfoot>
+      <tr>
+        <td colspan="5" class="text-center">
+          <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+        </td>
+      </tr>
+    </tfoot>
 </table>
  </form>
 
