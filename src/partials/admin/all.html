@@ -62,12 +62,12 @@
 
 <!--Table listing part -->
 
- <table class="layout1">
+  <table class="layout1" st-table="displayedCollection" st-safe-src="entries">
     <thead>
  <th>Count</th><th>Date</th><th>Species</th><th>Location</th><th>Assessment</th><th>Excelfile</th><th>View</th><th>Edit</th><th>Delete</th>
     </thead>
     <tbody>
-   <tr ng-repeat="entry in entries"><td>{{$index + 1}}</td> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
+   <tr ng-repeat="entry in displayedCollection"><td>{{$index + 1}}</td> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
 
         <td><a href="partials/edit_observations.html?id={{ entry.id }}">{{ entry.species }}&nbsp;</td>
         <td>{{ entry.locality }}&nbsp;</td>
@@ -78,8 +78,14 @@
         <td><a href="#/observation/delete/{{entry.id}}">Delete</a></td>
   </tr>
 </tbody>
+<tfoot>
+      <tr >
+        <td colspan="5" class="text-center">
+          <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+        </td>
+      </tr>
+</tfoot>
 </table>
-
  </form>
 
 </div>  <!-- ng-show -->

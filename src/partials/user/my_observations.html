@@ -28,7 +28,9 @@
  <p></p>
 <table class="layout1" st-table="displayedCollection" st-safe-src="arr.feed.entries">
     <thead>
-        <th>Date</th><th>Species</th><th>Location</th><th>Latitude</th><th>Longitude</th><th>Assessment</th><th></th><th></th>
+        <th>Date</th><th>Species</th><th>Location</th><th>Latitude</th><th>Longitude</th>
+       <!-- <th>Assessment</th>  -->
+        <th></th><th></th>
     </thead>
 
     <tbody>
@@ -39,13 +41,13 @@
         <td>{{ entry.locality }}&nbsp;</td>
         <td>{{ entry.latitude }}&nbsp;</td>
         <td>{{ entry.longitude }}&nbsp;</td>
-        <td>{{ entry.editor_assessment }}</td>
+    <!--    <td>{{ entry.editor_assessment }}</td> -->
         <td><a href="observations/{{entry.id}}">View</a></td>
         <td><a href="observations/{{entry.id}}/edit">Edit</a></td>
    </tr>
    </tbody>
    <tfoot>
-      <tr>
+      <tr >
         <td colspan="5" class="text-center">
           <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
         </td>

@@ -8,6 +8,11 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
 
  var markers = [];
+
+ //pagination
+ $scope.itemsByPage=10;
+ var displayedCollection = [];
+
  //select -get species
  $scope.items = SPECIES;
 // angular.extend($scope, {species:""});
@@ -95,8 +100,6 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
   // Execute this function when advanced search button is pressed
  $scope.submit = function() {
 
-     console.log("submit");
-     console.log($scope);
 
     // First find out which paramaters are not empty
     var sok = ''; var lat = ''; var lng = ''; var edate = '';
@@ -174,6 +177,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
     iconSize:     [8, 8] // size of the icon
     };
 
+
     // Fetch the lat/lon entries. Have to switch lat/lon for display
     for (var i=0; i< $scope.full.feed.entries.length; i++) {
        markers.push({
@@ -194,6 +198,11 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
     //Display data for all entries
     $scope.entries = $scope.full.feed.entries;
+
+    //Pagination
+    displayedCollection.push($scope.full.feed.entries);
+    $scope.displayedCollection = displayedCollection;
+
 
     //Transfer info to CSV file via service
     CSVService.entryObject = $scope.entries;
