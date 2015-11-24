@@ -2,12 +2,9 @@
 'use strict';
 
 var angular = require('angular');
-require('angular-route');
 require('angular-resource');
 
 /*require('angularjs-datepicker');*/
-require('formula');
-require('angular-npolar');
 
 
 var npdcCommon = require('npdc-common');

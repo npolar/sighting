@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var npdcGulp = require('npdc-gulp');
+var runSequence = require('run-sequence');
 
 npdcGulp.loadAppTasks(gulp, {
   'deps': {
