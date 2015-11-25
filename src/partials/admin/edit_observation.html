@@ -1,8 +1,15 @@
 
+
 <h1><b> Edit observation {{ entry.id }} <b></h1>
 
-
+<div ng-show="isAdmin">
 <div formula="formula"></div>
+</div>
+
+<div ng-show="!isAdmin">
+      <p>Please <a href="/sighting">log in</a> with your admin account in order to view this page.</p>
+</div>
+
 
 
 

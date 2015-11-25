@@ -1,7 +1,7 @@
 'use strict';
 
 // @ngInject
-var QualityCtrl = function($scope, $http, Sighting, npolarApiConfig, SightingDBSearch) {
+var QualityCtrl = function($scope, $http, Sighting, npolarApiConfig, SightingDBSearch, IsAdmin) {
 
   //pagination
   $scope.itemsByPage=15;
@@ -13,6 +13,9 @@ var QualityCtrl = function($scope, $http, Sighting, npolarApiConfig, SightingDBS
      displayedCollection.push($scope.full.feed.entries);
      $scope.displayedCollection = displayedCollection;
    });
+
+  //Admin logon?
+  $scope.isAdmin = IsAdmin.entryObject['data'];
 
 };
 

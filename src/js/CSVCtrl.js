@@ -3,7 +3,10 @@
 
 /*Controller for CSV print */
 // @ngInject
-var CSVCtrl = function($scope, CSVService) {
+var CSVCtrl = function($scope, CSVService, IsAdmin) {
+
+	//Admin logon?
+    $scope.isAdmin = IsAdmin.entryObject['data'];
     $scope.entries = CSVService.entryObject;
 };
 

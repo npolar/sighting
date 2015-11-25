@@ -4,7 +4,7 @@
 // Respond to search to get relevant entries
 // First respond to squares drawn
 // @ngInject
-var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBSearch, npolarApiConfig) {
+var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBSearch, npolarApiConfig, IsAdmin) {
 
 
  var markers = [];
@@ -13,9 +13,12 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
  $scope.itemsByPage=10;
  var displayedCollection = [];
 
+ //Access to page or not?
+ $scope.isAdmin = IsAdmin.entryObject['data'];
+
  //select -get species
  $scope.items = SPECIES;
-// angular.extend($scope, {species:""});
+ // angular.extend($scope, {species:""});
     var drawnItems = new L.featureGroup();
 
     // Setting up the map
@@ -217,10 +220,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
 }; //submit
 
-//Access to page or not?
-   $scope.isAdmin = function() {
-     return NpolarApiSecurity.hasSystem('https:' + npolarApiConfig.base + '/sighting/admin');
-   };
+
 
 };  //AdminObservationsCtrl
 

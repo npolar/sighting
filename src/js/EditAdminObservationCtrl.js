@@ -2,7 +2,7 @@
 /* user module */
 //Update entry from Svalbard MMS couch database here
 // @ngInject
-var EditAdminObservationCtrl =  function($scope,$location, $controller, Sighting, npolarApiConfig, NpolarApiSecurity) {
+var EditAdminObservationCtrl =  function($scope,$location, $controller, Sighting, npolarApiConfig, NpolarApiSecurity, IsAdmin) {
     //var speciesgallery = require('./SpeciesGallery');
 
      // EditController -> NpolarEditController
@@ -12,6 +12,8 @@ var EditAdminObservationCtrl =  function($scope,$location, $controller, Sighting
 
   // Dataset -> npolarApiResource -> ngResource
   $scope.resource = Sighting;
+
+   $scope.isAdmin = IsAdmin.entryObject['data'];
 
   // Formula ($scope.formula set by parent)
 

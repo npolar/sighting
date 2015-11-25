@@ -66,17 +66,4 @@ var EditObservationCtrl =  function($scope,$location, $controller, Sighting, npo
 
 
 
-
-  /*  $scope.formulaData = {
-      schema: "https://api.npolar.no/schema/sighting.json",
-      form: "./partials/user/formula.json",
-      language: "./partials/user/translation.json",
-      model: {},
-      onsave: function(doc) {
-        alert($scope);
-    }
-    }; */
-
-
-
 module.exports = EditObservationCtrl;

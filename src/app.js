@@ -51,6 +51,7 @@ appSighting.controller('QualityCtrl', require('./js/QualityCtrl'));
 appSighting.service('SightingDBSearch', require('./js/SightingDBSearch'));
 appSighting.service('SightingDBGet', require('./js/SightingDBGet'));
 appSighting.service('CSVService', require('./js/CSVService'));
+appSighting.service('IsAdmin', require('./js/IsAdmin'));
 appSighting.directive('fileInput', require('./js/fileInput'));
 appSighting.directive('npolarLoginLogout2', require('./js/ngloginLogout2'));
 appSighting.directive('picture', require('./js/picture'));

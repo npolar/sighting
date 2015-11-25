@@ -6,6 +6,7 @@ var ViewObservationCtrl = function ($scope, $routeParams, $controller, Sighting,
   $controller('NpolarBaseController', {$scope: $scope});
   $scope.resource = Sighting;
   $scope.items = SPECIES;
+  $scope.security = NpolarApiSecurity;
 
   //Convert latin species' names to english/norwegian
   let species = (sighting) => {
@@ -46,7 +47,7 @@ var ViewObservationCtrl = function ($scope, $routeParams, $controller, Sighting,
 
     //Convert from date format ISO8601 to human friendly view
    function short_date(theDate) {
-   if (theDate !== "undefined" && theDate !== null && theDate !== "") {
+   if (theDate !== undefined && theDate !== null && theDate !== "") {
       return  theDate.substr(0,10);
     } else {
       return "";
@@ -61,7 +62,7 @@ var ViewObservationCtrl = function ($scope, $routeParams, $controller, Sighting,
     $scope.document.date_identified = date_identified(sighting);
     $scope.document.created = created(sighting);
     $scope.document.updated = updated(sighting);
-    console.log($scope.document.expedition.start_date);
+    //console.log($scope.document.expedition.start_date);
     $scope.document.expedition.start_date = start_date(sighting);
     $scope.document.expedition.end_date = end_date(sighting);
     $scope.document.event_date = event_date(sighting);
