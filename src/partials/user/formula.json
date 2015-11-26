@@ -45,7 +45,7 @@
       }
     ]
   },
-              {
+  {
                   "title": "Observation",
                   "fields": [
                 {
@@ -87,33 +87,34 @@
         "title": "occurrence remarks"}
             ]
         },
-{"title": "Time/location",
-      "fields": [
-            {
-                    "id": "event_date",
-                    "title": "observation date",
-                    "description": "Date of observation"
-                },
-                "habitat",
-                {
-                    "id": "latitude",
-                    "description":"Perferably in decimal degrees"
-                },
-                {
-                    "id": "longitude",
-                    "description":"Preferably in decimal degrees"
-                },
-                {
-                    "id": "locality",
-                    "title": "location",
-                    "description":"Observation's location"
-                },
-                {
-                    "id": "location_comment",
-                    "title": "location comment",
-                    "description":""
-                }
-         ]
+        {
+        "title": "Time/location",
+        "fields": [
+        {
+        "id": "event_date",
+        "title": "observation date",
+        "description": "Date of observation"
+        },
+        "habitat",
+        {
+        "id": "latitude",
+        "description":"Perferably in decimal degrees"
+        },
+        {
+        "id": "longitude",
+        "description":"Preferably in decimal degrees"
+        },
+        {
+        "id": "locality",
+        "title": "location",
+        "description":"Observation's location"
+        },
+        {
+        "id": "location_comment",
+        "title": "location comment",
+        "description":""
+        }
+            ]
         },
          {
       "title": "Picture upload",
