@@ -7,7 +7,7 @@ var DeleteAdminObservationCtrl =  function($scope, $routeParams, Sighting, Sight
           $scope.entry = SightingDBGet.get({id: $routeParams.id }, function(){
           });
 
-          $scope.isAdmin = IsAdmin.entryObject['data'];
+          $scope.isAdmin = IsAdmin.entryObject.data;
 
      //Delete by put update, set _deleted to true
     $scope.submit = function(id) {

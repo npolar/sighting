@@ -13,7 +13,7 @@ var EditAdminObservationCtrl =  function($scope,$location, $controller, Sighting
   // Dataset -> npolarApiResource -> ngResource
   $scope.resource = Sighting;
 
-   $scope.isAdmin = IsAdmin.entryObject['data'];
+   $scope.isAdmin = IsAdmin.entryObject.data;
 
   // Formula ($scope.formula set by parent)
 

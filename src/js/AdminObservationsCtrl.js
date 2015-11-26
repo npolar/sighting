@@ -14,7 +14,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
  var displayedCollection = [];
 
  //Access to page or not?
- $scope.isAdmin = IsAdmin.entryObject['data'];
+ $scope.isAdmin = IsAdmin.entryObject.data;
 
  //select -get species
  $scope.items = SPECIES;

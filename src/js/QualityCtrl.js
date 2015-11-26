@@ -15,7 +15,7 @@ var QualityCtrl = function($scope, $http, Sighting, npolarApiConfig, SightingDBS
    });
 
   //Admin logon?
-  $scope.isAdmin = IsAdmin.entryObject['data'];
+  $scope.isAdmin = IsAdmin.entryObject.data;
 
 };
 
