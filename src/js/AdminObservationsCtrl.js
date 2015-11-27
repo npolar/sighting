@@ -226,10 +226,6 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
     //Get hostname
     $scope.hostname = location.host;
-   // console.log($scope.hostname);
-
-
-
 
   });
 
