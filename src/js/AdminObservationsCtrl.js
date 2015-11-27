@@ -208,8 +208,12 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
     //Reset for next search
     markers = [];
 
-    //Display data for all entries
+    //Display data for all entries and counting with pagination
     $scope.entries = $scope.full.feed.entries;
+    for (var i=0; i<$scope.entries.length; i++) {
+        $scope.entries[i].count = i;
+    }
+
 
     //Pagination
     displayedCollection.push($scope.full.feed.entries);

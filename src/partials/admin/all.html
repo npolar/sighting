@@ -67,7 +67,7 @@
  <th>Count</th><th>Date</th><th>Species</th><th>Location</th><th>Assessment</th><th>Excelfile</th><th>View</th><th>Edit</th><th>Delete</th>
     </thead>
     <tbody>
-   <tr ng-repeat="entry in displayedCollection"><td>{{$index + 1}}</td> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
+   <tr ng-repeat="entry in displayedCollection"><td>{{entry.count}}</td> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
 
         <td>{{ entry.species }}&nbsp;</td>
         <td>{{ entry.locality }}&nbsp;</td>
@@ -81,7 +81,7 @@
 <tfoot>
       <tr >
         <td colspan="5" class="text-center">
-          <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="7"></div>
+          <div st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="20"></div>
         </td>
       </tr>
 </tfoot>

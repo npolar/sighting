@@ -23,9 +23,12 @@ var MyObservationsCtrl = function($scope, Sighting, NpolarApiSecurity, npolarApi
 
    //editor_assessment=unknown means new entries
    $scope.arr = SightingDBSearch.get({search:'&filter-recorded_by='+ user.email}, function(){
+
+
      //For pagination - a copy is needed for display aka displayedCollection
      displayedCollection.push($scope.arr.feed.entries);
      $scope.displayedCollection = displayedCollection;
+
    });
 
   // Execute this function when advanced search button is pressed
