@@ -4,8 +4,7 @@
 
 <div ng-if="security.isAuthenticated()">
 <a ng-if="document.id && isAuthenticated()" ng-href="{{document.id}}/edit"><button class="btn btn-danger">edit</button></a>
-<button class="btn btn-default"><a href="./observations">Back</a></button>
-
+<button class="btn btn-default" ng-click="goBack()"><a href="./observations">Back</a></button>
 
 
         <br /><br />
@@ -85,6 +84,4 @@
 <div ng-show="!security.isAuthenticated()">
   <p>Please <a href="/sighting/">log in</a> in order to view your sightings</p>
 </div>
-
-
 

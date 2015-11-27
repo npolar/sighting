@@ -69,13 +69,13 @@
     <tbody>
    <tr ng-repeat="entry in displayedCollection"><td>{{$index + 1}}</td> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
 
-        <td><a href="partials/edit_observations.html?id={{ entry.id }}">{{ entry.species }}&nbsp;</td>
+        <td>{{ entry.species }}&nbsp;</td>
         <td>{{ entry.locality }}&nbsp;</td>
         <td>{{ entry.editor_assessment }}&nbsp;</td>
         <td><a href="http://{{hostname}}/{{entry.excelfile.filename}}">{{ entry.excelfile.filename }}&nbsp;</td>
-        <td><a href="#/observation/{{entry.id}}">View&nbsp;</a></td>
-         <td><a href="#/observation/edit/{{entry.id}}">Edit&nbsp;</a></td>
-        <td><a href="#/observation/delete/{{entry.id}}">Delete</a></td>
+        <td><a href="observations/{{entry.id}}">View&nbsp;</a></td>
+         <td><a href="observations/{{entry.id}}/editadmin">Edit&nbsp;</a></td>
+        <td><a href="observations/{{entry.id}}/deleteadmin">Delete</a></td>
   </tr>
 </tbody>
 <tfoot>

@@ -100,9 +100,9 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
 }); //leafletdata.getMap
 
+
   // Execute this function when advanced search button is pressed
  $scope.submit = function() {
-
 
     // First find out which paramaters are not empty
     var sok = ''; var lat = ''; var lng = ''; var edate = '';
@@ -173,7 +173,6 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
     //editor_assessment=unknown means new entries
   $scope.full = SightingDBSearch.get({search:sok}, function(){
-   //});
 
     var redIcon = {
     iconUrl: 'img/icons/reddot.png',
@@ -183,6 +182,8 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
     // Fetch the lat/lon entries. Have to switch lat/lon for display
     for (var i=0; i< $scope.full.feed.entries.length; i++) {
+
+      if ($scope.full.feed.entries[i].latitude && $scope.full.feed.entries[i].longitude){
        markers.push({
                 lng: parseFloat($scope.full.feed.entries[i].longitude),
                 lat: parseFloat($scope.full.feed.entries[i].latitude),
@@ -191,6 +192,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
                 message: $scope.full.feed.entries[i].locality,
                 icon: redIcon
        });
+     }
     }
 
     //Display markers on map
@@ -202,6 +204,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
     //Display data for all entries
     $scope.entries = $scope.full.feed.entries;
 
+
     //Pagination
     displayedCollection.push($scope.full.feed.entries);
     $scope.displayedCollection = displayedCollection;
@@ -210,9 +213,11 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
     //Transfer info to CSV file via service
     CSVService.entryObject = $scope.entries;
 
+
     //Get hostname
     $scope.hostname = location.host;
    // console.log($scope.hostname);
+
 
 
 

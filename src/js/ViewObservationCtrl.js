@@ -8,6 +8,12 @@ var ViewObservationCtrl = function ($scope, $routeParams, $controller, Sighting,
   $scope.items = SPECIES;
   $scope.security = NpolarApiSecurity;
 
+//Back button - return to previous page
+$scope.goBack = function() {
+    window.history.back();
+};
+
+
   //Convert latin species' names to english/norwegian
   let species = (sighting) => {
       for (var i = 0; i < SPECIES.length; i++) {
@@ -96,7 +102,7 @@ var ViewObservationCtrl = function ($scope, $routeParams, $controller, Sighting,
   });
 };
 
-  show();
+show();
 
 };
 

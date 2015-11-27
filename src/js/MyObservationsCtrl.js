@@ -28,8 +28,6 @@ var MyObservationsCtrl = function($scope, Sighting, NpolarApiSecurity, npolarApi
      $scope.displayedCollection = displayedCollection;
    });
 
-
-
   // Execute this function when advanced search button is pressed
   $scope.submit = function() {
 

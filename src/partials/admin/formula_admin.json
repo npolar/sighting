@@ -84,13 +84,7 @@
         {"id": "total",
         "title": "total count"},
         {"id": "occurrence_remarks",
-        "title": "occurrence remarks"},
-         {"id": "editor_assessment",
-        "title": "admin assessment",
-         "description":"Red is highly unlikely, yellow is ununsual/surprising, green is likely"
-         },
-         {"id": "editor_comment",
-        "title": "admin comment"}
+        "title": "occurrence remarks"}
             ]
         },
 {"title": "Time/location",
@@ -118,7 +112,13 @@
                     "id": "location_comment",
                     "title": "location comment",
                     "description":""
-                }
+                },
+                {"id": "editor_assessment",
+                 "title": "admin assessment",
+                 "description":"Red is highly unlikely, yellow is ununsual/surprising, green is likely"
+                },
+                {"id": "editor_comment",
+                "title": "admin comment"}
          ]
         },
          {
