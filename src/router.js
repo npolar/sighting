@@ -38,10 +38,10 @@ var router = function($routeProvider, $locationProvider) {
     //    templateUrl: 'partials/user/images.html',
     //    controller: 'UploadImagesCtrl'
     //  }).
-   //   when('/upload', {
-   //     templateUrl: 'partials/admin/upload.html',
-   //     controller: 'UploadObservationsCtrl'
-    //  }).
+      when('/upload', {
+        templateUrl: 'partials/admin/upload.html',
+        controller: 'UploadObservationsCtrl'
+      }).
       when('/all', {
         templateUrl: 'partials/admin/all.html',
         controller: 'AdminObservationsCtrl'

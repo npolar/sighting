@@ -47,6 +47,7 @@ appSighting.controller('ngLoginLogout', require('./js/ngLoginlogout'));
 appSighting.controller('EditAdminObservationCtrl', require('./js/EditAdminObservationCtrl'));
 appSighting.controller('DeleteAdminObservationCtrl', require('./js/DeleteAdminObservationCtrl'));
 appSighting.controller('QualityCtrl', require('./js/QualityCtrl'));
+appSighting.controller('UploadObservationsCtrl', require('./js/UploadObservationsCtrl'));
 
 appSighting.service('SightingDBSearch', require('./js/SightingDBSearch'));
 appSighting.service('SightingDBGet', require('./js/SightingDBGet'));

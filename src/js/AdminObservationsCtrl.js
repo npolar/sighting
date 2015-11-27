@@ -7,6 +7,13 @@
 var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBSearch, npolarApiConfig, IsAdmin) {
 
 
+  //Fetch previous search if existing
+  $scope.entries = CSVService.entryObject;
+  //Remove empty entry from table
+  if ($scope.entries.data === null) {
+    $scope.entries = undefined;
+  }
+
  var markers = [];
 
  //pagination
@@ -203,7 +210,6 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
     //Display data for all entries
     $scope.entries = $scope.full.feed.entries;
-
 
     //Pagination
     displayedCollection.push($scope.full.feed.entries);

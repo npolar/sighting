@@ -9,6 +9,8 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
      // Dataset -> npolarApiResource -> ngResource
      $scope.resource = Sighting;
 
+     console.log("upload");
+
 
      $scope.filesChanged = function(e){
         $scope.files=e.files;
