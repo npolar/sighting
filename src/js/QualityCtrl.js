@@ -9,6 +9,7 @@ var QualityCtrl = function($scope, $http, Sighting, npolarApiConfig, SightingDBS
 
   //editor_assessment=unknown means new entries
   $scope.full = SightingDBSearch.get({search:"&filter-editor_assessment=unknown"}, function(){
+
   	 //For pagination - a copy is needed for display aka displayedCollection
      displayedCollection.push($scope.full.feed.entries);
      $scope.displayedCollection = displayedCollection;

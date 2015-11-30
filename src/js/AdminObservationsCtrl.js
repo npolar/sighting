@@ -179,7 +179,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
 
     //editor_assessment=unknown means new entries
-  $scope.full = SightingDBSearch.get({search:sok}, function(){
+  var full = SightingDBSearch.get({search:sok}, function(){
 
     var redIcon = {
     iconUrl: 'img/icons/reddot.png',
@@ -188,15 +188,15 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
 
 
     // Fetch the lat/lon entries. Have to switch lat/lon for display
-    for (var i=0; i< $scope.full.feed.entries.length; i++) {
+    for (var i=0; i< full.feed.entries.length; i++) {
 
-      if ($scope.full.feed.entries[i].latitude && $scope.full.feed.entries[i].longitude){
+      if (full.feed.entries[i].latitude && full.feed.entries[i].longitude){
        markers.push({
-                lng: parseFloat($scope.full.feed.entries[i].longitude),
-                lat: parseFloat($scope.full.feed.entries[i].latitude),
+                lng: parseFloat(full.feed.entries[i].longitude),
+                lat: parseFloat(full.feed.entries[i].latitude),
                 focus: true,
                 draggable: false,
-                message: $scope.full.feed.entries[i].locality,
+                message: full.feed.entries[i].locality,
                 icon: redIcon
        });
      }
@@ -209,19 +209,22 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
     markers = [];
 
     //Display data for all entries and counting with pagination
-    $scope.entries = $scope.full.feed.entries;
-    for (var i=0; i<$scope.entries.length; i++) {
-        $scope.entries[i].count = i;
+    var entries = full.feed.entries;
+    for (var i=0; i<entries.length; i++) {
+        entries[i].count = i;
     }
+    $scope.total = entries.length;
 
 
     //Pagination
-    displayedCollection.push($scope.full.feed.entries);
+    displayedCollection.push(full.feed.entries);
     $scope.displayedCollection = displayedCollection;
+    $scope.entries = entries;
 
 
     //Transfer info to CSV file via service
-    CSVService.entryObject = $scope.entries;
+    CSVService.entryObject = entries;
+
 
 
     //Get hostname
