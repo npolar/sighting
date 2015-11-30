@@ -177,26 +177,33 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
        sok = sok+lat+lng+edate;
     }
 
+   //Prune search - transfer as little data as possible to save time
+   var fields = '&fields=id,event_date,latitude,longitude,locality,location_comment,species,adult_m,adult_f,adult,subadult,polar_bear_condition,\
+cub_calf_pup,bear_cubs,unidentified,total,habitat,occurrence_remark,excelfile.filename,expedition.name,expedition.contact_info,\
+expedition.organisation,expedition.platform,expedition.platform_comment,expedition.start_date,expedition.end_date';
 
-    //editor_assessment=unknown means new entries
-  var full = SightingDBSearch.get({search:sok}, function(){
+   var full = SightingDBSearch.get({search:sok+fields}, function(){
 
     var redIcon = {
     iconUrl: 'img/icons/reddot.png',
     iconSize:     [8, 8] // size of the icon
     };
 
+    var len = full.feed.entries.length;
+    $scope.total = len;
 
     // Fetch the lat/lon entries. Have to switch lat/lon for display
-    for (var i=0; i< full.feed.entries.length; i++) {
+    while (len--) {
 
-      if (full.feed.entries[i].latitude && full.feed.entries[i].longitude){
+      full.feed.entries[len].count = len;
+
+      if (full.feed.entries[len].latitude && full.feed.entries[len].longitude){
        markers.push({
-                lng: parseFloat(full.feed.entries[i].longitude),
-                lat: parseFloat(full.feed.entries[i].latitude),
+                lng: parseFloat(full.feed.entries[len].longitude),
+                lat: parseFloat(full.feed.entries[len].latitude),
                 focus: true,
                 draggable: false,
-                message: full.feed.entries[i].locality,
+                message: full.feed.entries[len].locality,
                 icon: redIcon
        });
      }
@@ -208,24 +215,15 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
     //Reset for next search
     markers = [];
 
-    //Display data for all entries and counting with pagination
-    var entries = full.feed.entries;
-    for (var i=0; i<entries.length; i++) {
-        entries[i].count = i;
-    }
-    $scope.total = entries.length;
-
 
     //Pagination
     displayedCollection.push(full.feed.entries);
     $scope.displayedCollection = displayedCollection;
-    $scope.entries = entries;
+    $scope.entries = full.feed.entries;
 
 
     //Transfer info to CSV file via service
-    CSVService.entryObject = entries;
-
-
+    CSVService.entryObject = full.feed.entries;
 
     //Get hostname
     $scope.hostname = location.host;

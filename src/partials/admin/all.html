@@ -67,8 +67,9 @@
  <th>Count</th><th>Date</th><th>Species</th><th>Location</th><th>Assessment</th><th>Excelfile</th><th>View</th><th>Edit</th><th>Delete</th>
     </thead>
     <tbody>
-   <tr ng-repeat="entry in displayedCollection "><td>{{entry.count}}</td> <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
-
+   <tr ng-repeat="entry in displayedCollection" ng-cloak>
+        <td>{{entry.count}}</td>
+        <td>{{ (entry.event_date).substring(0,10) }}&nbsp;</td>
         <td>{{ entry.species }}&nbsp;</td>
         <td>{{ entry.locality }}&nbsp;</td>
         <td>{{ entry.editor_assessment }}&nbsp;</td>
