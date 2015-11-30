@@ -6,6 +6,9 @@
 // @ngInject
 var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVService, NpolarApiSecurity, Sighting, SightingDBSearch, npolarApiConfig, IsAdmin) {
 
+  //Do not show "loading.."
+  $scope.dataLoading = false;
+
 
   //Fetch previous search if existing
   $scope.entries = CSVService.entryObject;
@@ -14,7 +17,15 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
     $scope.entries = undefined;
   }
 
+  $scope.edate1 = undefined;
+  $scope.edate2 = undefined;
+
+
  var markers = [];
+
+ //using chronopic to show dates
+ new Chronopic('input[type="datetime"]', { date: new Date(), format: "{YYYY}-{MM}-{DD}" });
+ new Chronopic('input[type="date"][lang="en"]', { locale: 'en_US' });
 
  //pagination
  $scope.itemsByPage=10;
@@ -42,7 +53,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
          tileLayer: 'https://a.tile.openstreetmap.org/{z}/{x}/{y}.png',
         tileLayerOptions: { attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' },
         maxZoom: 14,
-				minZoom: 2
+        minZoom: 2
       },
      controls: {
         draw: {
@@ -76,6 +87,7 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
                 $scope.lat1= res[0][0][1];
                 $scope.lng2= res[0][2][0];
                 $scope.lat2= res[0][2][1];
+
 
         });
 
@@ -111,23 +123,31 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
   // Execute this function when advanced search button is pressed
  $scope.submit = function() {
 
+    //show loading..
+    $scope.dataLoading = true;
+
+    console.log($scope.lat1);
+    console.log($scope.edate1);
+    console.log($scope.edate2);
+    console.log($scope);
+
     // First find out which paramaters are not empty
     var sok = ''; var lat = ''; var lng = ''; var edate = '';
 
     // If event_date exists
-    if (typeof $scope.event_date1 !== "undefined" && $scope.event_date1 !== "") {
+    if (typeof $scope.edate1 !== "undefined" && $scope.edate1 !== "") {
            //Remember to transform into the correct format
-           edate = '&filter-event_date=' + convertDate($scope.event_date1) + '..';
+           edate = '&filter-event_date=' + convertDate($scope.edate1) + '..';
 
-           if (typeof $scope.event_date2 !== "undefined" && $scope.event_date2 !== "") {
+           if (typeof $scope.edate2 !== "undefined" && $scope.edate2 !== "") {
                //Transform edate to correct format
-               edate = edate + convertDate($scope.event_date2);
+               edate = edate + convertDate($scope.edate2);
 
            }
     //Else if lat2 exists
-    } else if (typeof $scope.event_date2 !== "undefined" && $scope.event_date2 !== "") {
+    } else if (typeof $scope.edate2 !== "undefined" && $scope.edate2 !== "") {
                //Transform edate to correct format
-               edate = '&filter-event_date=..' + convertDate($scope.event_date2);
+               edate = '&filter-event_date=..' + convertDate($scope.edate2);
     }
 
 
@@ -176,6 +196,8 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
     }else {
        sok = sok+lat+lng+edate;
     }
+
+    console.log(sok);
 
    //Prune search - transfer as little data as possible to save time
    var fields = '&fields=id,event_date,latitude,longitude,locality,location_comment,species,adult_m,adult_f,adult,subadult,polar_bear_condition,\
@@ -228,8 +250,10 @@ expedition.organisation,expedition.platform,expedition.platform_comment,expediti
     //Get hostname
     $scope.hostname = location.host;
 
-  });
+    //Remove loading..
+    $scope.dataLoading = false;
 
+  });
 }; //submit
 
 
@@ -247,6 +271,3 @@ function convertDate(idate) {
 
 
   module.exports = AdminObservationsCtrl;
-
-
-

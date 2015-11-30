@@ -32,6 +32,14 @@
       <option value=""> Undefined </option></select>
 </div>
 
+<div class="pure-u-1 pure-u-md-1-2">
+ <label for="edate1">Event date start:</label> <input type="datetime" lang="en" ng-model="edate1">
+</div>
+
+<div class="pure-u-1 pure-u-md-1-2">
+ <label for="edate2">Event date end:</label> <input type="datetime" lang="en" ng-model="edate2">
+</div>
+
 
 <div class="pure-u-1 pure-u-md-1-2">
  <label for="lat1">Latitude start:</label> <input type="text" ng-model="lat1" size="5" >
@@ -53,6 +61,10 @@
 <div class="pure-u-1 pure-u-md-1-1">
 <input type="submit" id="submit" value="Search" />
 </div>
+</div>
+
+<div ng-if="dataLoading">
+    Loading...
 </div>
 
 <p></p>
