@@ -14,8 +14,7 @@ var AutoConfig = npdcCommon.AutoConfig;
 var appSighting = angular.module('sighting',[
   'ngRoute',
   'formula',
-  'npolarApi', //NP logon
-  'npolarUi',
+  'ngNpolar', //NP logon
  // 'nemLogging',
 //  'sightingServices',   //Edit service
   'leaflet-directive',
@@ -97,7 +96,7 @@ appSighting.run(npolarApiConfig => {
 });
 
 // Inject Chronopic on suitable input elements
-appSighting.directive('input', require('npdc-common/wrappers/chronopic')({
+appSighting.directive('input', require('npdc-common/src/wrappers/chronopic')({
   css: { 'max-width': '340px' }
 }));
 
