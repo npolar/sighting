@@ -96,9 +96,9 @@ appSighting.run(npolarApiConfig => {
 });
 
 // Inject Chronopic on suitable input elements
-appSighting.directive('input', require('npdc-common/src/wrappers/chronopic')({
-  css: { 'max-width': '340px' }
-}));
+//appSighting.directive('input', require('npdc-common/src/wrappers/chronopic')({
+//  css: { 'max-width': '340px' }
+//}));
 
 
 
