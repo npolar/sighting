@@ -20,8 +20,9 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
      $scope.upload = function(e) {
 
         var files = $scope.files;
-      //  console.log(files);
+        console.log(files);
         var i,f;
+        console.log("upload2");
 
         //Count up each successful row - used for user feedback
         var log, row_count = 0;
@@ -30,6 +31,7 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
 
         for (i = 0, f = files[i]; i !== files.length; ++i) {
           var reader = new FileReader();
+
 
             reader.onload = (function(f){
               //var fileName = theFile.name;
@@ -136,7 +138,7 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                                    console.log(JSON.stringify(entry));
                                    console.log("result ----------");
 
-                                   $scope.resource.save(JSON.stringify(entry), function(document) {
+                                /*   $scope.resource.save(JSON.stringify(entry), function(document) {
                                    // $scope.document = document;
                                    // console.log(document);
                                    // console.log("document----");
@@ -146,7 +148,7 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
                                     }, function(error) {
                                           log.concat("Row no " + row_count + " was not saved. Please submit your form by e-mail (magnus.andersen@npolar.no). <br />");
                                           console.log("Row no " + row_count + " was not saved. Please submit your form by e-mail (magnus.andersen@npolar.no).");
-                                    });
+                                    });  */
                                     //Get next row
                                     row_count++;
                                 }
@@ -162,7 +164,7 @@ var UploadObservationsCtrl = function($scope, $http, NpolarApiSecurity, Sighting
             else {reader.readAsArrayBuffer(f);}
 
    }
-  $scope.apply();
+//  $scope.apply();
 };
 };
 

@@ -38,23 +38,22 @@ appSighting.controller('MyObservationsCtrl', require('./js/MyObservationsCtrl'))
 appSighting.controller('ViewObservationCtrl', require('./js/ViewObservationCtrl'));
 
 appSighting.controller('EditObservationCtrl', require('./js/EditObservationCtrl'));
-//appSighting.controller('UploadObservationsCtrl', require('./js/UploadObservationsCtrl'));
 //appSighting.controller('UploadImagesCtrl', require('./js/UploadImagesCtrl'));
-
 appSighting.controller('ngLoginLogout', require('./js/ngLoginlogout'));
-
 appSighting.controller('EditAdminObservationCtrl', require('./js/EditAdminObservationCtrl'));
 appSighting.controller('DeleteAdminObservationCtrl', require('./js/DeleteAdminObservationCtrl'));
 appSighting.controller('QualityCtrl', require('./js/QualityCtrl'));
 appSighting.controller('UploadObservationsCtrl', require('./js/UploadObservationsCtrl'));
 
+appSighting.directive('fileInput', require('./js/fileInput'));
+appSighting.directive('npolarLoginLogout2', require('./js/ngloginLogout2'));
+appSighting.directive('picture', require('./js/picture'));
+appSighting.directive('uploadObservations', require('./js/uploadObservations'));
+
 appSighting.service('SightingDBSearch', require('./js/SightingDBSearch'));
 appSighting.service('SightingDBGet', require('./js/SightingDBGet'));
 appSighting.service('CSVService', require('./js/CSVService'));
 appSighting.service('IsAdmin', require('./js/IsAdmin'));
-appSighting.directive('fileInput', require('./js/fileInput'));
-appSighting.directive('npolarLoginLogout2', require('./js/ngloginLogout2'));
-appSighting.directive('picture', require('./js/picture'));
 appSighting.constant('SPECIES', require('./js/SpeciesGallery'));
 appSighting.filter('viewFilter', require('./js/viewFilter'));
 appSighting.filter('uniqueFilter', require('./js/uniqueFilter'));
