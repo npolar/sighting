@@ -3,23 +3,30 @@
 // @ngInject
 var uploadObservations = function() {
 
-
- 	//templateUrl:'src/partials/user/upload_observations.html',
- //	scope: {
- //      excelobj: '='
- // 	},
- //	link: function(scope, elem, attrs) {
- //        console.log("uploadDirective");
-// 	}
 console.log("directive reached");
 
 return {
       restrict: 'AE',
-      replace: 'true',
-      template: '<h3>Hello World!!</h3>'
+      templateUrl:'partials/user/upload_observations.html',
+      scope: {},    //new isolated scope
+     // scope: {
+     //    excelobj: '='
+     // },
+ 	  link: function(scope, elem, attrs) {
+ 	        console.log("uploadDirective");
+
+		    scope.filesChanged = function(e){
+		        scope.files=e.files;
+		        scope.$apply();
+		    };
+
+		    scope.upload = function(e) {
+		     	 console.log("upload goes here");
+			};
+	}
+
+
 };
-
-
 };
 
 

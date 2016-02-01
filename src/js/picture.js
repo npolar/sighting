@@ -21,9 +21,9 @@ var picture = function () {
         }
 
         //Transfer uploaded pictures to
-        var fileReader = new FileReader();
+       // var fileReader = new FileReader();
         for (var i = 0; i < scope.files.length; i++) {
-           var obj = new Object();
+           var obj = {};
            obj.filename = scope.files[i].name;
            obj.content_type = scope.files[i].type;
            obj.content_size = scope.files[i].size;
