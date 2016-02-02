@@ -1,9 +1,13 @@
+<br/>
+<label><input type="checkbox" ng-model="schema_version"> The schema contains question about bear cubs and dead/alive</label><br/>
+<label>Which row is first row containing input?
+<input type="text" ng-model="row" maxlength="2" size="2"></label><br /><br />
 
 
- <area></area><input type="file"  onchange="angular.element(this).scope().filesChanged(this)" multiple accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+ <area></area><input type="file"  onchange="angular.element(this).scope().filesChanged(this)" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
     <button ng-click="upload()">Upload</button>
-  <li ng-repeat="file in files">{{file.name}}</li>
+  <!-- <li ng-repeat="file in files">{{file.name}}</li>
 
-    {{results}}
+    {{results}}  -->
 
 
