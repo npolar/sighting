@@ -1,7 +1,7 @@
 'use strict';
 
-// @ngInject
 var uploadObservations = function(SPECIES) {
+'ngInject';
 
 return {
       restrict: 'AE',
@@ -52,7 +52,7 @@ return {
 			                    if (exped === {}) {
 			                    	console.log("Can't find contact information in column J or K in worksheet. Exiting..");
 			                    }
-			                    console.log(exped);
+			                    //console.log(exped);
 
 
 			                    //Create excel object
@@ -60,34 +60,16 @@ return {
 			                    if (excelfile === {}) {
 			                    	console.log("Unable to extract excel file information. Exiting..");
 			                    }
-			                    console.log(excelfile);
+			                    //console.log(excelfile);
 
-
-			                    //Some values are the same for all entries
-			                    var entry = {};
-			                    entry.recorded_by = scope.$parent.recorded_by;
-			                    entry.created_by = scope.$parent.created_by;
-
-			                    var date2 = new Date();
-			                    entry.created = date2.toISOString().substring(0,10) + 'T00:00:00Z';
-
-			                    //Include excel and expedition in entry
-			                    entry.excelfile = excelfile;
-                                entry.expedition = exped;
-
-                                //Add database info
-                                entry.schema = "https://api.npolar.no/no/schema/sighting.json";
-                                entry.collection = "sighting";
-                                entry.base = "http://api.npolar.no";
 
                                 //Extract row info, store in database if possible
-			                    var result = getExcelLineInfo(worksheet, entry, start_row, schema_version);
+			                    var result = getExcelLineInfo(worksheet, excelfile, exped, start_row, schema_version);
 			                    if (result) {
 			                    	console.log("All rows stored successfully.");
 			                    } else {
 			                    	console.log("Some - or all - entries were not stored");
 			                    }
-
 
 			                  });  //sheet_name_list
 			              }; //return function
@@ -101,62 +83,116 @@ return {
  			//Extract a row of data from worksheet
  			//start_row is the first row with input
 		    //In 2014 the schema questions included bear cubs and dead/alive
-			function getExcelLineInfo(worksheet, entry, start_row, schema_version) {
+			function getExcelLineInfo(worksheet, excelfile, exped, start_row, sv) {
 
-				//Count up the rows
-			    var row_count = start_row;
+                //create entry object
+				var entry =initEntry(excelfile, exped);
+
+			    //Row count
+				var row_count = start_row;
+
+				//Set schema_version to false (old schema) if not set
+			    if (!sv) { sv = false; };
+
 
 			    for (var z in worksheet) {
-			    	//Pick out rows with values
+			    	//num holds the currect row number
+			    	//Necessary because excel lib does not keep track of rows
 			    	var num = z.substring(1);
 
-			    	//Excel entries start after 10th row
+
+			    	//Excel form starts with start_row
 			        if (((worksheet.hasOwnProperty(z))) && (num > (start_row-1))) {
 
-			          if (z === ("A"+num)) { var event_d = getJsDateFromExcel(worksheet[z].v); entry.event_date = event_d;}
-                      if (z === ("B"+num)) { entry.latitude = worksheet[z].v;}
-                      if (z === ("C"+num)) { entry.longitude = worksheet[z].v;}
-                      if (z === ("D"+num)) { worksheet[z].v === "(select or write placename)" ? (entry.locality = "") : (entry.locality = worksheet[z].v);}
-                      if (z === ("E"+num)) {
-                      	worksheet[z].v === "(select species)" ?
-                      	(entry.species = "") : (entry.species = worksheet[z].v);
-                      	for (var p = 0; p < SPECIES.length; p++) {
-	                        if (entry.species && ((entry.species).toLowerCase() === (SPECIES[p].eng).toLowerCase())) {
-	                               entry.species = (SPECIES[p].family).toLowerCase();
-	                        }
-	                    }
-                      }
-                      if (z === ("F"+num)) { entry.adult_m = (worksheet[z].v).toString();}
-                      if (z === ("G"+num)) { entry.adult_f = (worksheet[z].v).toString();}
-                      if (z === ("H"+num)) { entry.adult = (worksheet[z].v).toString();}
-                      if (z === ("I"+num)) { entry.sub_adult = (worksheet[z].v).toString();}
+			          //if new row detected, push entry to database
+			          //Afterwards, reset entry object
+			          if (num > row_count)
+			          	 { console.log(num, row_count);
+			          	 	//Update row_count
+			          	 	row_count = num;
+			          	 	//Submit entry if it contains real values
+			          	 	submitEntry(entry);
+			          	 	//Init new entry
+			          	 	entry = initEntry(excelfile, exped);
+			          	 }
 
-                      //Here the schemas differ
-	                  if (schema_version) {
-	                      if (z === ("J"+num)) { worksheet[z].v === "(select condition)" ? (entry.polar_bear_condition = "") : (entry.polar_bear_condition = worksheet[z].v);}
-	                      if (z === ("K"+num)) { entry.cub_calf_pup = (worksheet[z].v).toString();}
-	                      if (z === ("L"+num)) { worksheet[z].v === "(select years)" ? (entry.bear_cubs = "") : (entry.bear_cubs = worksheet[z].v);}
-	                      if (z === ("M"+num)) { entry.unidentified = (worksheet[z].v).toString();}
-	                      if (z === ("N"+num)) { worksheet[z].v === 'NA' ? (entry.dead_alive = 'unknown') : (entry.dead_alive = worksheet[z].v) ;}
-	                      if (z === ("O"+num)) { entry.total = (worksheet[z].v).toString();}
-	                      if (z === ("P"+num)) { worksheet[z].v === "(select habitat)" ? (entry.habitat = "") : (entry.habitat = worksheet[z].v);}
-	                      if (z === ("Q"+num)) { entry.occurrence_remarks= worksheet[z].v;}
-	                  } else { //Old schema
-	                  	  if (z === ("J"+num)) { entry.cub_calf_pup = (worksheet[z].v).toString();}
-	                      if (z === ("K"+num)) { entry.unidentified = (worksheet[z].v).toString();}
-	                      if (z === ("L"+num)) { entry.total = (worksheet[z].v).toString();}
-	                      if (z === ("M"+num)) { worksheet[z].v === "(select habitat)" ? (entry.habitat = "") : (entry.habitat = worksheet[z].v);}
-	                      if (z === ("N"+num)) { entry.occurrence_remarks= worksheet[z].v;}
-	                  }
 
-                   } //if worksheet
+			          switch(z) {
+			          	case ("A"+num): var event_d = getJsDateFromExcel(worksheet[z].v); entry.event_date = event_d; break;
+                        case ("B"+num): entry.latitude = worksheet[z].v; break;
+                        case ("C"+num): entry.longitude = worksheet[z].v; break;
+                        case ("D"+num): worksheet[z].v === "(select or write placename)" ?
+                        				(entry.locality = "") : (entry.locality = worksheet[z].v); break;
+                        case ("E"+num): worksheet[z].v === "(select species)" ?
+                      					(entry.species = "") : (entry.species = worksheet[z].v);
+                      					for (var p = 0; p < SPECIES.length; p++) {
+	                        				if (entry.species && ((entry.species).toLowerCase() === (SPECIES[p].eng).toLowerCase())) {
+	                              			 	entry.species = (SPECIES[p].family).toLowerCase();
+	                        				} } break;
+                        case ("F"+num): entry.adult_m = (worksheet[z].v).toString(); break;
+                        case ("G"+num): entry.adult_f = (worksheet[z].v).toString(); break;
+                        case ("H"+num): entry.adult = (worksheet[z].v).toString(); break;
+                        case ("I"+num): entry.sub_adult = (worksheet[z].v).toString(); break;
+						case ("J"+num): if (sv) { worksheet[z].v === "(select condition)" ?
+										(entry.polar_bear_condition = "") : (entry.polar_bear_condition = worksheet[z].v);}
+										else { entry.cub_calf_pup = (worksheet[z].v).toString(); } break;
+						case ("K"+num): if (sv) { entry.cub_calf_pup = (worksheet[z].v).toString();} else {
+										entry.unidentified = (worksheet[z].v).toString(); } break;
+						case ("L"+num): if (sv) { worksheet[z].v === "(select years)" ? (entry.bear_cubs = "") : (entry.bear_cubs = worksheet[z].v);
+										} else { entry.total = (worksheet[z].v).toString(); } break;
+						case ("M"+num): if (sv) { entry.unidentified = (worksheet[z].v).toString(); } else {
+										 worksheet[z].v === "(select habitat)" ? (entry.habitat = "") : (entry.habitat = worksheet[z].v);
+										} break;
+						case ("N"+num): if (sv) {
+										worksheet[z].v === 'NA' ? (entry.dead_alive = 'unknown') : (entry.dead_alive = worksheet[z].v);
+										} else { entry.occurrence_remarks= worksheet[z].v;} break;
+						case ("O"+num): entry.total = (worksheet[z].v).toString(); break;
+	                    case ("P"+num): worksheet[z].v === "(select habitat)" ? (entry.habitat = "") : (entry.habitat = worksheet[z].v); break;
+	                    case ("Q"+num): entry.occurrence_remarks= worksheet[z].v; break;
 
-                //   console.log(JSON.stringify(entry));
-                //   console.log("result ----------");
-                //&& (worksheet["A"+num] !== undefined) && (typeof worksheet["A"+num].v === "number" )
+                      } //switch
+                    } //if worksheet
+
               } //for worksheet
+              //Submit the last entry if it contains real values
+			  submitEntry(entry);
               return true;
             } // End getExcelLineInfo
+
+
+            //Submit entry if it is deemed real
+            function submitEntry(entry) {
+            	//Check if real values
+            	//If event_date is there, submit
+            	if (!entry.event_date || entry.event_date == '' || entry.event_date === undefined ){
+            		console.log(JSON.stringify(entry));
+            		console.log("not valid entry");
+            	} else {
+            		console.log(JSON.stringify(entry));
+            		console.log('submitted');
+            	};
+            }
+
+
+            //Some values are the same for all entries
+            function initEntry(excelfile, exped) {
+            	var entry = {};
+                entry.recorded_by = scope.$parent.recorded_by;
+                entry.created_by = scope.$parent.created_by;
+
+                var date2 = new Date();
+                entry.created = date2.toISOString().substring(0,10) + 'T00:00:00Z';
+
+                //Include excel and expedition in entry
+                entry.excelfile = excelfile;
+                entry.expedition = exped;
+
+                //Add database info
+                entry.schema = "https://api.npolar.no/no/schema/sighting.json";
+                entry.collection = "sighting";
+                entry.base = "http://api.npolar.no";
+                return entry;
+            }
 
 
 			//Extract info on Excel file
@@ -180,8 +216,7 @@ return {
 			//Fetch expedition  data - could be either in fields J or K
 			function getContactInfo(worksheet) {
 			 var exped={};
-			 console.log("Checking expedition info - should start in column J or K..");
-
+			 // expedition info - should start in column J or K..
 			 for (var q in worksheet) {
 			     if (worksheet.hasOwnProperty(q)) {
 			          // all keys that do not begin with "!" correspond to cell addresses

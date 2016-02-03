@@ -1,7 +1,12 @@
 <br/>
 <label><input type="checkbox" ng-model="schema_version"> The schema contains question about bear cubs and dead/alive</label><br/>
+<label>Please check that the form uses decimal degrees with comma as separator.</label><br />
 <label>Which row is first row containing input?
-<input type="text" ng-model="row" maxlength="2" size="2"></label><br /><br />
+<input type="text" ng-model="row" maxlength="2" size="2"></label><br />
+<label>Please also check that from the first row containing input the form strictly adheres to the template.</label>
+<label>Expedition info should start in column J or K.</label>
+
+<br /><br />
 
 
  <area></area><input type="file"  onchange="angular.element(this).scope().filesChanged(this)" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
@@ -9,5 +14,4 @@
   <!-- <li ng-repeat="file in files">{{file.name}}</li>
 
     {{results}}  -->
-
 
