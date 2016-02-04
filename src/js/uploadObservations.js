@@ -1,6 +1,6 @@
 'use strict';
 
-var uploadObservations = function(SPECIES) {
+var uploadObservations = function(SPECIES, $sce) {
 'ngInject';
 
 return {
@@ -22,6 +22,7 @@ return {
 		    	    //Get files
 		     	    var files = scope.files;
         		    var i,f;
+
     				//Input about start row and schema version
         		    var start_row = scope.row;
         		    var schema_version = scope.schema_version;
@@ -85,6 +86,10 @@ return {
 		    //In 2014 the schema questions included bear cubs and dead/alive
 			function getExcelLineInfo(worksheet, excelfile, exped, start_row, sv) {
 
+				//Ugly "semi-global" variable needed for html formatting on a string
+				//which is illegal alone if anything is appended..
+				var jsonStr = '';
+
                 //create entry object
 				var entry =initEntry(excelfile, exped);
 
@@ -111,7 +116,7 @@ return {
 			          	 	//Update row_count
 			          	 	row_count = num;
 			          	 	//Submit entry if it contains real values
-			          	 	submitEntry(entry);
+			          	 	jsonStr = submitEntry(entry, jsonStr);
 			          	 	//Init new entry
 			          	 	entry = initEntry(excelfile, exped);
 			          	 }
@@ -155,24 +160,33 @@ return {
 
               } //for worksheet
               //Submit the last entry if it contains real values
-			  submitEntry(entry);
+			  jsonStr = submitEntry(entry, jsonStr);
               return true;
             } // End getExcelLineInfo
 
 
             //Submit entry if it is deemed real
-            function submitEntry(entry) {
+            function submitEntry(entry, jsonStr) {
             	//Check if real values
             	//If event_date is there, submit
             	if (!entry.event_date || entry.event_date == '' || entry.event_date === undefined ){
             		console.log(JSON.stringify(entry));
             		console.log("not valid entry");
+
             	} else {
             		console.log(JSON.stringify(entry));
+            		//scope.entry += $sce.trustAsHtml(JSON.stringify(entry));
+            		console.log("*********" + jsonStr );
+            		jsonStr += JSON.stringify(entry) + '<br /><br />';
+            		scope.entry = $sce.trustAsHtml(jsonStr);
+     //'I am an <code>HTML</code>string with <a href="#" ng-mouseover="removeExp()">links!</a> and other <em>stuff</em>');
+
+            		//scope.entry += '<br />';
+            		scope.$apply();
             		console.log('submitted');
+            		return jsonStr;
             	};
             }
-
 
             //Some values are the same for all entries
             function initEntry(excelfile, exped) {

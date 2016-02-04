@@ -3,6 +3,7 @@
 
 var angular = require('angular');
 require('angular-resource');
+require('angular-sanitize');
 
 /*require('angularjs-datepicker');*/
 
