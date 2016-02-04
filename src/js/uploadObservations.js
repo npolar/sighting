@@ -112,7 +112,7 @@ return {
 			          //if new row detected, push entry to database
 			          //Afterwards, reset entry object
 			          if (num > row_count)
-			          	 { console.log(num, row_count);
+			          	 {
 			          	 	//Update row_count
 			          	 	row_count = num;
 			          	 	//Submit entry if it contains real values
@@ -167,28 +167,19 @@ return {
 
             //Submit entry if it is deemed real
             function submitEntry(entry, jsonStr) {
-            	//Check if real values
-            	//If event_date is there, submit
-            	if (!entry.event_date || entry.event_date == '' || entry.event_date === undefined ){
-            		console.log(JSON.stringify(entry));
-            		console.log("not valid entry");
-
-            	} else {
-            		console.log(JSON.stringify(entry));
-            		//scope.entry += $sce.trustAsHtml(JSON.stringify(entry));
-            		console.log("*********" + jsonStr );
+            	//If event_date is there the entry is real, thus submit
+            	if (entry.event_date){
+            		//Add all relevant entries to jsonStr
             		jsonStr += JSON.stringify(entry) + '<br /><br />';
             		scope.entry = $sce.trustAsHtml(jsonStr);
-     //'I am an <code>HTML</code>string with <a href="#" ng-mouseover="removeExp()">links!</a> and other <em>stuff</em>');
-
-            		//scope.entry += '<br />';
             		scope.$apply();
-            		console.log('submitted');
+            		//Feedback jsonStr
             		return jsonStr;
             	};
             }
 
-            //Some values are the same for all entries
+            //Some values are the same for all entries objects
+            //they are appended here
             function initEntry(excelfile, exped) {
             	var entry = {};
                 entry.recorded_by = scope.$parent.recorded_by;
