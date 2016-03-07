@@ -97,7 +97,7 @@ return {
 				var row_count = start_row;
 
 				//Set schema_version to false (old schema) if not set
-			    if (!sv) { sv = false; };
+			    if (!sv) { sv = false; }
 
 
 			    for (var z in worksheet) {
@@ -126,10 +126,8 @@ return {
 			          	case ("A"+num): var event_d = getJsDateFromExcel(worksheet[z].v); entry.event_date = event_d; break;
                         case ("B"+num): entry.latitude = worksheet[z].v; break;
                         case ("C"+num): entry.longitude = worksheet[z].v; break;
-                        case ("D"+num): worksheet[z].v === "(select or write placename)" ?
-                        				(entry.locality = "") : (entry.locality = worksheet[z].v); break;
-                        case ("E"+num): worksheet[z].v === "(select species)" ?
-                      					(entry.species = "") : (entry.species = worksheet[z].v);
+                        case ("D"+num): worksheet[z].v === "(select or write placename)" ? (entry.locality = "") : (entry.locality = worksheet[z].v); break;
+                        case ("E"+num): worksheet[z].v === "(select species)" ? (entry.species = "") : (entry.species = worksheet[z].v);
                       					for (var p = 0; p < SPECIES.length; p++) {
 	                        				if (entry.species && ((entry.species).toLowerCase() === (SPECIES[p].eng).toLowerCase())) {
 	                              			 	entry.species = (SPECIES[p].family).toLowerCase();
@@ -169,13 +167,18 @@ return {
             function submitEntry(entry, jsonStr) {
             	//If event_date is there the entry is real, thus submit
             	if (entry.event_date){
+
+            		//Call upload to db here
+            		//if ok. print data to screen
+
+
             		//Add all relevant entries to jsonStr
             		jsonStr += JSON.stringify(entry) + '<br /><br />';
             		scope.entry = $sce.trustAsHtml(jsonStr);
             		scope.$apply();
             		//Feedback jsonStr
             		return jsonStr;
-            	};
+            	}
             }
 
             //Some values are the same for all entries objects
@@ -298,7 +301,8 @@ return {
 						//Remove 'About the Form' and 'Species name'
 			            removeVal(sheet_name_list, 'About the Form');
 			            removeVal(sheet_name_list, 'Species name');
-			            if (!(sheet_name_list === ["Sightings"])) {
+			   			//Give feedback of someone has renamed the form
+			            if ((sheet_name_list.length > 1) || (sheet_name_list[0] !== 'Sightings')) {
 			             console.log('Warning: Contains sheets with other names than "Sightings". Trying..');
 						}
 						return sheet_name_list;

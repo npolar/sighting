@@ -11,13 +11,9 @@ var ngloginLogout2 = function (NpolarApiSecurity, npolarApiConfig, $http) {
    link: function(scope) {
 
       scope.user = NpolarApiSecurity.getUser();
+      console.log("ngloginLogout2");
+      console.log(scope.user);
       scope.edits = [];
-
-      //let editlog = `${npolarApiConfig.base}/editlog/?sort=-request.time&q=&filter-request.authorization=Bearer&filter-request.username=conrad&fields=method,request.time,endpoint,response.header.Location&filter-response.status=200..299&format=json&variant=array&limit=5`;
-      //$http.get(editlog).success(response => {
-      //  console.log(response);
-      //  scope.edits = response;
-      //});
    }
   };
 };

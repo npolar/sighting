@@ -2,8 +2,8 @@
 'use strict';
 
 var angular = require('angular');
-require('angular-resource');
-require('angular-sanitize');
+//require('angular-resource');
+//require('angular-sanitize');
 
 /*require('angularjs-datepicker');*/
 
@@ -19,7 +19,6 @@ angular.module('sighting',[
  // 'nemLogging',
 //  'sightingServices',   //Edit service
   'leaflet-directive',
-//  '720kb.datepicker',  //Calendar
   'ngResource',
   'templates',
   'smart-table'
@@ -82,18 +81,32 @@ angular.module('sighting').config(require('./router'));
 
 
 // API HTTP interceptor - adds tokens to server + (gir probl routing)
-angular.module('sighting').config(function ($httpProvider) {
-  $httpProvider.interceptors.push('npolarApiInterceptor');
-});
+//angular.module('sighting').config(function ($httpProvider) {
+//  $httpProvider.interceptors.push('npolarApiInterceptor');
+//});
 
 
 // Inject npolarApiConfig and run
-angular.module('sighting').run(npolarApiConfig => {
+//angular.module('sighting').run(npolarApiConfig => {
   //var environment; // 'test', 'development', 'production'
-  var autoconfig = new AutoConfig('test');
-  angular.extend(npolarApiConfig, autoconfig, { resources });
+  //var autoconfig = new AutoConfig('test');
+  //angular.extend(npolarApiConfig, autoconfig, { resources });
   //console.log("npolarApiConfig", npolarApiConfig);
+//});
+
+
+
+// API HTTP interceptor
+angular.module('sighting').config($httpProvider => {
+  $httpProvider.interceptors.push('npolarApiInterceptor');
 });
+
+// Inject npolarApiConfig and run
+angular.module('sighting').run(($http, npolarApiConfig) => {
+  var autoconfig = new AutoConfig("test");
+  angular.extend(npolarApiConfig, autoconfig, { resources });
+});
+
 
 // Inject Chronopic on suitable input elements
 //appSighting.directive('input', require('npdc-common/src/wrappers/chronopic')({

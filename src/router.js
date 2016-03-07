@@ -18,10 +18,10 @@ var router = function($routeProvider, $locationProvider) {
         templateUrl: 'partials/open/species.html',
         controller: 'SightingCtrl'
       }).
-      when('/observers', {
-        templateUrl: 'partials/user/observers.html',
-        controller: 'ObserversCtrl'
-      }).
+   //   when('/observers', {
+   //     templateUrl: 'partials/user/observers.html',
+   //     controller: 'ObserversCtrl'
+   //   }).
       when('/observations', {
         templateUrl: 'partials/user/my_observations.html',
         controller: 'MyObservationsCtrl'
