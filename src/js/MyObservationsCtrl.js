@@ -42,6 +42,7 @@ var MyObservationsCtrl = function($scope, Sighting, NpolarApiSecurity, npolarApi
 
         //Do the search
        var search2 =  search + '&filter-recorded_by='+ user.email + '&sort=-event_date';
+
        $scope.arr = SightingDBSearch.get({search:search2}, function(){
        });
 

@@ -13,6 +13,7 @@ var AutoConfig = npdcCommon.AutoConfig;
 
 
 angular.module('sighting',[
+  'npdcCommon',
   'ngRoute',
   'formula',
   'ngNpolar', //NP logon
@@ -59,8 +60,6 @@ angular.module('sighting').filter('viewFilter', require('./js/viewFilter'));
 angular.module('sighting').filter('uniqueFilter', require('./js/uniqueFilter'));
 
 
-
-
 // Bootstrap ngResource models using NpolarApiResource
 var resources = [
   {'path': '/user', 'resource': 'User'},
@@ -103,13 +102,16 @@ angular.module('sighting').config($httpProvider => {
 
 // Inject npolarApiConfig and run
 angular.module('sighting').run(($http, npolarApiConfig) => {
-  var autoconfig = new AutoConfig("test");
+  var autoconfig = new AutoConfig("production");
   angular.extend(npolarApiConfig, autoconfig, { resources });
 });
 
+angular.module('sighting').run(($http, npdcAppConfig) => {
+  npdcAppConfig.toolbarTitle = 'Marine mammal sighting';
+});
 
 // Inject Chronopic on suitable input elements
-//appSighting.directive('input', require('npdc-common/src/wrappers/chronopic')({
+//angular.module('sighting').directive('input', require('npdc-common/src/wrappers/chronopic')({
 //  css: { 'max-width': '340px' }
 //}));
 

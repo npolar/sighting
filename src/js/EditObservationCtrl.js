@@ -2,13 +2,13 @@
 /* user module */
 //Update entry from Svalbard MMS couch database here
 // @ngInject
-var EditObservationCtrl =  function($scope,$location, $controller, Sighting, npolarApiConfig, NpolarApiSecurity) {
-    //var speciesgallery = require('./SpeciesGallery');
+var EditObservationCtrl =  function($scope,$location, $controller, $routeParams, Sighting, formula, npolarApiConfig,
+ npdcAppConfig, chronopicService,  fileFunnelService, NpolarApiSecurity) {
 
      // EditController -> NpolarEditController
   $controller('NpolarEditController', { $scope: $scope });
 
-  $scope.duplicate = function() {
+/*  $scope.duplicate = function() {
 
       //console.log($scope.document);
       //Duplicating the object to a new instance
@@ -25,15 +25,17 @@ var EditObservationCtrl =  function($scope,$location, $controller, Sighting, npo
     });
 
 
-  };
+  }; */
 
   // Dataset -> npolarApiResource -> ngResource
   $scope.resource = Sighting;
 
-  var user = NpolarApiSecurity.getUser();
+
+ // var user = NpolarApiSecurity.getUser();
+
 
   // Formula ($scope.formula set by parent)
-  $scope.formula.schema = 'https:' + npolarApiConfig.base + '/schema/sighting';
+ /* $scope.formula.schema = 'https:' + npolarApiConfig.base + '/schema/sighting';
   $scope.formula.form = './partials/user/formula.json';
   $scope.formula.validateHidden = false;
   $scope.formula.saveHidden = false;
@@ -54,7 +56,21 @@ var EditObservationCtrl =  function($scope,$location, $controller, Sighting, npo
     });
 
     onSaveCallback(model);
-  };
+  }; */
+
+  let templates = [];
+
+  $scope.formula = formula.getInstance({
+    schema: '//api.npolar.no/schema/sighting',
+    form: 'edit/formula.json',
+    templates: npdcAppConfig.formula.templates.concat(templates)
+   });
+
+   chronopicService.defineOptions({ match: 'released', format: '{date}'});
+  chronopicService.defineOptions({ match(field) {
+    return field.path.match(/^#\/activity\/\d+\/.+/);
+  }, format: '{date}'});
+
 
 
   // edit (or new) action
