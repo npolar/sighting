@@ -3,10 +3,10 @@
 "lang": "nb",
 "config": [
 { "environment" : "development",
-"base": "https://apptest.data.npolar.no"
+"base": "https://apptest.data.npolar.no:3000"
 },
 { "environment" : "test",
-"base": "https://apptest.data.npolar.no"
+"base": "https://apptest.data.npolar.no:3000"
 },
 { "environment": "production",
 "base": "//api.npolar.no"

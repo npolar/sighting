@@ -1,11 +1,9 @@
 {
-    "fieldsets": [
-        {
+    "fieldsets": [{
             "title": "Expedition",
             "fields": [
                 {
                     "id": "expedition",
-                    "title": "",
                     "fields": [
                         "name",
                         "contact_info",
@@ -173,6 +171,10 @@
                     ]
                 }
             ]
+        },
+        {
+            "title": "Draft",
+            "fields": []
         }
     ]
 }

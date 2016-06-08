@@ -7,6 +7,9 @@ var SightingCtrl = function ($scope, $http, Sighting, SPECIES) {
 
   $scope.species = SPECIES;
 
+
+ $scope.username = "John";
+  console.log($scope.username);
 };
 
 
