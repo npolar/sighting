@@ -123,11 +123,6 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
     //show loading..
     $scope.dataLoading = true;
 
-    console.log($scope.lat1);
-    console.log($scope.edate1);
-    console.log($scope.edate2);
-    console.log($scope);
-
     // First find out which paramaters are not empty
     var sok = ''; var lat = ''; var lng = ''; var edate = '';
 
@@ -194,7 +189,8 @@ var AdminObservationsCtrl = function($scope, $http, leafletData, SPECIES, CSVSer
        sok = sok+lat+lng+edate;
     }
 
-    console.log(sok);
+   // console.log(sok);
+   // console.log("cccccc");
 
    //Prune search - transfer as little data as possible to save time
    var fields = '&fields=id,event_date,latitude,longitude,locality,location_comment,species,adult_m,adult_f,adult,subadult,polar_bear_condition,\
@@ -217,12 +213,17 @@ expedition.organisation,expedition.platform,expedition.platform_comment,expediti
       full.feed.entries[len].count = len;
 
       if (full.feed.entries[len].latitude && full.feed.entries[len].longitude){
+
+       //Get id to create link on the map to edit an entry
+       //Useful when whales are tagged with land GPS coord..
+       var id = full.feed.entries[len].id;
+
        markers.push({
                 lng: parseFloat(full.feed.entries[len].longitude),
                 lat: parseFloat(full.feed.entries[len].latitude),
                 focus: true,
                 draggable: false,
-                message: full.feed.entries[len].locality,
+                message: "<a href='http://localhost:3000/sighting/observations/" + id + "/edit'>" + full.feed.entries[len].locality + "</a>",
                 icon: redIcon
        });
      }
