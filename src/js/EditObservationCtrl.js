@@ -3,7 +3,7 @@
 //Update entry from Svalbard MMS couch database here
 // @ngInject
 var EditObservationCtrl =  function($scope,$location, $controller, $routeParams, Sighting, formula, npolarApiConfig,
- npdcAppConfig, chronopicService,  fileFunnelService, NpolarApiSecurity) {
+ npdcAppConfig, chronopicService, fileFunnelService, NpolarApiSecurity) {
 
      // EditController -> NpolarEditController
   $controller('NpolarEditController', { $scope: $scope });
@@ -62,11 +62,13 @@ var EditObservationCtrl =  function($scope,$location, $controller, $routeParams,
 
   $scope.formula = formula.getInstance({
     schema: '//api.npolar.no/schema/sighting',
-    form: 'formula.json',
+    form: 'js/formula.json',
     templates: npdcAppConfig.formula.templates.concat(templates)
    });
 
-   chronopicService.defineOptions({ match: 'released', format: '{date}'});
+  console.log($scope.formula);
+
+  chronopicService.defineOptions({ match: 'released', format: '{date}'});
   chronopicService.defineOptions({ match(field) {
     return field.path.match(/^#\/activity\/\d+\/.+/);
   }, format: '{date}'});

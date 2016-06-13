@@ -2,8 +2,9 @@
 /* user module */
 //Update entry from Svalbard MMS couch database here
 // @ngInject
-var EditAdminObservationCtrl =  function($scope,$location, $controller, Sighting, npolarApiConfig, NpolarApiSecurity, IsAdmin) {
-    //var speciesgallery = require('./SpeciesGallery');
+var EditAdminObservationCtrl =  function($scope,$location, $controller, Sighting, formula, npolarApiConfig,
+  npdcAppConfig, chronopicService, fileFunnelService, NpolarApiSecurity, IsAdmin) {
+
 
      // EditController -> NpolarEditController
   $controller('NpolarEditController', { $scope: $scope });
@@ -15,12 +16,21 @@ var EditAdminObservationCtrl =  function($scope,$location, $controller, Sighting
 
    $scope.isAdmin = IsAdmin.entryObject.data;
 
-  // Formula ($scope.formula set by parent)
 
-  $scope.formula.schema = 'https:'+ npolarApiConfig.base + '/schema/sighting';
-  $scope.formula.form = './partials/admin/formula_admin.json';
-  $scope.formula.validateHidden = false;
-  $scope.formula.saveHidden = false;
+    let templates = [];
+
+  $scope.formula = formula.getInstance({
+    schema: '//api.npolar.no/schema/sighting',
+    form: 'js/formula.json',
+    templates: npdcAppConfig.formula.templates.concat(templates)
+   });
+
+  console.log($scope.formula);
+
+  chronopicService.defineOptions({ match: 'released', format: '{date}'});
+  chronopicService.defineOptions({ match(field) {
+    return field.path.match(/^#\/activity\/\d+\/.+/);
+  }, format: '{date}'});
 
 
 
