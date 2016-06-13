@@ -62,7 +62,7 @@ var EditObservationCtrl =  function($scope,$location, $controller, $routeParams,
 
   $scope.formula = formula.getInstance({
     schema: '//api.npolar.no/schema/sighting',
-    form: 'edit/formula.json',
+    form: 'formula.json',
     templates: npdcAppConfig.formula.templates.concat(templates)
    });
 

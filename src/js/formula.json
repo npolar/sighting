@@ -1,0 +1,9 @@
+{
+    "fieldsets": [{
+        "title": "Core",
+        "fields": [{
+            "id": "species",
+            "title": "research project title or other title"
+        }]
+    }]
+}
