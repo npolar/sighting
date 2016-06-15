@@ -3,8 +3,41 @@
 
 //Controller for Excel file upload
 // @ngInject
-var UploadImagesCtrl = function($scope, $http, NpolarApiSecurity, Sighting) {
+var UploadImagesCtrl = function($scope, $http, $location, $controller, $routeParams, formula, NpolarApiSecurity,
+  npolarApiConfig, npdcAppConfig, fileFunnelService, chronopicService, Sighting) {
+
      $scope.security = NpolarApiSecurity;
+
+     console.log("testt");
+
+     $controller('NpolarEditController', { $scope: $scope });
+
+     // Sighting -> npolarApiResource -> ngResource
+     $scope.resource = Sighting;
+
+      let templates = [];
+
+      console.log("test2");
+
+  $scope.formula = formula.getInstance({
+    schema: '//api.npolar.no/schema/sighting',
+    form: 'partials/admin/formula.json',
+    templates: npdcAppConfig.formula.templates.concat(templates)
+   });
+
+  console.log($scope.formula);
+  console.log("test3");
+
+  chronopicService.defineOptions({ match: 'released', format: '{date}'});
+  chronopicService.defineOptions({ match(field) {
+    return field.path.match(/^#\/activity\/\d+\/.+/);
+  }, format: '{date}'});
+
+
+ console.log("test4");
+  // edit (or new) action
+  $scope.edit();
+
 
      // Dataset -> npolarApiResource -> ngResource
     //$scope.resource = Sighting;

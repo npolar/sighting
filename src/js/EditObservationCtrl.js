@@ -27,7 +27,7 @@ var EditObservationCtrl =  function($scope,$location, $controller, $routeParams,
 
   }; */
 
-  // Dataset -> npolarApiResource -> ngResource
+  // Sighting -> npolarApiResource -> ngResource
   $scope.resource = Sighting;
 
 

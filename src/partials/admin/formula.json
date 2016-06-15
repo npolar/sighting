@@ -1,0 +1,10 @@
+{
+    "fieldsets": [{
+            "title": "Expeditionrr",
+            "fields": [
+                        "name",
+                        "contact_info"
+                    ]
+        }
+    ]
+}
