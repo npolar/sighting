@@ -2,6 +2,8 @@
 
 ## Overview
 
+Note: This repository is now continued as a part of npdc under to https://github.com/npolar/npdc-sighting.
+
 The application let people register their sightings of marine mammals at Svalbard. The code will be deployed at mms.data.npolar.no.
 
 
